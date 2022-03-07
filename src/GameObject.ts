@@ -45,6 +45,15 @@ export class GameObject{
         return this.sprite.rotation;
     }
 
+    set scale(scale: Vector){
+        this.sprite.scale.x = scale.x;
+        this.sprite.scale.y = scale.y;
+    }
+
+    get scale(){
+        return new Vector(this.sprite.scale.x, this.sprite.scale.y);
+    }
+
     destroy(){
         if(this.updateFunction) 
             this.engine.pixiApplication.ticker.remove(this.updateFunction);
