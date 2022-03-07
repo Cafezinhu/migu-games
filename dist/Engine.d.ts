@@ -8,6 +8,6 @@ export declare class Engine {
     stage: Container;
     autoResize: boolean;
     constructor(options?: EngineOptions);
-    appendToDocument(element?: HTMLElement): void;
+    appendToDocument(): void;
     resize(): void;
 }

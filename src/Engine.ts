@@ -17,14 +17,11 @@ export class Engine{
         this.autoResize = options.autoResize;
     }
 
-    appendToDocument(element?: HTMLElement){
-        if(!element)
-            element = document.body;
-
-        element.appendChild(this.view);
+    appendToDocument(){
+        document.body.appendChild(this.view);
 
         if(this.autoResize){
-            element.parentElement.addEventListener('resize', () => {
+            window.addEventListener('resize', () => {
                 this.resize();
             });
         }

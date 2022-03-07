@@ -6,12 +6,10 @@ export class Engine {
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
     }
-    appendToDocument(element) {
-        if (!element)
-            element = document.body;
-        element.appendChild(this.view);
+    appendToDocument() {
+        document.body.appendChild(this.view);
         if (this.autoResize) {
-            element.parentElement.addEventListener('resize', () => {
+            window.addEventListener('resize', () => {
                 this.resize();
             });
         }
