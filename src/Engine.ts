@@ -10,4 +10,11 @@ export class Engine{
         this.view = this.pixiApplication.view;
         this.stage = this.pixiApplication.stage;
     }
+
+    appendToDocument(element?: HTMLElement){
+        if(!element)
+            element = document.body;
+            
+        element.appendChild(this.view);
+    }
 }
