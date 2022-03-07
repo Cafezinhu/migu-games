@@ -1,6 +1,6 @@
 {
   "name": "migu-games",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Javascript 2D game engine",
   "main": "dist/index.js",
   "author": "Aerton Oliveira",
