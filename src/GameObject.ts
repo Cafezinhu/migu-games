@@ -1,10 +1,12 @@
 import { Sprite } from "pixi.js";
+import { Anchor, getAnchorPoint } from "./Anchor";
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 
 export type GameObjectOptions = {
     spriteUrl?: string;
     engine: Engine;
+    anchor?: Anchor
 }
 
 export class GameObject{
@@ -16,6 +18,11 @@ export class GameObject{
         this.sprite = Sprite.from(options.spriteUrl);
         this.engine = options.engine;
         this.engine.stage.addChild(this.sprite);
+
+        if(options.anchor){
+            const anchorPoint = getAnchorPoint(this.sprite.getBounds(), options.anchor);
+            this.sprite.anchor.set(anchorPoint.x, anchorPoint.y);
+        }
 
         //@ts-ignore
         if(this.update){
