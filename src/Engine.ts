@@ -3,6 +3,7 @@ import { Vector } from "./Vector";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
+    sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
 }
 
@@ -12,6 +13,7 @@ export class Engine{
     stage: Container;
     autoResize: boolean;
     baseResolution: Vector;
+    sideToPreserve: 'height' | 'width';
     
     constructor(options?: EngineOptions){
         this.pixiApplication = new Application(options);
@@ -20,8 +22,12 @@ export class Engine{
         this.autoResize = options.autoResize;
 
         this.baseResolution = options.baseResolution;
-        
-        if(this.autoResize) this.resize();
+
+        if(options.sideToPreserve){
+            this.sideToPreserve  = options.sideToPreserve;
+        }else{
+            this.sideToPreserve = 'width';
+        }
     }
 
     appendToDocument(){
@@ -31,6 +37,7 @@ export class Engine{
             window.addEventListener('resize', () => {
                 this.resize();
             });
+            this.resize();
         }
     }
 
@@ -38,7 +45,12 @@ export class Engine{
         this.pixiApplication.view.height = this.view.parentElement.clientHeight;
         this.pixiApplication.view.width = this.view.parentElement.clientWidth;
         if(this.baseResolution){
-            const ratio = this.pixiApplication.view.height / this.baseResolution.y;
+            let ratio: number;
+            if(this.sideToPreserve == 'height')
+                ratio = this.pixiApplication.view.height / this.baseResolution.y;
+            else
+                ratio = this.pixiApplication.view.width / this.baseResolution.x;
+
             this.stage.scale.x = ratio;
             this.stage.scale.y = ratio;
         }

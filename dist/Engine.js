@@ -6,8 +6,12 @@ export class Engine {
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.baseResolution = options.baseResolution;
-        if (this.autoResize)
-            this.resize();
+        if (options.sideToPreserve) {
+            this.sideToPreserve = options.sideToPreserve;
+        }
+        else {
+            this.sideToPreserve = 'width';
+        }
     }
     appendToDocument() {
         document.body.appendChild(this.view);
@@ -15,13 +19,18 @@ export class Engine {
             window.addEventListener('resize', () => {
                 this.resize();
             });
+            this.resize();
         }
     }
     resize() {
         this.pixiApplication.view.height = this.view.parentElement.clientHeight;
         this.pixiApplication.view.width = this.view.parentElement.clientWidth;
         if (this.baseResolution) {
-            const ratio = this.pixiApplication.view.height / this.baseResolution.y;
+            let ratio;
+            if (this.sideToPreserve == 'height')
+                ratio = this.pixiApplication.view.height / this.baseResolution.y;
+            else
+                ratio = this.pixiApplication.view.width / this.baseResolution.x;
             this.stage.scale.x = ratio;
             this.stage.scale.y = ratio;
         }
