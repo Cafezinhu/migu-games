@@ -25,6 +25,18 @@ export class GameObject {
         const position = this.sprite.position;
         return new Vector(position.x, position.y);
     }
+    set x(value) {
+        this.sprite.position.x = value;
+    }
+    get x() {
+        return this.sprite.position.x;
+    }
+    set y(value) {
+        this.sprite.position.y = value;
+    }
+    get y() {
+        return this.sprite.position.y;
+    }
     set rotation(rotation) {
         this.sprite.rotation = rotation;
     }

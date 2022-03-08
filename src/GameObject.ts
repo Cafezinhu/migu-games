@@ -41,6 +41,22 @@ export class GameObject{
         return new Vector(position.x, position.y);
     }
 
+    set x(value: number){
+        this.sprite.position.x = value;
+    }
+
+    get x(){
+        return this.sprite.position.x;
+    }
+
+    set y(value: number){
+        this.sprite.position.y = value;
+    }
+
+    get y(){
+        return this.sprite.position.y;
+    }
+
     set rotation(rotation: number){
         this.sprite.rotation = rotation;
     }

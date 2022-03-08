@@ -12,6 +12,10 @@ export declare class GameObject {
     constructor(engine: Engine, options?: GameObjectOptions);
     set position(position: Vector);
     get position(): Vector;
+    set x(value: number);
+    get x(): number;
+    set y(value: number);
+    get y(): number;
     set rotation(rotation: number);
     get rotation(): number;
     set scale(scale: Vector);
