@@ -1,10 +1,9 @@
 import { Sprite } from "pixi.js";
-import { Anchor } from "./Anchor";
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 export declare type GameObjectOptions = {
     spriteUrl?: string;
-    anchor?: Anchor;
+    anchor?: Vector;
 };
 export declare class GameObject {
     sprite: Sprite;

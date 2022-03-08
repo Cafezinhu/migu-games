@@ -1,28 +1,12 @@
 import { Vector } from "./Vector";
-export var Anchor;
-(function (Anchor) {
-    Anchor[Anchor["TopLeft"] = 0] = "TopLeft";
-    Anchor[Anchor["Top"] = 1] = "Top";
-    Anchor[Anchor["TopRight"] = 2] = "TopRight";
-    Anchor[Anchor["Left"] = 3] = "Left";
-    Anchor[Anchor["Center"] = 4] = "Center";
-    Anchor[Anchor["Right"] = 5] = "Right";
-    Anchor[Anchor["BottomLeft"] = 6] = "BottomLeft";
-    Anchor[Anchor["Bottom"] = 7] = "Bottom";
-    Anchor[Anchor["BottomRight"] = 8] = "BottomRight";
-})(Anchor || (Anchor = {}));
-;
-export function getAnchorPoint(rectangle, anchor) {
-    const points = [
-        new Vector(0, 0),
-        new Vector(0.5, 0),
-        new Vector(1, 0),
-        new Vector(0, 0.5),
-        new Vector(0.5, 0.5),
-        new Vector(1, 0.5),
-        new Vector(0, 1),
-        new Vector(0.5, 1),
-        new Vector(1, 1)
-    ];
-    return points[anchor];
+export class Anchor {
 }
+Anchor.TopLeft = new Vector(0, 0);
+Anchor.Top = new Vector(0.5, 0);
+Anchor.TopRight = new Vector(1, 0);
+Anchor.Left = new Vector(0, 0.5);
+Anchor.Center = new Vector(0.5, 0.5);
+Anchor.Right = new Vector(1, 0.5);
+Anchor.BottomLeft = new Vector(0, 1);
+Anchor.Bottom = new Vector(0.5, 1);
+Anchor.BottomRight = new Vector(1, 1);

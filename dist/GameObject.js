@@ -1,5 +1,4 @@
 import { Sprite } from "pixi.js";
-import { getAnchorPoint } from "./Anchor";
 import { Vector } from "./Vector";
 export class GameObject {
     constructor(engine, options) {
@@ -7,8 +6,7 @@ export class GameObject {
         this.engine = engine;
         this.engine.stage.addChild(this.sprite);
         if (options.anchor) {
-            const anchorPoint = getAnchorPoint(this.sprite.getBounds(), options.anchor);
-            this.sprite.anchor.set(anchorPoint.x, anchorPoint.y);
+            this.sprite.anchor.set(options.anchor.x, options.anchor.y);
         }
         //@ts-ignore
         if (this.update) {

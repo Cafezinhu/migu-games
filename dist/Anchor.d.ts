@@ -1,14 +1,12 @@
-import { Rectangle } from "pixi.js";
-import { Vector } from "./Vector";
-export declare enum Anchor {
-    TopLeft = 0,
-    Top = 1,
-    TopRight = 2,
-    Left = 3,
-    Center = 4,
-    Right = 5,
-    BottomLeft = 6,
-    Bottom = 7,
-    BottomRight = 8
+/// <reference types="victor" />
+export declare class Anchor {
+    static TopLeft: import("victor");
+    static Top: import("victor");
+    static TopRight: import("victor");
+    static Left: import("victor");
+    static Center: import("victor");
+    static Right: import("victor");
+    static BottomLeft: import("victor");
+    static Bottom: import("victor");
+    static BottomRight: import("victor");
 }
-export declare function getAnchorPoint(rectangle: Rectangle, anchor: Anchor): Vector;

@@ -1,20 +1,13 @@
-import { Rectangle } from "pixi.js";
 import { Vector } from "./Vector";
 
-export enum Anchor {TopLeft, Top, TopRight, Left, Center, Right, BottomLeft, Bottom, BottomRight};
-
-export function getAnchorPoint(rectangle: Rectangle, anchor: Anchor): Vector{
-    const points = [
-        new Vector(0, 0),
-        new Vector(0.5, 0),
-        new Vector(1, 0),
-        new Vector(0, 0.5),
-        new Vector(0.5, 0.5),
-        new Vector(1, 0.5),
-        new Vector(0, 1),
-        new Vector(0.5, 1),
-        new Vector(1, 1)
-    ];
-
-    return points[anchor];
+export class Anchor{
+    static TopLeft = new Vector(0, 0);
+    static Top = new Vector(0.5, 0);
+    static TopRight = new Vector(1, 0);
+    static Left = new Vector(0, 0.5);
+    static Center = new Vector(0.5, 0.5);
+    static Right = new Vector(1, 0.5);
+    static BottomLeft = new Vector(0, 1);
+    static Bottom = new Vector(0.5, 1);
+    static BottomRight = new Vector(1, 1);
 }
