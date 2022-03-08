@@ -5,7 +5,6 @@ import { Vector } from "./Vector";
 
 export type GameObjectOptions = {
     spriteUrl?: string;
-    engine: Engine;
     anchor?: Anchor
 }
 
@@ -14,9 +13,9 @@ export class GameObject{
     engine: Engine;
     private updateFunction: any;
     
-    constructor(options: GameObjectOptions){
+    constructor(engine: Engine, options?: GameObjectOptions){
         this.sprite = Sprite.from(options.spriteUrl);
-        this.engine = options.engine;
+        this.engine = engine;
         this.engine.stage.addChild(this.sprite);
 
         if(options.anchor){
