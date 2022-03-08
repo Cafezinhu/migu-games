@@ -15,14 +15,14 @@ export var Anchor;
 export function getAnchorPoint(rectangle, anchor) {
     const points = [
         new Vector(0, 0),
-        new Vector(rectangle.width / 2, 0),
-        new Vector(rectangle.width, 0),
-        new Vector(0, rectangle.height / 2),
-        new Vector(rectangle.width / 2, rectangle.height / 2),
-        new Vector(rectangle.width, rectangle.height / 2),
-        new Vector(0, rectangle.height),
-        new Vector(rectangle.width / 2, rectangle.height),
-        new Vector(rectangle.width, rectangle.height)
+        new Vector(0.5, 0),
+        new Vector(1, 0),
+        new Vector(0, 0.5),
+        new Vector(0.5, 0.5),
+        new Vector(1, 0.5),
+        new Vector(0, 1),
+        new Vector(0.5, 1),
+        new Vector(1, 1)
     ];
     return points[anchor];
 }
