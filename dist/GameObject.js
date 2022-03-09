@@ -64,6 +64,12 @@ export class GameObject {
     get rotation() {
         return this.container.rotation;
     }
+    set angle(angle) {
+        this.container.angle = angle;
+    }
+    get angle() {
+        return this.container.angle;
+    }
     set scale(scale) {
         this.container.scale.x = scale.x;
         this.container.scale.y = scale.y;

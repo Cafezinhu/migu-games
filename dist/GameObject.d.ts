@@ -21,6 +21,8 @@ export declare class GameObject {
     get y(): number;
     set rotation(rotation: number);
     get rotation(): number;
+    set angle(angle: number);
+    get angle(): number;
     set scale(scale: Vector);
     get scale(): Vector;
     set animationSpeed(speed: number);
