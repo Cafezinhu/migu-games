@@ -7,6 +7,7 @@ export declare type GameObjectOptions = {
     autoPlay?: boolean;
     loop?: boolean;
     animationSpeed?: number;
+    tilingSize?: Vector;
 };
 export declare class GameObject {
     container: Container;
@@ -27,6 +28,8 @@ export declare class GameObject {
     get scale(): Vector;
     set animationSpeed(speed: number);
     get animationSpeed(): number;
+    set offset(offset: Vector);
+    get offset(): Vector;
     lookAt(point: Vector): void;
     destroy(): void;
 }

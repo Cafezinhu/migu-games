@@ -1,10 +1,19 @@
-import { AnimatedSprite, Container, Sprite, Texture } from "pixi.js";
+import { AnimatedSprite, Container, Sprite, Texture, TilingSprite } from "pixi.js";
 import { Vector } from "./Vector";
 export class GameObject {
     constructor(engine, options) {
         if (options && options.spriteUrl) {
-            if (typeof (options.spriteUrl) == 'string')
-                this.container = Sprite.from(options.spriteUrl);
+            if (typeof (options.spriteUrl) == 'string') {
+                if (options.tilingSize) {
+                    this.container = TilingSprite.from(options.spriteUrl, {
+                        width: options.tilingSize.x,
+                        height: options.tilingSize.y
+                    });
+                }
+                else {
+                    this.container = Sprite.from(options.spriteUrl);
+                }
+            }
             else {
                 const textures = options.spriteUrl.map(url => {
                     return Texture.from(url);
@@ -82,6 +91,14 @@ export class GameObject {
     }
     get animationSpeed() {
         return this.container.animationSpeed;
+    }
+    set offset(offset) {
+        this.container
+            .tilePosition.set(offset.x, offset.y);
+    }
+    get offset() {
+        const tilePosition = this.container.tilePosition;
+        return new Vector(tilePosition.x, tilePosition.y);
     }
     lookAt(point) {
         this.angle = point.clone().subtract(this.position).angleDeg();
