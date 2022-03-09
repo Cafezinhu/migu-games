@@ -1,12 +1,19 @@
-import { Sprite } from "pixi.js";
+import { Container, Sprite } from "pixi.js";
 import { Vector } from "./Vector";
 export class GameObject {
     constructor(engine, options) {
-        this.sprite = Sprite.from(options.spriteUrl);
+        if (options && options.spriteUrl)
+            this.container = Sprite.from(options.spriteUrl);
+        else
+            this.container = new Container();
         this.engine = engine;
-        this.engine.stage.addChild(this.sprite);
-        if (options.anchor) {
-            this.sprite.anchor.set(options.anchor.x, options.anchor.y);
+        this.engine.stage.addChild(this.container);
+        if (options && options.anchor) {
+            //@ts-ignore
+            if (this.container.anchor) {
+                //@ts-ignore
+                this.container.anchor.set(options.anchor.x, options.anchor.y);
+            }
         }
         //@ts-ignore
         if (this.update) {
@@ -18,41 +25,41 @@ export class GameObject {
         }
     }
     set position(position) {
-        this.sprite.position.x = position.x;
-        this.sprite.position.y = position.y;
+        this.container.position.x = position.x;
+        this.container.position.y = position.y;
     }
     get position() {
-        const position = this.sprite.position;
+        const position = this.container.position;
         return new Vector(position.x, position.y);
     }
     set x(value) {
-        this.sprite.position.x = value;
+        this.container.position.x = value;
     }
     get x() {
-        return this.sprite.position.x;
+        return this.container.position.x;
     }
     set y(value) {
-        this.sprite.position.y = value;
+        this.container.position.y = value;
     }
     get y() {
-        return this.sprite.position.y;
+        return this.container.position.y;
     }
     set rotation(rotation) {
-        this.sprite.rotation = rotation;
+        this.container.rotation = rotation;
     }
     get rotation() {
-        return this.sprite.rotation;
+        return this.container.rotation;
     }
     set scale(scale) {
-        this.sprite.scale.x = scale.x;
-        this.sprite.scale.y = scale.y;
+        this.container.scale.x = scale.x;
+        this.container.scale.y = scale.y;
     }
     get scale() {
-        return new Vector(this.sprite.scale.x, this.sprite.scale.y);
+        return new Vector(this.container.scale.x, this.container.scale.y);
     }
     destroy() {
         if (this.updateFunction)
             this.engine.pixiApplication.ticker.remove(this.updateFunction);
-        this.sprite.destroy();
+        this.container.destroy();
     }
 }

@@ -1,4 +1,4 @@
-import { Sprite } from "pixi.js";
+import { Container } from "pixi.js";
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 export declare type GameObjectOptions = {
@@ -6,7 +6,7 @@ export declare type GameObjectOptions = {
     anchor?: Vector;
 };
 export declare class GameObject {
-    sprite: Sprite;
+    container: Container;
     engine: Engine;
     private updateFunction;
     constructor(engine: Engine, options?: GameObjectOptions);
