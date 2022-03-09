@@ -2,8 +2,11 @@ import { Container } from "pixi.js";
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 export declare type GameObjectOptions = {
-    spriteUrl?: string;
+    spriteUrl?: string | string[];
     anchor?: Vector;
+    autoPlay?: boolean;
+    loop?: boolean;
+    animationSpeed?: number;
 };
 export declare class GameObject {
     container: Container;
@@ -20,5 +23,7 @@ export declare class GameObject {
     get rotation(): number;
     set scale(scale: Vector);
     get scale(): Vector;
+    set animationSpeed(speed: number);
+    get animationSpeed(): number;
     destroy(): void;
 }

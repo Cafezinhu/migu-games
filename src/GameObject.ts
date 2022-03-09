@@ -1,10 +1,13 @@
-import { Container, Sprite } from "pixi.js";
+import { AnimatedSprite, Container, Sprite, Texture } from "pixi.js";
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 
 export type GameObjectOptions = {
-    spriteUrl?: string;
-    anchor?: Vector
+    spriteUrl?: string | string[];
+    anchor?: Vector;
+    autoPlay?: boolean;
+    loop?: boolean;
+    animationSpeed?: number;
 }
 
 export class GameObject{
@@ -13,8 +16,21 @@ export class GameObject{
     private updateFunction: any;
     
     constructor(engine: Engine, options?: GameObjectOptions){
-        if(options && options.spriteUrl)
-            this.container = Sprite.from(options.spriteUrl);
+        if(options && options.spriteUrl){
+            if(typeof(options.spriteUrl) == 'string')
+                this.container = Sprite.from(options.spriteUrl);
+            else{
+                const textures = options.spriteUrl.map(url => {
+                    return Texture.from(url);
+                })
+                this.container = new AnimatedSprite(textures);
+                const container = this.container as AnimatedSprite;
+                container.loop = options.loop;
+                if(options.animationSpeed) 
+                    container.animationSpeed = options.animationSpeed;
+                if(options.autoPlay) container.play();
+            }
+        }
         else
             this.container = new Container();
 
@@ -81,6 +97,14 @@ export class GameObject{
 
     get scale(){
         return new Vector(this.container.scale.x, this.container.scale.y);
+    }
+
+    set animationSpeed(speed: number){
+        (this.container as AnimatedSprite).animationSpeed = speed;
+    }
+
+    get animationSpeed(){
+        return (this.container as AnimatedSprite).animationSpeed;
     }
 
     destroy(){
