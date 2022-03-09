@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { Input } from "./Input";
 export class Engine {
     constructor(options) {
         this.pixiApplication = new Application(options);
@@ -12,6 +13,9 @@ export class Engine {
         }
         else {
             this.sideToPreserve = 'width';
+        }
+        if (!options.disableInputSystem) {
+            this.inputSystem = new Input(this);
         }
     }
     appendToDocument() {

@@ -1,10 +1,12 @@
 import { Application, Container, IApplicationOptions } from "pixi.js";
+import { Input } from "./Input";
 import { Vector } from "./Vector";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
     sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
+    disableInputSystem?: boolean;
 }
 
 export class Engine{
@@ -15,6 +17,7 @@ export class Engine{
     baseResolution: Vector;
     sideToPreserve: 'height' | 'width';
     scaleRatio: number;
+    inputSystem: Input;
     
     constructor(options?: EngineOptions){
         this.pixiApplication = new Application(options);
@@ -30,6 +33,10 @@ export class Engine{
             this.sideToPreserve  = options.sideToPreserve;
         }else{
             this.sideToPreserve = 'width';
+        }
+
+        if(!options.disableInputSystem) {
+            this.inputSystem = new Input(this);
         }
     }
 
