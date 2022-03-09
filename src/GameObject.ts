@@ -116,7 +116,7 @@ export class GameObject{
     }
 
     lookAt(point: Vector){
-        this.angle = point.subtract(this.position).angleDeg();
+        this.angle = point.clone().subtract(this.position).angleDeg();
     }
 
     destroy(){

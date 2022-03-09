@@ -84,7 +84,7 @@ export class GameObject {
         return this.container.animationSpeed;
     }
     lookAt(point) {
-        this.angle = point.subtract(this.position).angleDeg();
+        this.angle = point.clone().subtract(this.position).angleDeg();
     }
     destroy() {
         if (this.updateFunction)
