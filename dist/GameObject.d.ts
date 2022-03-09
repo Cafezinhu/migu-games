@@ -27,5 +27,6 @@ export declare class GameObject {
     get scale(): Vector;
     set animationSpeed(speed: number);
     get animationSpeed(): number;
+    lookAt(point: Vector): void;
     destroy(): void;
 }

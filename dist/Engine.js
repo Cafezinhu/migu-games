@@ -6,6 +6,7 @@ export class Engine {
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.baseResolution = options.baseResolution;
+        this.scaleRatio = 1;
         if (options.sideToPreserve) {
             this.sideToPreserve = options.sideToPreserve;
         }
@@ -26,13 +27,12 @@ export class Engine {
         this.pixiApplication.view.height = this.view.parentElement.clientHeight;
         this.pixiApplication.view.width = this.view.parentElement.clientWidth;
         if (this.baseResolution) {
-            let ratio;
             if (this.sideToPreserve == 'height')
-                ratio = this.pixiApplication.view.height / this.baseResolution.y;
+                this.scaleRatio = this.pixiApplication.view.height / this.baseResolution.y;
             else
-                ratio = this.pixiApplication.view.width / this.baseResolution.x;
-            this.stage.scale.x = ratio;
-            this.stage.scale.y = ratio;
+                this.scaleRatio = this.pixiApplication.view.width / this.baseResolution.x;
+            this.stage.scale.x = this.scaleRatio;
+            this.stage.scale.y = this.scaleRatio;
         }
         this.pixiApplication.resize();
     }

@@ -83,6 +83,9 @@ export class GameObject {
     get animationSpeed() {
         return this.container.animationSpeed;
     }
+    lookAt(point) {
+        this.angle = point.subtract(this.position).angleDeg();
+    }
     destroy() {
         if (this.updateFunction)
             this.engine.pixiApplication.ticker.remove(this.updateFunction);

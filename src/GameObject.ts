@@ -115,6 +115,10 @@ export class GameObject{
         return (this.container as AnimatedSprite).animationSpeed;
     }
 
+    lookAt(point: Vector){
+        this.angle = point.subtract(this.position).angleDeg();
+    }
+
     destroy(){
         if(this.updateFunction) 
             this.engine.pixiApplication.ticker.remove(this.updateFunction);

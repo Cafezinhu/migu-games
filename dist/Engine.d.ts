@@ -12,6 +12,7 @@ export declare class Engine {
     autoResize: boolean;
     baseResolution: Vector;
     sideToPreserve: 'height' | 'width';
+    scaleRatio: number;
     constructor(options?: EngineOptions);
     appendToDocument(): void;
     resize(): void;
