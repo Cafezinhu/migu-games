@@ -9,6 +9,7 @@ export type GameObjectOptions = {
     loop?: boolean;
     animationSpeed?: number;
     tilingSize?: Vector;
+    parent?: Container;
 }
 
 export class GameObject{
@@ -44,8 +45,12 @@ export class GameObject{
             this.container = new Container();
 
         this.engine = engine;
-        this.engine.stage.addChild(this.container);
 
+        if(options.parent)
+            options.parent.addChild(this.container)
+        else
+            this.engine.stage.addChild(this.container);
+        
         if(options && options.anchor){
             //@ts-ignore
             if(this.container.anchor)
@@ -137,8 +142,6 @@ export class GameObject{
     lookAt(point: Vector){
         this.angle = point.clone().subtract(this.position).angleDeg();
     }
-
-
 
     destroy(){
         if(this.updateFunction) 

@@ -30,7 +30,10 @@ export class GameObject {
         else
             this.container = new Container();
         this.engine = engine;
-        this.engine.stage.addChild(this.container);
+        if (options.parent)
+            options.parent.addChild(this.container);
+        else
+            this.engine.stage.addChild(this.container);
         if (options && options.anchor) {
             //@ts-ignore
             if (this.container.anchor) {

@@ -8,6 +8,7 @@ export declare type GameObjectOptions = {
     loop?: boolean;
     animationSpeed?: number;
     tilingSize?: Vector;
+    parent?: Container;
 };
 export declare class GameObject {
     container: Container;
