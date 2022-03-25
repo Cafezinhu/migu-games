@@ -1,4 +1,4 @@
-export class MiguAudio extends Audio{
+export class GameAudio extends Audio{
     baseVolume: number;
 
     constructor(src: string, baseVolume?: number){

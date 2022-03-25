@@ -1,9 +1,9 @@
-import { MiguAudio } from "./MiguAudio";
+import { GameAudio } from "./GameAudio";
 
 let generalVolume = 1;
 
 type AudioTag = {
-    audioList: MiguAudio[];
+    audioList: GameAudio[];
     currentVolume: number;
 }
 
@@ -11,7 +11,16 @@ const audioMap: Map<string, AudioTag> = new Map();
 
 export class VolumeController
 {
-    static addAudioToTag(audio: MiguAudio, tag: string){
+    static createAudio(src: string, tag: string, baseVolume = 1)
+    {
+        const gameAudio = new GameAudio(src, baseVolume);
+
+        VolumeController.addAudioToTag(gameAudio, tag);
+
+        return gameAudio;
+    }
+    
+    static addAudioToTag(audio: GameAudio, tag: string){
         const audioTag = audioMap.get(tag);
         if(audioTag){
             audio.volume = audioTag.currentVolume * generalVolume * audio.baseVolume;
