@@ -19,6 +19,7 @@
     "@types/matter-js": "^0.17.7",
     "@types/offscreencanvas": "^2019.6.4",
     "@types/victor": "^1.1.0",
+    "game-audio": "github:Cafezinhu/game-audio",
     "matter-js": "^0.18.0",
     "pixi.js": "^6.2.2",
     "victor": "^1.1.0"

@@ -4,7 +4,6 @@ import { GameObject, GameObjectOptions } from "./GameObject";
 import { Vector } from "./Vector";
 import * as PIXI from 'pixi.js';
 import { Input } from "./Input";
-import { VolumeController } from "./audio/VolumeController";
-import { GameAudio } from "./audio/GameAudio";
+import { GameAudio, GameAudioManager } from 'game-audio';
 
-export {Engine, EngineOptions, GameObject, GameObjectOptions, Vector, Anchor, Input, GameAudio, VolumeController, PIXI};
+export {Engine, EngineOptions, GameObject, GameObjectOptions, Vector, Anchor, Input, GameAudio, GameAudioManager, PIXI};
