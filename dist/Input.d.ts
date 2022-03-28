@@ -6,4 +6,5 @@ export declare class Input {
     static mousePos: Vector;
     constructor(engine: Engine);
     static mouseEventToVector(e: MouseEvent): import("victor");
+    static touchEventToVector(e: TouchEvent): import("victor");
 }

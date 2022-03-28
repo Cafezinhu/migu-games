@@ -10,4 +10,8 @@ export class Input {
     static mouseEventToVector(e) {
         return new Vector(e.offsetX / Input.engine.scaleRatio, e.offsetY / Input.engine.scaleRatio);
     }
+    static touchEventToVector(e) {
+        const rect = Input.engine.view.getBoundingClientRect();
+        return new Vector(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+    }
 }

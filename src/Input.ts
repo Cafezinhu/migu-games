@@ -21,4 +21,12 @@ export class Input{
             e.offsetY/Input.engine.scaleRatio
         );
     }
+
+    static touchEventToVector(e: TouchEvent){
+        const rect = Input.engine.view.getBoundingClientRect();
+        return new Vector(
+            e.touches[0].clientX - rect.left,
+            e.touches[0].clientY - rect.top,
+        );
+    }
 }
