@@ -46,7 +46,7 @@ export class GameObject{
 
         this.engine = engine;
 
-        if(options.parent)
+        if(options && options.parent)
             options.parent.addChild(this.container)
         else
             this.engine.stage.addChild(this.container);
