@@ -9,8 +9,8 @@ export class Input{
         Input.mousePos = new Vector(0,0);
         engine.view.addEventListener('mousemove', e => {
             Input.mousePos = new Vector(
-                e.pageX/engine.scaleRatio,
-                e.pageY/engine.scaleRatio
+                e.offsetX/engine.scaleRatio,
+                e.offsetY/engine.scaleRatio
             );
         })
     }
