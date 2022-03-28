@@ -1,7 +1,9 @@
+/// <reference types="victor" />
 import { Engine } from "./Engine";
 import { Vector } from "./Vector";
 export declare class Input {
-    engine: Engine;
+    static engine: Engine;
     static mousePos: Vector;
     constructor(engine: Engine);
+    static mouseEventToVector(e: MouseEvent): import("victor");
 }
