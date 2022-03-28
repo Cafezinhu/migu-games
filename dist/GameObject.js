@@ -103,6 +103,12 @@ export class GameObject {
         const tilePosition = this.container.tilePosition;
         return new Vector(tilePosition.x, tilePosition.y);
     }
+    set visible(value) {
+        this.container.visible = value;
+    }
+    get visible() {
+        return this.container.visible;
+    }
     lookAt(point) {
         this.angle = point.clone().subtract(this.position).angleDeg();
     }

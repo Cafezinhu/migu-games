@@ -31,6 +31,8 @@ export declare class GameObject {
     get animationSpeed(): number;
     set offset(offset: Vector);
     get offset(): Vector;
+    set visible(value: boolean);
+    get visible(): boolean;
     lookAt(point: Vector): void;
     destroy(): void;
 }
