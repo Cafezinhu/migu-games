@@ -5,4 +5,7 @@ import { Vector } from "./Vector";
 import * as PIXI from 'pixi.js';
 import { Input } from "./Input";
 import { GameAudio, GameAudioManager } from 'game-audio';
-export { Engine, GameObject, Vector, Anchor, Input, GameAudio, GameAudioManager, PIXI };
+import { CollisionArea } from './collision/CollisionArea';
+import { CircleCollisionArea } from './collision/CircleCollisionArea';
+import { RectangleCollisionArea } from './collision/RectangleCollisionArea';
+export { Engine, GameObject, Vector, Anchor, Input, GameAudio, GameAudioManager, CollisionArea, CircleCollisionArea, RectangleCollisionArea, PIXI };
