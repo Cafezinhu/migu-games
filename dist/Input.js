@@ -3,8 +3,13 @@ export class Input {
     constructor(engine) {
         Input.engine = engine;
         Input.mousePos = new Vector(0, 0);
+        Input.ignoreOffset = false;
         engine.view.addEventListener('mousemove', e => {
-            Input.mousePos = new Vector(e.offsetX / engine.scaleRatio, e.offsetY / engine.scaleRatio);
+            if (!Input.ignoreOffset) {
+                Input.mousePos = new Vector(e.offsetX / engine.scaleRatio, e.offsetY / engine.scaleRatio);
+                return;
+            }
+            Input.mousePos = new Vector(e.clientX / engine.scaleRatio, e.clientY / engine.scaleRatio);
         });
     }
     static mouseEventToVector(e) {
