@@ -8,13 +8,16 @@ export declare type GameObjectOptions = {
     loop?: boolean;
     animationSpeed?: number;
     tilingSize?: Vector;
-    parent?: Container;
+    parent?: GameObject;
 };
 export declare class GameObject {
     container: Container;
     engine: Engine;
+    parent: GameObject;
+    children: GameObject[];
     private updateFunction;
     constructor(engine: Engine, options?: GameObjectOptions);
+    addChild(child: GameObject): void;
     set position(position: Vector);
     get position(): Vector;
     set x(value: number);

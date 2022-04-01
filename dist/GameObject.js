@@ -31,7 +31,7 @@ export class GameObject {
             this.container = new Container();
         this.engine = engine;
         if (options && options.parent)
-            options.parent.addChild(this.container);
+            options.parent.addChild(this);
         else
             this.engine.stage.addChild(this.container);
         if (options && options.anchor) {
@@ -49,6 +49,11 @@ export class GameObject {
             };
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
+    }
+    addChild(child) {
+        this.children.push(child);
+        this.container.addChild(child.container);
+        child.parent = this;
     }
     set position(position) {
         this.container.position.x = position.x;

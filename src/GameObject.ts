@@ -9,12 +9,14 @@ export type GameObjectOptions = {
     loop?: boolean;
     animationSpeed?: number;
     tilingSize?: Vector;
-    parent?: Container;
+    parent?: GameObject;
 }
 
 export class GameObject{
     container: Container;
     engine: Engine;
+    parent: GameObject;
+    children: GameObject[];
     private updateFunction: any;
     
     constructor(engine: Engine, options?: GameObjectOptions){
@@ -47,7 +49,7 @@ export class GameObject{
         this.engine = engine;
 
         if(options && options.parent)
-            options.parent.addChild(this.container)
+            options.parent.addChild(this);
         else
             this.engine.stage.addChild(this.container);
         
@@ -68,6 +70,12 @@ export class GameObject{
             };
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
+    }
+
+    addChild(child: GameObject){
+        this.children.push(child);
+        this.container.addChild(child.container);
+        child.parent = this;
     }
 
     set position(position: Vector){
