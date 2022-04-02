@@ -20,6 +20,7 @@ export class GameObject{
     private updateFunction: any;
     
     constructor(engine: Engine, options?: GameObjectOptions){
+        this.children = [];
         if(options && options.spriteUrl){
             if(typeof(options.spriteUrl) == 'string'){
                 if(options.tilingSize){

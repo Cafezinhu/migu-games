@@ -2,6 +2,7 @@ import { AnimatedSprite, Container, Sprite, Texture, TilingSprite } from "pixi.j
 import { Vector } from "./Vector";
 export class GameObject {
     constructor(engine, options) {
+        this.children = [];
         if (options && options.spriteUrl) {
             if (typeof (options.spriteUrl) == 'string') {
                 if (options.tilingSize) {
