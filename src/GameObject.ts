@@ -129,6 +129,22 @@ export class GameObject{
         return new Vector(this.container.scale.x, this.container.scale.y);
     }
 
+    set scaleX(x: number){
+        this.container.scale.x = x;
+    }
+
+    get scaleX(){
+        return this.container.scale.x;
+    }
+
+    set scaleY(y: number){
+        this.container.scale.y = y;
+    }
+
+    get scaleY(){
+        return this.container.scale.y;
+    }
+
     set animationSpeed(speed: number){
         (this.container as AnimatedSprite).animationSpeed = speed;
     }

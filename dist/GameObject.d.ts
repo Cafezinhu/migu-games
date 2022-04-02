@@ -30,6 +30,10 @@ export declare class GameObject {
     get angle(): number;
     set scale(scale: Vector);
     get scale(): Vector;
+    set scaleX(x: number);
+    get scaleX(): number;
+    set scaleY(y: number);
+    get scaleY(): number;
     set animationSpeed(speed: number);
     get animationSpeed(): number;
     set offset(offset: Vector);

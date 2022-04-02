@@ -94,6 +94,18 @@ export class GameObject {
     get scale() {
         return new Vector(this.container.scale.x, this.container.scale.y);
     }
+    set scaleX(x) {
+        this.container.scale.x = x;
+    }
+    get scaleX() {
+        return this.container.scale.x;
+    }
+    set scaleY(y) {
+        this.container.scale.y = y;
+    }
+    get scaleY() {
+        return this.container.scale.y;
+    }
     set animationSpeed(speed) {
         this.container.animationSpeed = speed;
     }
