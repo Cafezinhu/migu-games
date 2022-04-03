@@ -5,6 +5,6 @@ export class Sprite extends GameObject {
         options.ignoreEmptyContainer = true;
         super(engine, options);
         this.container = PIXISprite.from(options.spriteUrl);
-        this.addContainerToParent(options.parent);
+        this.endOptionsConfiguration(options);
     }
 }

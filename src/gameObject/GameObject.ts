@@ -17,22 +17,13 @@ export class GameObject{
     
     constructor(engine: Engine, options: GameObjectOptions){
         this.children = [];
+        this.engine = engine;
 
         if(!options.ignoreEmptyContainer){
             this.container = new Container();
-            this.addContainerToParent(options.parent);
+            this.endOptionsConfiguration(options);
         }
 
-        this.engine = engine;
-
-        if(options.anchor){
-            //@ts-ignore
-            if(this.container.anchor)
-            {
-                //@ts-ignore
-                this.container.anchor.set(options.anchor.x, options.anchor.y);
-            }
-        }
 
         //@ts-ignore
         if(this.update){
@@ -54,11 +45,20 @@ export class GameObject{
         child.parent = this;
     }
 
-    protected addContainerToParent(parent: GameObject){
-        if(parent)
-            parent.addChild(this);
+    protected endOptionsConfiguration(options: GameObjectOptions){
+        if(options.parent)
+            options.parent.addChild(this);
         else
             this.engine.stage.addChild(this.container);
+        
+        if(options.anchor){
+            //@ts-ignore
+            if(this.container.anchor)
+            {
+                //@ts-ignore
+                this.container.anchor.set(options.anchor.x, options.anchor.y);
+            }
+        }
     }
 
     set position(position: Vector){

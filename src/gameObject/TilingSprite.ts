@@ -21,7 +21,7 @@ export class TilingSprite extends GameObject{
             width: options.tilingSize.width,
             height: options.tilingSize.height
         });
-        this.addContainerToParent(options.parent);
+        this.endOptionsConfiguration(options);
     }
 
     set offset(offset: Vector){

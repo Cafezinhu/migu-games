@@ -24,7 +24,7 @@ export class AnimatedSprite extends GameObject{
         if(options.animationSpeed) 
             this.container.animationSpeed = options.animationSpeed;
         if(options.autoPlay) this.container.play();
-        this.addContainerToParent(options.parent);
+        this.endOptionsConfiguration(options);
     }
 
     set animationSpeed(speed: number){
