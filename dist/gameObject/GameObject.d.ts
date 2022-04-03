@@ -14,6 +14,7 @@ export declare class GameObject {
     private updateFunction;
     constructor(engine: Engine, options: GameObjectOptions);
     addChild(child: GameObject): void;
+    protected addContainerToParent(parent: GameObject): void;
     set position(position: Vector);
     get position(): Vector;
     set x(value: number);

@@ -3,13 +3,11 @@ import { Vector } from "../Vector";
 export class GameObject {
     constructor(engine, options) {
         this.children = [];
-        if (!options.ignoreEmptyContainer)
+        if (!options.ignoreEmptyContainer) {
             this.container = new Container();
+            this.addContainerToParent(options.parent);
+        }
         this.engine = engine;
-        if (options.parent)
-            options.parent.addChild(this);
-        else
-            this.engine.stage.addChild(this.container);
         if (options.anchor) {
             //@ts-ignore
             if (this.container.anchor) {
@@ -33,6 +31,12 @@ export class GameObject {
         this.children.push(child);
         this.container.addChild(child.container);
         child.parent = this;
+    }
+    addContainerToParent(parent) {
+        if (parent)
+            parent.addChild(this);
+        else
+            this.engine.stage.addChild(this.container);
     }
     set position(position) {
         this.container.position.x = position.x;

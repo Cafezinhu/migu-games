@@ -9,6 +9,7 @@ export class TilingSprite extends GameObject {
             width: options.tilingSize.width,
             height: options.tilingSize.height
         });
+        this.addContainerToParent(options.parent);
     }
     set offset(offset) {
         this.container.tilePosition.set(offset.x, offset.y);
