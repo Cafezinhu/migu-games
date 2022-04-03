@@ -1,15 +1,11 @@
-import { AnimatedSprite, Container, Sprite, Texture, TilingSprite } from "pixi.js";
-import { Engine } from "./Engine";
-import { Vector } from "./Vector";
+import { Container } from "pixi.js";
+import { Engine } from "../Engine";
+import { Vector } from "../Vector";
 
 export type GameObjectOptions = {
-    spriteUrl?: string | string[];
     anchor?: Vector;
-    autoPlay?: boolean;
-    loop?: boolean;
-    animationSpeed?: number;
-    tilingSize?: Vector;
     parent?: GameObject;
+    ignoreEmptyContainer?: boolean;
 }
 
 export class GameObject{
@@ -19,42 +15,20 @@ export class GameObject{
     children: GameObject[];
     private updateFunction: any;
     
-    constructor(engine: Engine, options?: GameObjectOptions){
+    constructor(engine: Engine, options: GameObjectOptions){
         this.children = [];
-        if(options && options.spriteUrl){
-            if(typeof(options.spriteUrl) == 'string'){
-                if(options.tilingSize){
-                    this.container = TilingSprite.from(options.spriteUrl, {
-                        width: options.tilingSize.x,
-                        height: options.tilingSize.y
-                    })
-                }else{
-                    this.container = Sprite.from(options.spriteUrl);
-                }
-            }
-            else{
-                const textures = options.spriteUrl.map(url => {
-                    return Texture.from(url);
-                })
-                this.container = new AnimatedSprite(textures);
-                const container = this.container as AnimatedSprite;
-                container.loop = options.loop;
-                if(options.animationSpeed) 
-                    container.animationSpeed = options.animationSpeed;
-                if(options.autoPlay) container.play();
-            }
-        }
-        else
+
+        if(!options.ignoreEmptyContainer)
             this.container = new Container();
 
         this.engine = engine;
 
-        if(options && options.parent)
+        if(options.parent)
             options.parent.addChild(this);
         else
             this.engine.stage.addChild(this.container);
         
-        if(options && options.anchor){
+        if(options.anchor){
             //@ts-ignore
             if(this.container.anchor)
             {
@@ -71,6 +45,10 @@ export class GameObject{
             };
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
+
+        //@ts-ignore
+        if(this.start) this.start();
+        
     }
 
     addChild(child: GameObject){
@@ -144,24 +122,6 @@ export class GameObject{
 
     get scaleY(){
         return this.container.scale.y;
-    }
-
-    set animationSpeed(speed: number){
-        (this.container as AnimatedSprite).animationSpeed = speed;
-    }
-
-    get animationSpeed(){
-        return (this.container as AnimatedSprite).animationSpeed;
-    }
-
-    set offset(offset: Vector){
-        (this.container as TilingSprite)
-            .tilePosition.set(offset.x, offset.y);
-    }
-
-    get offset(){
-        const tilePosition = (this.container as TilingSprite).tilePosition;
-        return new Vector(tilePosition.x, tilePosition.y);
     }
 
     set visible(value: boolean){
