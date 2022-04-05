@@ -16,6 +16,8 @@ export class GameObject {
             };
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
+        if (options && options.zIndex)
+            this.container.zIndex = options.zIndex;
         //@ts-ignore
         if (this.start) {
             if (options && options.ignoreStart)
@@ -98,6 +100,12 @@ export class GameObject {
     }
     get visible() {
         return this.container.visible;
+    }
+    set zIndex(z) {
+        this.container.zIndex = z;
+    }
+    get zIndex() {
+        return this.container.zIndex;
     }
     lookAt(point) {
         this.angle = point.clone().subtract(this.position).angleDeg();

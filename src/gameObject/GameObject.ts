@@ -7,6 +7,7 @@ export type GameObjectOptions = {
     parent?: GameObject;
     ignoreEmptyContainer?: boolean;
     ignoreStart?: boolean;
+    zIndex?: number;
 }
 
 export class GameObject{
@@ -35,13 +36,14 @@ export class GameObject{
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
 
+        if(options && options.zIndex) this.container.zIndex = options.zIndex;
+
         //@ts-ignore
         if(this.start) {
             if(options && options.ignoreStart) return;
             //@ts-ignore
             this.start();
         }
-        
     }
 
     addChild(child: GameObject){
@@ -139,6 +141,14 @@ export class GameObject{
 
     get visible(){
         return this.container.visible;
+    }
+
+    set zIndex(z: number){
+        this.container.zIndex = z;
+    }
+
+    get zIndex(){
+        return this.container.zIndex;
     }
 
     lookAt(point: Vector){

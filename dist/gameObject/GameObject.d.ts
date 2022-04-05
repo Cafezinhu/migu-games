@@ -6,6 +6,7 @@ export declare type GameObjectOptions = {
     parent?: GameObject;
     ignoreEmptyContainer?: boolean;
     ignoreStart?: boolean;
+    zIndex?: number;
 };
 export declare class GameObject {
     container: Container;
@@ -34,6 +35,8 @@ export declare class GameObject {
     get scaleY(): number;
     set visible(value: boolean);
     get visible(): boolean;
+    set zIndex(z: number);
+    get zIndex(): number;
     lookAt(point: Vector): void;
     destroy(): void;
 }
