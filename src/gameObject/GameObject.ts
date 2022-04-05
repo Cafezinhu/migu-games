@@ -6,6 +6,7 @@ export type GameObjectOptions = {
     anchor?: Vector;
     parent?: GameObject;
     ignoreEmptyContainer?: boolean;
+    ignoreStart?: boolean;
 }
 
 export class GameObject{
@@ -35,7 +36,11 @@ export class GameObject{
         }
 
         //@ts-ignore
-        if(this.start) this.start();
+        if(this.start) {
+            if(options && options.ignoreStart) return;
+            //@ts-ignore
+            this.start();
+        }
         
     }
 

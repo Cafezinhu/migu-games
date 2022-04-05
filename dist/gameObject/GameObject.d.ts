@@ -5,6 +5,7 @@ export declare type GameObjectOptions = {
     anchor?: Vector;
     parent?: GameObject;
     ignoreEmptyContainer?: boolean;
+    ignoreStart?: boolean;
 };
 export declare class GameObject {
     container: Container;

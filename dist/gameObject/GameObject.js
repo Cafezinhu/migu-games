@@ -17,8 +17,12 @@ export class GameObject {
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
         //@ts-ignore
-        if (this.start)
+        if (this.start) {
+            if (options && options.ignoreStart)
+                return;
+            //@ts-ignore
             this.start();
+        }
     }
     addChild(child) {
         this.children.push(child);
