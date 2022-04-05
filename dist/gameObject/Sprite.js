@@ -7,4 +7,10 @@ export class Sprite extends GameObject {
         this.container = PIXISprite.from(options.spriteUrl);
         this.endOptionsConfiguration(options);
     }
+    get tint() {
+        return this.container.tint;
+    }
+    set tint(tint) {
+        this.container.tint = tint;
+    }
 }
