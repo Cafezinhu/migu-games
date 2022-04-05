@@ -36,8 +36,6 @@ export class GameObject{
             this.engine.pixiApplication.ticker.add(this.updateFunction);
         }
 
-        if(options && options.zIndex) this.container.zIndex = options.zIndex;
-
         //@ts-ignore
         if(this.start) {
             if(options && options.ignoreStart) return;
@@ -66,6 +64,7 @@ export class GameObject{
                 this.container.anchor.set(options.anchor.x, options.anchor.y);
             }
         }
+        if(options.zIndex) this.container.zIndex = options.zIndex;
     }
 
     set position(position: Vector){
