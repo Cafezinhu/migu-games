@@ -1,3 +1,9 @@
 import Victor from "victor";
-export declare type Vector = Victor;
-export declare const Vector: typeof Victor;
+export declare class Vector extends Victor {
+    static Zero: () => Victor;
+    static One: () => Victor;
+    static Left: () => Victor;
+    static Right: () => Victor;
+    static Up: () => Victor;
+    static Down: () => Victor;
+}

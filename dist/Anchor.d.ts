@@ -1,12 +1,12 @@
-/// <reference types="victor" />
+import { Vector } from "./Vector";
 export declare class Anchor {
-    static TopLeft: import("victor");
-    static Top: import("victor");
-    static TopRight: import("victor");
-    static Left: import("victor");
-    static Center: import("victor");
-    static Right: import("victor");
-    static BottomLeft: import("victor");
-    static Bottom: import("victor");
-    static BottomRight: import("victor");
+    static TopLeft: Vector;
+    static Top: Vector;
+    static TopRight: Vector;
+    static Left: Vector;
+    static Center: Vector;
+    static Right: Vector;
+    static BottomLeft: Vector;
+    static Bottom: Vector;
+    static BottomRight: Vector;
 }
