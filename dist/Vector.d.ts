@@ -1,9 +1,9 @@
 import Victor from "victor";
 export declare class Vector extends Victor {
-    static Zero: () => Victor;
-    static One: () => Victor;
-    static Left: () => Victor;
-    static Right: () => Victor;
-    static Up: () => Victor;
-    static Down: () => Victor;
+    static Zero: () => Vector;
+    static One: () => Vector;
+    static Left: () => Vector;
+    static Right: () => Vector;
+    static Up: () => Vector;
+    static Down: () => Vector;
 }
