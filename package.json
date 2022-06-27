@@ -1,6 +1,6 @@
 {
   "name": "migu-games",
-  "version": "1.2.9",
+  "version": "1.2.10",
   "description": "Javascript 2D game engine",
   "main": "dist/index.js",
   "author": "Aerton Oliveira",
@@ -8,6 +8,12 @@
   "types": "./dist\\index.d.ts",
   "scripts": {
     "build": "tsc"
+  },
+  "bin": {
+    "import-sprites": "bin/import-sprites.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "/dist"
@@ -22,6 +28,7 @@
     "game-audio": "github:Cafezinhu/game-audio",
     "matter-js": "^0.18.0",
     "pixi.js": "^6.4.2",
+    "recursive-readdir": "^2.2.2",
     "victor": "^1.1.0"
   },
   "type": "module"
