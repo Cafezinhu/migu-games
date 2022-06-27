@@ -1,4 +1,5 @@
-import { Application, Container, IApplicationOptions } from "pixi.js";
+import { Dict } from "@pixi/utils";
+import { Application, Container, IApplicationOptions, Loader, LoaderResource } from "pixi.js";
 import { Input } from "./Input";
 import { Vector } from "./Vector";
 
@@ -7,6 +8,8 @@ export interface EngineOptions extends IApplicationOptions{
     sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
     disableInputSystem?: boolean;
+    onProgress?: (progress: number) => void;
+    onLoad?: () => void;
 }
 
 export class Engine{
@@ -18,12 +21,27 @@ export class Engine{
     sideToPreserve: 'height' | 'width';
     scaleRatio: number;
     inputSystem: Input;
+    loader: Loader;
+    resources: Dict<LoaderResource>;
+    onLoad: () => void;
+    onProgress: (progress: number) => void;
     
     constructor(options?: EngineOptions){
         this.pixiApplication = new Application(options);
         this.view = this.pixiApplication.view;
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
+        this.loader = new Loader();
+        this.onLoad = options.onLoad;
+        this.onProgress = options.onProgress;
+
+        this.loader.onLoad.add(() => {
+            if(this.onLoad) this.onLoad();
+        });
+
+        this.loader.onProgress.add((loader) => {
+            if(this.onProgress) this.onProgress(loader.progress);
+        });
 
         this.baseResolution = options.baseResolution;
 
@@ -64,5 +82,15 @@ export class Engine{
             this.stage.scale.y = this.scaleRatio;
         }
         this.pixiApplication.resize();
+    }
+
+    addResource(name: string, url: string){
+        this.loader.add(name, url);
+    }
+
+    loadResources(){
+        this.loader.load((l, resources) => {
+            this.resources = resources;
+        });
     }
 }

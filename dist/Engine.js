@@ -1,4 +1,4 @@
-import { Application } from "pixi.js";
+import { Application, Loader } from "pixi.js";
 import { Input } from "./Input";
 export class Engine {
     constructor(options) {
@@ -6,6 +6,17 @@ export class Engine {
         this.view = this.pixiApplication.view;
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
+        this.loader = new Loader();
+        this.onLoad = options.onLoad;
+        this.onProgress = options.onProgress;
+        this.loader.onLoad.add(() => {
+            if (this.onLoad)
+                this.onLoad();
+        });
+        this.loader.onProgress.add((loader) => {
+            if (this.onProgress)
+                this.onProgress(loader.progress);
+        });
         this.baseResolution = options.baseResolution;
         this.scaleRatio = 1;
         if (options.sideToPreserve) {
@@ -39,5 +50,13 @@ export class Engine {
             this.stage.scale.y = this.scaleRatio;
         }
         this.pixiApplication.resize();
+    }
+    addResource(name, url) {
+        this.loader.add(name, url);
+    }
+    loadResources() {
+        this.loader.load((l, resources) => {
+            this.resources = resources;
+        });
     }
 }
