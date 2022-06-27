@@ -2,8 +2,8 @@
 import fs from 'fs';
 import recursive from 'recursive-readdir';
 
-const input = process.argv[2];
-const output = process.argv[3];
+const input = process.argv[process.argv.length - 2];
+const output = process.argv[process.argv.length - 1];
 const files = recursive(input, (err, files) => {
     let sprites = {};
     files.forEach(file => {
