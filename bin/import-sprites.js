@@ -4,7 +4,7 @@ import recursive from 'recursive-readdir';
 
 const input = process.argv[process.argv.length - 2];
 const output = process.argv[process.argv.length - 1];
-const files = recursive(input, (err, files) => {
+recursive(input, (err, files) => {
     let sprites = {};
     files.forEach(file => {
         if(!file.endsWith('.png')  
@@ -38,5 +38,13 @@ const files = recursive(input, (err, files) => {
         sprites[finalName] = file;
     });
     
-    fs.writeFileSync(output, `export const sprites = ${JSON.stringify(sprites)}`);
+    fs.writeFileSync(output, `
+export const sprites = ${JSON.stringify(sprites)}
+export function loadSprites(engine){
+    Object.keys(sprites).forEach(sprite => {
+        engine.addResource(sprite, sprites[sprite]);
+    });
+    engine.loadResources();
+}
+`);
 });
