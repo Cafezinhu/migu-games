@@ -3,7 +3,7 @@ import { Engine } from '../Engine';
 import { GameObject, GameObjectOptions } from "./GameObject";
 
 export type AnimatedSpriteOptions = GameObjectOptions & {
-    textures: string[] | Texture<Resource>[] | undefined;
+    textures: string[] | (Texture<Resource> | undefined)[] | undefined;
     autoPlay?: boolean;
     loop?: boolean;
     animationSpeed?: number;
