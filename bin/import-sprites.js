@@ -40,10 +40,10 @@ recursive(inputPath, (err, files) => {
     });
 
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.js'), `
-${Object.keys(sprites).map(sprite => {
-    return `import ${sprite} from '../../../${sprites[sprite]}';\n`;
+${Object.keys(sprites).reduce((acc, sprite) => {
+    return `${acc}\nimport ${sprite} from '../../../${sprites[sprite]}';`;
 })}
-const sprites = {${Object.keys(sprites).map(sprite => `${sprite},`)}}
+const sprites = {${Object.keys(sprites).reduce((acc, sprite) => `${acc}, ${sprite}`)}}
 export function loadSprites(engine){
     Object.keys(sprites).forEach(sprite => {
         engine.addResource(sprite, sprites[sprite]);
