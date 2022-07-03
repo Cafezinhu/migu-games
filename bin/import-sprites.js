@@ -38,6 +38,7 @@ recursive(inputPath, (err, files) => {
             }
         }
         sprites[finalName] = file;
+        console.log(finalName);
     });
 
     console.log('Writing js...');
