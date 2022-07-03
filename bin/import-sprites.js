@@ -25,7 +25,7 @@ recursive(inputPath, (err, files) => {
         let nextCap = false;
         let finalName = '';
         for(let char of name.split('')){
-            if(char == '\\' || char == ' ' || char == '/', char == '-'){
+            if(char == '\\' || char == ' ' || char == '/' || char == '-'){
                 nextCap = true;
             }else{
                 if(nextCap){
