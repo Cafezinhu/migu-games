@@ -7,7 +7,8 @@
   "license": "MIT",
   "types": "./dist\\index.d.ts",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "push": "npm run build && git push"
   },
   "bin": {
     "import-sprites": "bin/import-sprites.js"
