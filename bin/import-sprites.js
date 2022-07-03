@@ -5,6 +5,7 @@ import recursive from 'recursive-readdir';
 
 const input = process.argv[process.argv.length - 1];
 const inputPath = path.join(process.cwd(), input);
+console.log('Reading files...');
 recursive(inputPath, (err, files) => {
     let sprites = {};
     files.forEach(file => {
@@ -38,6 +39,8 @@ recursive(inputPath, (err, files) => {
         }
         sprites[finalName] = file;
     });
+
+    console.log('Writing js...');
     
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.js'), `const sprites = ${JSON.stringify(sprites)}
 export function loadSprites(engine){
@@ -46,6 +49,8 @@ export function loadSprites(engine){
     });
     engine.loadResources();
 }`);
+
+    console.log('Writing .d.ts...');
 
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.d.ts'), `import { Engine } from "./Engine";
 import { LoaderResource } from 'pixi.js';
