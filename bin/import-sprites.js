@@ -38,8 +38,7 @@ recursive(input, (err, files) => {
         sprites[finalName] = file;
     });
     
-    fs.writeFileSync(output, `
-export const sprites = ${JSON.stringify(sprites)}
+    fs.writeFileSync(output, `const sprites = ${JSON.stringify(sprites)}
 export function loadSprites(engine){
     Object.keys(sprites).forEach(sprite => {
         engine.addResource(sprite, sprites[sprite]);
