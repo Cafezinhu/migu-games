@@ -1,10 +1,10 @@
-import { TilingSprite as PIXITilingSprite } from 'pixi.js';
+import { Resource, Texture, TilingSprite as PIXITilingSprite } from 'pixi.js';
 import { Engine } from '../Engine';
 import { Vector } from '../Vector';
 import { GameObject, GameObjectOptions } from "./GameObject";
 
 export type TilingSpriteOptions = GameObjectOptions & {
-    spriteUrl: string;
+    texture?: string | Texture<Resource>;
     tilingSize: {
         width: number,
         height: number
@@ -17,7 +17,7 @@ export class TilingSprite extends GameObject{
     constructor(engine: Engine, options: TilingSpriteOptions){
         options.ignoreEmptyContainer = true;
         super(engine, options);
-        this.container = PIXITilingSprite.from('a', {
+        this.container = PIXITilingSprite.from(options.texture, {
             width: options.tilingSize.width,
             height: options.tilingSize.height
         });

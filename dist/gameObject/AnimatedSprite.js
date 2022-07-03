@@ -4,8 +4,8 @@ export class AnimatedSprite extends GameObject {
     constructor(engine, options) {
         options.ignoreEmptyContainer = true;
         super(engine, options);
-        const textures = options.spritesUrls.map(url => {
-            return Texture.from(url);
+        const textures = options.textures.map(sprite => {
+            return Texture.from(sprite);
         });
         this.container = new PIXIAnimatedSprite(textures);
         this.container.loop = options.loop;

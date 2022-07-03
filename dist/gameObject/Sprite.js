@@ -4,7 +4,7 @@ export class Sprite extends GameObject {
     constructor(engine, options) {
         options.ignoreEmptyContainer = true;
         super(engine, options);
-        this.container = PIXISprite.from(options.spriteUrl);
+        this.container = PIXISprite.from(options.texture);
         this.endOptionsConfiguration(options);
     }
     get tint() {

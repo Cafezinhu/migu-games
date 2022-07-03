@@ -1,8 +1,8 @@
-import { Sprite as PIXISprite } from 'pixi.js';
+import { Resource, Sprite as PIXISprite, Texture } from 'pixi.js';
 import { Engine } from '../Engine';
 import { GameObject, GameObjectOptions } from "./GameObject";
 export declare type SpriteOptions = GameObjectOptions & {
-    spriteUrl: string;
+    texture: string | Texture<Resource> | undefined;
 };
 export declare class Sprite extends GameObject {
     container: PIXISprite;

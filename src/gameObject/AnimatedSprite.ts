@@ -1,9 +1,9 @@
-import { AnimatedSprite as PIXIAnimatedSprite, Texture } from 'pixi.js';
+import { AnimatedSprite as PIXIAnimatedSprite, Resource, Texture } from 'pixi.js';
 import { Engine } from '../Engine';
 import { GameObject, GameObjectOptions } from "./GameObject";
 
 export type AnimatedSpriteOptions = GameObjectOptions & {
-    spritesUrls: string[];
+    textures: string[] | Texture<Resource>[] | undefined;
     autoPlay?: boolean;
     loop?: boolean;
     animationSpeed?: number;
@@ -16,8 +16,8 @@ export class AnimatedSprite extends GameObject{
         options.ignoreEmptyContainer = true;
         super(engine, options);
 
-        const textures = options.spritesUrls.map(url => {
-            return Texture.from(url);
+        const textures = options.textures.map(sprite => {
+            return Texture.from(sprite);
         })
         this.container = new PIXIAnimatedSprite(textures);
         this.container.loop = options.loop;

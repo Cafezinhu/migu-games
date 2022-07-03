@@ -1,9 +1,9 @@
-import { TilingSprite as PIXITilingSprite } from 'pixi.js';
+import { Resource, Texture, TilingSprite as PIXITilingSprite } from 'pixi.js';
 import { Engine } from '../Engine';
 import { Vector } from '../Vector';
 import { GameObject, GameObjectOptions } from "./GameObject";
 export declare type TilingSpriteOptions = GameObjectOptions & {
-    spriteUrl: string;
+    texture?: string | Texture<Resource>;
     tilingSize: {
         width: number;
         height: number;

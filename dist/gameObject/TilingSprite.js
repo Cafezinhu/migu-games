@@ -5,7 +5,7 @@ export class TilingSprite extends GameObject {
     constructor(engine, options) {
         options.ignoreEmptyContainer = true;
         super(engine, options);
-        this.container = PIXITilingSprite.from('a', {
+        this.container = PIXITilingSprite.from(options.texture, {
             width: options.tilingSize.width,
             height: options.tilingSize.height
         });
