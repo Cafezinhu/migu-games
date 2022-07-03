@@ -17,7 +17,7 @@ recursive(inputPath, (err, files) => {
             && !file.endsWith('.bmp')
             && !file.endsWith('.webp')) return;
 
-        let name = file.replace(`${inputPath}\\`, '').toLowerCase()
+        let name = file.replace(`${inputPath}\\`, '').replace(`${inputPath}/`, '').toLowerCase()
             .replace('.png', '')
             .replace('.jpg', '')
             .replace('.jpeg', '')
