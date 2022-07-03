@@ -36,7 +36,7 @@ recursive(inputPath, (err, files) => {
                 }
             }
         }
-        sprites[finalName] = file.replace(`${inputPath}\\`, '').replace(`${inputPath}/`, '');
+        sprites[finalName] = file.replace(`${process.cwd()}\\`, '').replace(`${process.cwd()}/`, '');
     });
 
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.js'), `const sprites = ${JSON.stringify(sprites)}
