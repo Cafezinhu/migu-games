@@ -12,4 +12,5 @@ import { CapsuleCollisionArea } from './collision/CapsuleCollisionArea';
 import { Sprite } from "./gameObject/Sprite";
 import { TilingSprite } from "./gameObject/TilingSprite";
 import { AnimatedSprite } from "./gameObject/AnimatedSprite";
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, GameAudio, GameAudioManager, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, PIXI };
+import { loadSprites } from './loadSprites';
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, GameAudio, GameAudioManager, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI };

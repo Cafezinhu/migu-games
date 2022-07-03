@@ -2,8 +2,7 @@
 import fs from 'fs';
 import recursive from 'recursive-readdir';
 
-const input = process.argv[process.argv.length - 2];
-const output = process.argv[process.argv.length - 1];
+const input = process.argv[process.argv.length - 1];
 recursive(input, (err, files) => {
     let sprites = {};
     files.forEach(file => {
@@ -38,12 +37,16 @@ recursive(input, (err, files) => {
         sprites[finalName] = file;
     });
     
-    fs.writeFileSync(output, `const sprites = ${JSON.stringify(sprites)}
+    fs.writeFileSync('node_modules/migu-games/dist/loadSprites.js', `const sprites = ${JSON.stringify(sprites)}
 export function loadSprites(engine){
     Object.keys(sprites).forEach(sprite => {
         engine.addResource(sprite, sprites[sprite]);
     });
     engine.loadResources();
-}
-`);
+}`);
+
+    fs.writeFileSync('node_modules/migu-games/dist/loadSprites.d.ts', `import { Engine } from "./Engine";
+import { LoaderResource } from 'pixi.js';
+export declare function loadSprites(engine: Engine): void;
+export declare type Resources = {${Object.keys(sprites).map(sprite => `${sprite}: LoaderResource, `)}}`);
 });
