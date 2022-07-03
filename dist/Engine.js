@@ -9,7 +9,7 @@ export class Engine {
         this.loader = new Loader();
         this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
-        this.loader.onComplete.add(() => options.onComplete());
+        this.onComplete = options.onComplete;
         this.loader.onLoad.add(() => {
             if (this.onLoad)
                 this.onLoad();
@@ -30,6 +30,7 @@ export class Engine {
             this.inputSystem = new Input(this);
         }
     }
+    ;
     appendToDocument() {
         document.body.appendChild(this.view);
         if (this.autoResize) {
@@ -58,6 +59,8 @@ export class Engine {
     loadResources() {
         this.loader.load((l, resources) => {
             this.resources = resources;
+            if (this.onComplete)
+                this.onComplete();
         });
     }
 }

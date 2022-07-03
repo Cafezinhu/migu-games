@@ -24,6 +24,7 @@ export declare class Engine {
     resources: Dict<LoaderResource>;
     onLoad: () => void;
     onProgress: (progress: number) => void;
+    onComplete: () => void;
     constructor(options?: EngineOptions);
     appendToDocument(): void;
     resize(): void;
