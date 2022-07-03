@@ -5,7 +5,9 @@ export class AnimatedSprite extends GameObject {
         options.ignoreEmptyContainer = true;
         super(engine, options);
         const textures = options.textures.map(sprite => {
-            return Texture.from(sprite);
+            if (typeof (sprite) == 'string')
+                return Texture.from(sprite);
+            return sprite;
         });
         this.container = new PIXIAnimatedSprite(textures);
         this.container.loop = options.loop;
