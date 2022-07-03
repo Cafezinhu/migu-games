@@ -5,6 +5,7 @@ import recursive from 'recursive-readdir';
 
 const input = process.argv[process.argv.length - 1];
 const inputPath = path.join(process.cwd(), input);
+console.log(inputPath);
 console.log('Reading files...');
 recursive(inputPath, (err, files) => {
     let sprites = {};
@@ -26,7 +27,7 @@ recursive(inputPath, (err, files) => {
         let nextCap = false;
         let finalName = '';
         for(let char of name.split('')){
-            if(char == '\\' || char == ' '){
+            if(char == '\\' || char == ' ' || char == '/'){
                 nextCap = true;
             }else{
                 if(nextCap){
