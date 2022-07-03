@@ -48,5 +48,5 @@ export function loadSprites(engine){
     fs.writeFileSync('node_modules/migu-games/dist/loadSprites.d.ts', `import { Engine } from "./Engine";
 import { LoaderResource } from 'pixi.js';
 export declare function loadSprites(engine: Engine): void;
-export declare type Resources = {${Object.keys(sprites).map(sprite => `${sprite}: LoaderResource`)}}`);
+export declare type Resources = {${Object.keys(sprites).map(sprite => `'${sprite}': LoaderResource`)}}`);
 });
