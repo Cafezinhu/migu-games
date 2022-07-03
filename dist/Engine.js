@@ -9,6 +9,7 @@ export class Engine {
         this.loader = new Loader();
         this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
+        this.loader.onComplete.add(() => options.onComplete());
         this.loader.onLoad.add(() => {
             if (this.onLoad)
                 this.onLoad();

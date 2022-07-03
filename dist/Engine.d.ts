@@ -9,6 +9,7 @@ export interface EngineOptions extends IApplicationOptions {
     disableInputSystem?: boolean;
     onProgress?: (progress: number) => void;
     onLoad?: () => void;
+    onComplete?: () => void;
 }
 export declare class Engine {
     pixiApplication: Application;
