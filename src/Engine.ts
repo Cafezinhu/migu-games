@@ -29,7 +29,7 @@ export class Engine{
     onComplete: () => void;;
     
     constructor(options?: EngineOptions){
-        this.pixiApplication = new Application(options);
+        this.pixiApplication = new Application({...options, resizeTo: window});
         this.view = this.pixiApplication.view;
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
@@ -60,17 +60,14 @@ export class Engine{
         if(!options.disableInputSystem) {
             this.inputSystem = new Input(this);
         }
+
+        window.addEventListener('resize', () => {
+            this.pixiApplication.resize();
+        });
     }
 
     appendToDocument(){
         document.body.appendChild(this.view);
-
-        if(this.autoResize){
-            window.addEventListener('resize', () => {
-                this.resize();
-            });
-            this.resize();
-        }
     }
 
     resize(){
