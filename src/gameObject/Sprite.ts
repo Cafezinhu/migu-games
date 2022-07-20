@@ -1,6 +1,6 @@
 import {Resource, Sprite as PIXISprite, Texture} from 'pixi.js';
 import { Engine } from '../Engine';
-import { GameObject, GameObjectOptions } from "./GameObject";
+import { GameObject, type GameObjectOptions } from "./GameObject";
 
 export type SpriteOptions = GameObjectOptions & {
     texture: string | Texture<Resource> | undefined;

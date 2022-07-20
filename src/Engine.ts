@@ -1,5 +1,4 @@
-import { Dict } from "@pixi/utils";
-import { Application, Container, IApplicationOptions, Loader, LoaderResource } from "pixi.js";
+import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";

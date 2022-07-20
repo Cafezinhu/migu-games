@@ -1,7 +1,7 @@
 import { Resource, Texture, TilingSprite as PIXITilingSprite } from 'pixi.js';
 import { Engine } from '../Engine';
 import { Vector } from '../Vector';
-import { GameObject, GameObjectOptions } from "./GameObject";
+import { GameObject, type GameObjectOptions } from "./GameObject";
 
 export type TilingSpriteOptions = GameObjectOptions & {
     texture?: string | Texture<Resource>;
