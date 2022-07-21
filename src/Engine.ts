@@ -1,4 +1,5 @@
 import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
+import { Camera } from "./Camera";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";
@@ -24,6 +25,7 @@ export class Engine{
     inputSystem: Input;
     loader: Loader;
     resources: Resources;
+    camera: Camera;
     onLoad: () => void;
     onProgress: (progress: number) => void;
     onComplete: () => void;;
@@ -47,7 +49,19 @@ export class Engine{
             if(this.onProgress) this.onProgress(loader.progress);
         });
 
-        this.baseResolution = options.baseResolution;
+        this.baseResolution = options.baseResolution ? options.baseResolution : new Vector(window.innerWidth, window.innerHeight);
+
+        this.camera = new Camera({
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight,
+            worldWidth: 1000,
+            worldHeight: 1000,
+            interaction: this.pixiApplication.renderer.plugins.interaction
+        });
+
+        this.camera.moveCenter(0,0);
+
+        this.stage.addChild(this.camera);
 
         this.scaleRatio = 1;
 
