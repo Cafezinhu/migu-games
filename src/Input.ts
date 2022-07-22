@@ -21,17 +21,13 @@ export class Input{
     }
 
     static mouseEventToVector(e: MouseEvent){
-        return new Vector(
-            e.offsetX,
-            e.offsetY
-        );
+        const world = Input.engine.camera.toWorld(e.offsetX, e.offsetX);
+        return new Vector(world.x, world.y);
     }
 
     static touchEventToVector(e: TouchEvent){
         const rect = Input.engine.view.getBoundingClientRect();
-        return new Vector(
-            e.touches[0].clientX - rect.left,
-            e.touches[0].clientY - rect.top,
-        );
+        const world = Input.engine.camera.toWorld(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        return new Vector(world.x, world.y);
     }
 }
