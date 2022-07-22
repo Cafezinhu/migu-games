@@ -11,7 +11,7 @@ export class Input{
         Input.ignoreOffset = false;
         engine.view.addEventListener('mousemove', e => {
             if(!Input.ignoreOffset){
-                const world = engine.camera.toWorld(e.offsetX, e.offsetX);
+                const world = engine.camera.toWorld(e.offsetX, e.offsetY);
                 Input.mousePos = new Vector(world.x, world.y);
                 return;
             }
@@ -21,7 +21,7 @@ export class Input{
     }
 
     static mouseEventToVector(e: MouseEvent){
-        const world = Input.engine.camera.toWorld(e.offsetX, e.offsetX);
+        const world = Input.engine.camera.toWorld(e.offsetX, e.offsetY);
         return new Vector(world.x, world.y);
     }
 
