@@ -40,10 +40,13 @@ export class Engine {
             this.inputSystem = new Input(this);
         }
         window.addEventListener('resize', () => {
+            const cameraPos = this.camera.center;
             this.pixiApplication.resize();
             this.camera.setZoom(this.sideToPreserve == 'width' ?
                 window.innerWidth / this.baseResolution.x :
                 window.innerHeight / this.baseResolution.y, true);
+            this.camera.resize();
+            this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
     }
     ;

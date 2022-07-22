@@ -81,6 +81,7 @@ export class Engine{
                     window.innerHeight/this.baseResolution.y,
                 true
             );
+            this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
     }
