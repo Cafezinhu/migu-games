@@ -30,7 +30,6 @@ export class Engine {
         });
         this.camera.moveCenter(0, 0);
         this.stage.addChild(this.camera);
-        this.scaleRatio = 1;
         if (options.sideToPreserve) {
             this.sideToPreserve = options.sideToPreserve;
         }
@@ -50,19 +49,6 @@ export class Engine {
     ;
     appendToDocument() {
         document.body.appendChild(this.view);
-    }
-    resize() {
-        this.pixiApplication.view.height = this.view.parentElement.clientHeight;
-        this.pixiApplication.view.width = this.view.parentElement.clientWidth;
-        if (this.baseResolution) {
-            if (this.sideToPreserve == 'height')
-                this.scaleRatio = this.pixiApplication.view.height / this.baseResolution.y;
-            else
-                this.scaleRatio = this.pixiApplication.view.width / this.baseResolution.x;
-            this.stage.scale.x = this.scaleRatio;
-            this.stage.scale.y = this.scaleRatio;
-        }
-        this.pixiApplication.resize();
     }
     addResource(name, url) {
         this.loader.add(name, url);

@@ -19,7 +19,6 @@ export declare class Engine {
     autoResize: boolean;
     baseResolution: Vector;
     sideToPreserve: 'height' | 'width';
-    scaleRatio: number;
     inputSystem: Input;
     loader: Loader;
     resources: Resources;
@@ -29,7 +28,6 @@ export declare class Engine {
     onComplete: () => void;
     constructor(options?: EngineOptions);
     appendToDocument(): void;
-    resize(): void;
     addResource(name: string, url: string): void;
     loadResources(): void;
 }

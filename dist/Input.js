@@ -6,17 +6,21 @@ export class Input {
         Input.ignoreOffset = false;
         engine.view.addEventListener('mousemove', e => {
             if (!Input.ignoreOffset) {
-                Input.mousePos = new Vector(e.offsetX / engine.scaleRatio, e.offsetY / engine.scaleRatio);
+                const world = engine.camera.toWorld(e.offsetX, e.offsetX);
+                Input.mousePos = new Vector(world.x, world.y);
                 return;
             }
-            Input.mousePos = new Vector(e.clientX / engine.scaleRatio, e.clientY / engine.scaleRatio);
+            const world = engine.camera.toWorld(e.clientX, e.clientY);
+            Input.mousePos = new Vector(world.x, world.y);
         });
     }
     static mouseEventToVector(e) {
-        return new Vector(e.offsetX / Input.engine.scaleRatio, e.offsetY / Input.engine.scaleRatio);
+        const world = Input.engine.camera.toWorld(e.offsetX, e.offsetX);
+        return new Vector(world.x, world.y);
     }
     static touchEventToVector(e) {
         const rect = Input.engine.view.getBoundingClientRect();
-        return new Vector(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        const world = Input.engine.camera.toWorld(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
+        return new Vector(world.x, world.y);
     }
 }
