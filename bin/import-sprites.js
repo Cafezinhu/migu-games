@@ -39,11 +39,6 @@ recursive(inputPath, (err, files) => {
         sprites[finalName] = file.replace(`${process.cwd()}\\`, '').replace(`${process.cwd()}/`, '').replace(/\\/g, '\\\\');
     });
 
-    const dir = path.join(process.cwd(), 'node_modules', 'migu-games', 'dist');
-    if(!fs.existsSync()){
-        fs.mkdirSync(dir, {recursive: true});
-    }
-
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.js'), `
 ${Object.keys(sprites).length < 2 ? `import ${Object.keys(sprites)[0]} from '../../../${Object.values(sprites)[0]}';` : 
 Object.keys(sprites).reduce((acc, sprite, index) => {
