@@ -73,6 +73,7 @@ export class Engine{
         }
 
         window.addEventListener('resize', () => {
+            const cameraPos = this.camera.center;
             this.pixiApplication.resize();
             this.camera.setZoom(
                 this.sideToPreserve == 'width' ?
@@ -80,6 +81,7 @@ export class Engine{
                     window.innerHeight/this.baseResolution.y,
                 true
             );
+            this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
     }
 
