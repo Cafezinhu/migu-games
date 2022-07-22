@@ -77,6 +77,12 @@ export class Engine{
 
         window.addEventListener('resize', () => {
             this.pixiApplication.resize();
+            this.camera.setZoom(
+                this.sideToPreserve == 'width' ?
+                    window.innerWidth/this.baseResolution.x : 
+                    window.innerHeight/this.baseResolution.y,
+                true
+            );
         });
     }
 
