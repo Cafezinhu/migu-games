@@ -11,16 +11,12 @@ export class Input{
         Input.ignoreOffset = false;
         engine.view.addEventListener('mousemove', e => {
             if(!Input.ignoreOffset){
-                Input.mousePos = new Vector(
-                    e.offsetX,
-                    e.offsetY
-                );
+                const world = engine.camera.toWorld(e.offsetX, e.offsetX);
+                Input.mousePos = new Vector(world.x, world.y);
                 return;
             }
-            Input.mousePos = new Vector(
-                e.clientX,
-                e.clientY
-            );
+            const world = engine.camera.toWorld(e.clientX, e.clientY);
+            Input.mousePos = new Vector( world.x, world.y);
         });
     }
 
