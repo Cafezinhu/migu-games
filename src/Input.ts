@@ -26,8 +26,8 @@ export class Input{
 
     static mouseEventToVector(e: MouseEvent){
         return new Vector(
-            e.offsetX/Input.engine.scaleRatio,
-            e.offsetY/Input.engine.scaleRatio
+            e.offsetX,
+            e.offsetY
         );
     }
 
