@@ -12,14 +12,14 @@ export class Input{
         engine.view.addEventListener('mousemove', e => {
             if(!Input.ignoreOffset){
                 Input.mousePos = new Vector(
-                    e.offsetX/engine.scaleRatio,
-                    e.offsetY/engine.scaleRatio
+                    e.offsetX,
+                    e.offsetY
                 );
                 return;
             }
             Input.mousePos = new Vector(
-                e.clientX/engine.scaleRatio, 
-                e.clientY/engine.scaleRatio
+                e.clientX,
+                e.clientY
             );
         });
     }
