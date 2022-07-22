@@ -39,8 +39,6 @@ recursive(inputPath, (err, files) => {
         sprites[finalName] = file.replace(`${process.cwd()}\\`, '').replace(`${process.cwd()}/`, '').replace(/\\/g, '\\\\');
     });
 
-    console.log(JSON.stringify(sprites));
-
     const dir = path.join(process.cwd(), 'node_modules', 'migu-games', 'dist');
     if(!fs.existsSync()){
         fs.mkdirSync(dir, {recursive: true});
