@@ -1,4 +1,5 @@
 import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
+import { Camera } from "./Camera";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";
@@ -22,6 +23,7 @@ export declare class Engine {
     inputSystem: Input;
     loader: Loader;
     resources: Resources;
+    camera: Camera;
     onLoad: () => void;
     onProgress: (progress: number) => void;
     onComplete: () => void;

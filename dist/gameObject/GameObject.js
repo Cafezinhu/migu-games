@@ -33,7 +33,7 @@ export class GameObject {
         if (options.parent)
             options.parent.addChild(this);
         else
-            this.engine.stage.addChild(this.container);
+            this.engine.camera.addChild(this.container);
         if (options.anchor) {
             //@ts-ignore
             if (this.container.anchor) {

@@ -1,6 +1,6 @@
 import { AnimatedSprite as PIXIAnimatedSprite, Resource, Texture } from 'pixi.js';
 import { Engine } from '../Engine';
-import { GameObject, GameObjectOptions } from "./GameObject";
+import { GameObject, type GameObjectOptions } from "./GameObject";
 export declare type AnimatedSpriteOptions = GameObjectOptions & {
     textures: string[] | (Texture<Resource> | undefined)[] | undefined;
     autoPlay?: boolean;

@@ -1,8 +1,10 @@
 import { Application, Loader } from "pixi.js";
+import { Camera } from "./Camera";
 import { Input } from "./Input";
+import { Vector } from "./Vector";
 export class Engine {
     constructor(options) {
-        this.pixiApplication = new Application(options);
+        this.pixiApplication = new Application(Object.assign(Object.assign({}, options), { resizeTo: window }));
         this.view = this.pixiApplication.view;
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
@@ -18,7 +20,16 @@ export class Engine {
             if (this.onProgress)
                 this.onProgress(loader.progress);
         });
-        this.baseResolution = options.baseResolution;
+        this.baseResolution = options.baseResolution ? options.baseResolution : new Vector(window.innerWidth, window.innerHeight);
+        this.camera = new Camera({
+            screenWidth: window.innerWidth,
+            screenHeight: window.innerHeight,
+            worldWidth: 1000,
+            worldHeight: 1000,
+            interaction: this.pixiApplication.renderer.plugins.interaction
+        });
+        this.camera.moveCenter(0, 0);
+        this.stage.addChild(this.camera);
         this.scaleRatio = 1;
         if (options.sideToPreserve) {
             this.sideToPreserve = options.sideToPreserve;
@@ -29,16 +40,13 @@ export class Engine {
         if (!options.disableInputSystem) {
             this.inputSystem = new Input(this);
         }
+        window.addEventListener('resize', () => {
+            this.pixiApplication.resize();
+        });
     }
     ;
     appendToDocument() {
         document.body.appendChild(this.view);
-        if (this.autoResize) {
-            window.addEventListener('resize', () => {
-                this.resize();
-            });
-            this.resize();
-        }
     }
     resize() {
         this.pixiApplication.view.height = this.view.parentElement.clientHeight;
