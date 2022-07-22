@@ -54,8 +54,8 @@ export class Engine{
         this.camera = new Camera({
             screenWidth: window.innerWidth,
             screenHeight: window.innerHeight,
-            worldWidth: 1000,
-            worldHeight: 1000,
+            worldWidth: this.baseResolution.x,
+            worldHeight: this.baseResolution.y,
             interaction: this.pixiApplication.renderer.plugins.interaction
         });
 
