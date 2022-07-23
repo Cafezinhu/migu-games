@@ -29,7 +29,7 @@
     "game-audio": "github:Cafezinhu/game-audio",
     "matter-js": "^0.18.0",
     "pixi-viewport": "^4.34.4",
-    "pixi.js": "^6.4.2",
+    "pixi.js": "6.4.2",
     "recursive-readdir": "^2.2.2",
     "victor": "^1.1.0"
   },
