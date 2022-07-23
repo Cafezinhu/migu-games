@@ -4,7 +4,6 @@ import { GameObject, type GameObjectOptions } from "./gameObject/GameObject";
 import { Vector } from "./Vector";
 import * as PIXI from 'pixi.js';
 import { Input } from "./Input";
-import { GameAudio, GameAudioManager } from 'game-audio';
 import { CollisionArea } from './collision/CollisionArea';
 import { CircleCollisionArea } from './collision/CircleCollisionArea';
 import { RectangleCollisionArea } from './collision/RectangleCollisionArea';
@@ -15,4 +14,4 @@ import { AnimatedSprite, type AnimatedSpriteOptions } from "./gameObject/Animate
 import { loadSprites } from './loadSprites';
 import { type Texture } from "./Texture";
 
-export {Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, GameAudio, GameAudioManager, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI};
+export {Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI};
