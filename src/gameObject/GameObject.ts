@@ -73,7 +73,7 @@ export class GameObject{
 
     setPhysics(engine: Engine, body: Body){
         body.position = {x: this.x, y: this.y};
-        body.angle = this.angle;
+        body.angle = this.rotation;
         this.physicsBody = body;
         Composite.add(engine.physicsEngine.world, body);
     }
@@ -113,7 +113,7 @@ export class GameObject{
     set rotation(rotation: number){
         this.container.rotation = rotation;
         if(this.physicsBody)
-            this.physicsBody.angle = rotation/(Math.PI/180);
+            this.physicsBody.angle = rotation;
     }
 
     get rotation(){
@@ -123,7 +123,7 @@ export class GameObject{
     set angle(angle: number){
         this.container.angle = angle;
         if(this.physicsBody)
-            this.physicsBody.angle = angle;
+            this.physicsBody.angle = angle/(Math.PI/180);
     }
 
     get angle(){
