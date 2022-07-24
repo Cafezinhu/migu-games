@@ -1,7 +1,7 @@
 {
   "name": "migu-games",
   "version": "1.3.0",
-  "description": "Javascript 2D game engine",
+  "description": "Javascript 2D game library",
   "main": "dist/index.js",
   "author": "Aerton Oliveira",
   "license": "MIT",
