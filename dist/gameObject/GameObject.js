@@ -47,6 +47,8 @@ export class GameObject {
             this.container.zIndex = options.zIndex;
     }
     setPhysics(engine, body) {
+        body.position = { x: this.x, y: this.y };
+        body.angle = this.angle;
         this.physicsBody = body;
         Composite.add(engine.physicsEngine.world, body);
     }

@@ -72,6 +72,8 @@ export class GameObject{
     }
 
     setPhysics(engine: Engine, body: Body){
+        body.position = {x: this.x, y: this.y};
+        body.angle = this.angle;
         this.physicsBody = body;
         Composite.add(engine.physicsEngine.world, body);
     }
