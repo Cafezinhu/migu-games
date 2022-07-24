@@ -1,3 +1,4 @@
+import Matter from "matter-js";
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./Input";
@@ -12,6 +13,7 @@ export class Engine {
         this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
         this.onComplete = options.onComplete;
+        this.gameObjects = [];
         this.loader.onLoad.add(() => {
             if (this.onLoad)
                 this.onLoad();
@@ -48,19 +50,40 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+        this.physicsEngine = new Matter.Engine();
+        const physicsRunner = Matter.Runner.create();
+        Matter.Events.on(this.physicsEngine, 'afterUpdate', () => this.onPhysicsUpdate());
+        Matter.Runner.run(physicsRunner, this.physicsEngine);
     }
-    ;
     appendToDocument() {
         document.body.appendChild(this.view);
     }
     addResource(name, url) {
         this.loader.add(name, url);
     }
+    addGameObject(gameObject) {
+        this.gameObjects.push(gameObject);
+    }
+    removeGameObject(gameObject) {
+        this.gameObjects = this.gameObjects.filter(g => {
+            return g != gameObject;
+        });
+    }
     loadResources() {
         this.loader.load((l, resources) => {
             this.resources = resources;
             if (this.onComplete)
                 this.onComplete();
+        });
+    }
+    onPhysicsUpdate() {
+        this.gameObjects.forEach(gameObject => {
+            const physicsBody = gameObject.physicsBody;
+            if (!physicsBody)
+                return;
+            gameObject.x = physicsBody.position.x;
+            gameObject.y = physicsBody.position.y;
+            gameObject.angle = physicsBody.angle;
         });
     }
 }

@@ -1,3 +1,4 @@
+import { Body } from "matter-js";
 import { Container } from "pixi.js";
 import { Engine } from "../Engine";
 import { Vector } from "../Vector";
@@ -14,9 +15,11 @@ export declare class GameObject {
     parent: GameObject;
     children: GameObject[];
     private updateFunction;
+    physicsBody?: Body;
     constructor(engine: Engine, options: GameObjectOptions);
     addChild(child: GameObject): void;
     protected endOptionsConfiguration(options: GameObjectOptions): void;
+    setPhysics(engine: Engine, body: Body): void;
     set position(position: Vector);
     get position(): Vector;
     set x(value: number);
