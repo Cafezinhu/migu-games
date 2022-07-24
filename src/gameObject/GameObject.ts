@@ -1,3 +1,4 @@
+import { Body, Composite } from "matter-js";
 import { Container } from "pixi.js";
 import { Engine } from "../Engine";
 import { Vector } from "../Vector";
@@ -16,10 +17,13 @@ export class GameObject{
     parent: GameObject;
     children: GameObject[];
     private updateFunction: any;
+
+    physicsBody?: Body;
     
     constructor(engine: Engine, options: GameObjectOptions){
         this.children = [];
         this.engine = engine;
+        engine.addGameObject(this);
 
         if(!options.ignoreEmptyContainer){
             this.container = new Container();
@@ -67,9 +71,16 @@ export class GameObject{
         if(options.zIndex) this.container.zIndex = options.zIndex;
     }
 
+    setPhysics(engine: Engine, body: Body){
+        this.physicsBody = body;
+        Composite.add(engine.physicsEngine.world, body);
+    }
+
     set position(position: Vector){
         this.container.position.x = position.x;
         this.container.position.y = position.y;
+        if(this.physicsBody)
+            this.physicsBody.position = {x: position.x, y: position.y};
     }
 
     get position(){
@@ -79,6 +90,8 @@ export class GameObject{
 
     set x(value: number){
         this.container.position.x = value;
+        if(this.physicsBody)
+            this.physicsBody.position.x = value;
     }
 
     get x(){
@@ -87,6 +100,8 @@ export class GameObject{
 
     set y(value: number){
         this.container.position.y = value;
+        if(this.physicsBody)
+            this.physicsBody.position.y = value;
     }
 
     get y(){
@@ -95,6 +110,8 @@ export class GameObject{
 
     set rotation(rotation: number){
         this.container.rotation = rotation;
+        if(this.physicsBody)
+            this.physicsBody.angle = rotation/(Math.PI/180);
     }
 
     get rotation(){
@@ -103,6 +120,8 @@ export class GameObject{
 
     set angle(angle: number){
         this.container.angle = angle;
+        if(this.physicsBody)
+            this.physicsBody.angle = angle;
     }
 
     get angle(){
@@ -112,6 +131,8 @@ export class GameObject{
     set scale(scale: Vector){
         this.container.scale.x = scale.x;
         this.container.scale.y = scale.y;
+        if(this.physicsBody)
+            Body.scale(this.physicsBody, scale.x, scale.y);
     }
 
     get scale(){
@@ -120,6 +141,8 @@ export class GameObject{
 
     set scaleX(x: number){
         this.container.scale.x = x;
+        if(this.physicsBody)
+            Body.scale(this.physicsBody, x, this.scaleY);
     }
 
     get scaleX(){
@@ -128,6 +151,8 @@ export class GameObject{
 
     set scaleY(y: number){
         this.container.scale.y = y;
+        if(this.physicsBody)
+            Body.scale(this.physicsBody, this.scaleX, y);
     }
 
     get scaleY(){
@@ -135,6 +160,12 @@ export class GameObject{
     }
 
     set visible(value: boolean){
+        if(this.physicsBody){
+            if(value && !this.container.visible) 
+                Composite.add(this.engine.physicsEngine.world, this.physicsBody);
+            else if(!value && this.container.visible)
+                Composite.remove(this.engine.physicsEngine.world, this.physicsBody);
+        }
         this.container.visible = value;
     }
 
@@ -155,8 +186,11 @@ export class GameObject{
     }
 
     destroy(){
+        this.engine.removeGameObject(this);
         if(this.updateFunction) 
             this.engine.pixiApplication.ticker.remove(this.updateFunction);
         this.container.destroy();
+        if(this.physicsBody)
+            Composite.remove(this.engine.physicsEngine.world, this.physicsBody);
     }
 }
