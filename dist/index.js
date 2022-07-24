@@ -12,4 +12,5 @@ import { Sprite } from "./gameObject/Sprite";
 import { TilingSprite } from "./gameObject/TilingSprite";
 import { AnimatedSprite } from "./gameObject/AnimatedSprite";
 import { loadSprites } from './loadSprites';
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI };
+import Matter from "matter-js";
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI, Matter };
