@@ -50,7 +50,7 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
-        this.physicsEngine = new Matter.Engine();
+        this.physicsEngine = Matter.Engine.create();
         const physicsRunner = Matter.Runner.create();
         Matter.Events.on(this.physicsEngine, 'afterUpdate', () => this.onPhysicsUpdate());
         Matter.Runner.run(physicsRunner, this.physicsEngine);
