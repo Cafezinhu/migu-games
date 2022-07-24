@@ -103,11 +103,18 @@ export class Engine {
                     break;
                 }
             }
+            const contacts = pair.contacts.map(contact => {
+                if (contact && contact.vertex)
+                    return new Vector(contact.vertex.x, contact.vertex.y);
+                return null;
+            }).filter(contact => {
+                return contact;
+            });
             if (gameObjectA) {
-                gameObjectA.onCollision(gameObjectB, pair.contacts);
+                gameObjectA.onCollision(gameObjectB, contacts);
             }
             if (gameObjectB) {
-                gameObjectB.onCollision(gameObjectA, pair.contacts);
+                gameObjectB.onCollision(gameObjectA, contacts);
             }
         });
     }

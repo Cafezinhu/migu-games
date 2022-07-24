@@ -41,6 +41,6 @@ export declare class GameObject {
     set zIndex(z: number);
     get zIndex(): number;
     lookAt(point: Vector): void;
-    onCollision(gameObject: GameObject | null, contacts: any): void;
+    onCollision(gameObject: GameObject | null, contacts: Vector[]): void;
     destroy(): void;
 }
