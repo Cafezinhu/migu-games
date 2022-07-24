@@ -54,6 +54,7 @@ export class Engine {
         const physicsRunner = Matter.Runner.create();
         Matter.Events.on(this.physicsEngine, 'afterUpdate', () => this.onPhysicsUpdate());
         Matter.Runner.run(physicsRunner, this.physicsEngine);
+        Matter.Events.on(this.physicsEngine, 'collisionStart', (e) => this.onCollision(e));
     }
     appendToDocument() {
         document.body.appendChild(this.view);
@@ -84,6 +85,30 @@ export class Engine {
             gameObject.x = physicsBody.position.x;
             gameObject.y = physicsBody.position.y;
             gameObject.angle = physicsBody.angle;
+        });
+    }
+    onCollision(e) {
+        e.pairs.forEach(pair => {
+            let gameObjectA = null;
+            for (let gameObject of this.gameObjects) {
+                if (pair.bodyA == gameObject.physicsBody) {
+                    gameObjectA = gameObject;
+                    break;
+                }
+            }
+            let gameObjectB = null;
+            for (let gameObject of this.gameObjects) {
+                if (pair.bodyB == gameObject.physicsBody) {
+                    gameObjectB = gameObject;
+                    break;
+                }
+            }
+            if (gameObjectA) {
+                gameObjectA.onCollision(gameObjectB, pair.contacts);
+            }
+            if (gameObjectB) {
+                gameObjectB.onCollision(gameObjectA, pair.contacts);
+            }
         });
     }
 }

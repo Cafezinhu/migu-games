@@ -187,6 +187,10 @@ export class GameObject{
         this.angle = point.clone().subtract(this.position).angleDeg();
     }
 
+    onCollision(gameObject: GameObject | null, contacts: any){
+
+    }
+
     destroy(){
         this.engine.removeGameObject(this);
         if(this.updateFunction) 

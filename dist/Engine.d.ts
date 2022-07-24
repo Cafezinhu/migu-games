@@ -37,4 +37,5 @@ export declare class Engine {
     removeGameObject(gameObject: GameObject): void;
     loadResources(): void;
     onPhysicsUpdate(): void;
+    onCollision(e: Matter.IEventCollision<Matter.Engine>): void;
 }
