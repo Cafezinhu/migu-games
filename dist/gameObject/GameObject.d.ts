@@ -1,6 +1,7 @@
-import { Body } from "matter-js";
+import { Collider, RigidBody } from "@dimforge/rapier2d";
 import { Container } from "pixi.js";
 import { Engine } from "../Engine";
+import { ColliderData } from "../Physics";
 import { Vector } from "../Vector";
 export declare type GameObjectOptions = {
     anchor?: Vector;
@@ -15,11 +16,14 @@ export declare class GameObject {
     parent: GameObject;
     children: GameObject[];
     private updateFunction;
-    physicsBody?: Body;
+    rigidBody?: RigidBody;
+    collider?: Collider;
+    colliderData?: ColliderData;
     constructor(engine: Engine, options: GameObjectOptions);
     addChild(child: GameObject): void;
     protected endOptionsConfiguration(options: GameObjectOptions): void;
-    setPhysics(engine: Engine, body: Body): void;
+    setCollider(colliderData: ColliderData): void;
+    setRigidbody(type: 'fixed' | 'dynamic', mass?: number): void;
     set position(position: Vector);
     get position(): Vector;
     set x(value: number);
@@ -36,11 +40,12 @@ export declare class GameObject {
     get scaleX(): number;
     set scaleY(y: number);
     get scaleY(): number;
+    scaleCollider(): void;
     set visible(value: boolean);
     get visible(): boolean;
     set zIndex(z: number);
     get zIndex(): number;
     lookAt(point: Vector): void;
-    onCollision(gameObject: GameObject | null, contacts: Vector[]): void;
+    onCollision(gameObject: GameObject | null, contacts: Vector[], started: boolean): void;
     destroy(): void;
 }

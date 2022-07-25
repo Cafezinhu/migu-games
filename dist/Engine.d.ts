@@ -5,11 +5,14 @@ import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";
+import { EventQueue, World } from '@dimforge/rapier2d';
 export interface EngineOptions extends IApplicationOptions {
     autoResize?: boolean;
     sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
     disableInputSystem?: boolean;
+    physicsStep?: number;
+    gravity?: Vector;
     onProgress?: (progress: number) => void;
     onLoad?: () => void;
     onComplete?: () => void;
@@ -29,6 +32,9 @@ export declare class Engine {
     onProgress: (progress: number) => void;
     onComplete: () => void;
     physicsEngine: Matter.Engine;
+    physicsWorld: World;
+    private physicsInterval;
+    physicsEventQueue: EventQueue;
     gameObjects: GameObject[];
     constructor(options?: EngineOptions);
     appendToDocument(): void;
@@ -37,5 +43,5 @@ export declare class Engine {
     removeGameObject(gameObject: GameObject): void;
     loadResources(): void;
     onPhysicsUpdate(): void;
-    onCollision(e: Matter.IEventCollision<Matter.Engine>): void;
+    onCollision(handle1: number, handle2: number, started: boolean): void;
 }

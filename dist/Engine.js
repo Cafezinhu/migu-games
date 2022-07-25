@@ -1,7 +1,16 @@
-import Matter from "matter-js";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./Input";
+import { setPhysics } from "./Physics";
 import { Vector } from "./Vector";
 export class Engine {
     constructor(options) {
@@ -14,10 +23,22 @@ export class Engine {
         this.onProgress = options.onProgress;
         this.onComplete = options.onComplete;
         this.gameObjects = [];
-        this.loader.onLoad.add(() => {
+        this.loader.onLoad.add(() => __awaiter(this, void 0, void 0, function* () {
+            const physics = yield import('@dimforge/rapier2d');
+            setPhysics(physics);
+            let gravity = options.gravity ? new Vector(options.gravity.x, -options.gravity.y) : new Vector(0, -9.81);
+            this.physicsWorld = new physics.World(gravity);
+            this.physicsEventQueue = new physics.EventQueue(true);
+            this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
+                this.onCollision(handle1, handle2, started);
+            });
+            clearInterval(this.physicsInterval);
+            this.physicsInterval = setInterval(() => {
+                this.onPhysicsUpdate();
+            });
             if (this.onLoad)
                 this.onLoad();
-        });
+        }));
         this.loader.onProgress.add((loader) => {
             if (this.onProgress)
                 this.onProgress(loader.progress);
@@ -50,11 +71,6 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
-        this.physicsEngine = Matter.Engine.create();
-        const physicsRunner = Matter.Runner.create({ isFixed: true });
-        Matter.Events.on(this.physicsEngine, 'afterUpdate', () => this.onPhysicsUpdate());
-        Matter.Runner.run(physicsRunner, this.physicsEngine);
-        Matter.Events.on(this.physicsEngine, 'collisionStart', (e) => this.onCollision(e));
     }
     appendToDocument() {
         document.body.appendChild(this.view);
@@ -78,44 +94,36 @@ export class Engine {
         });
     }
     onPhysicsUpdate() {
+        this.physicsWorld.step();
         this.gameObjects.forEach(gameObject => {
-            const physicsBody = gameObject.physicsBody;
-            if (!physicsBody)
+            if (!gameObject.rigidBody)
                 return;
-            gameObject.x = physicsBody.position.x;
-            gameObject.y = physicsBody.position.y;
-            gameObject.angle = physicsBody.angle;
+            const pos = gameObject.rigidBody.translation();
+            gameObject.position = new Vector(pos.x, -pos.y);
+            gameObject.rotation = gameObject.rigidBody.rotation();
         });
     }
-    onCollision(e) {
-        e.pairs.forEach(pair => {
-            let gameObjectA = null;
-            for (let gameObject of this.gameObjects) {
-                if (pair.bodyA == gameObject.physicsBody) {
-                    gameObjectA = gameObject;
-                    break;
-                }
+    onCollision(handle1, handle2, started) {
+        let gameObjectA = null;
+        for (let gameObject of this.gameObjects) {
+            if (handle1 == gameObject.collider.handle) {
+                gameObjectA = gameObject;
+                break;
             }
-            let gameObjectB = null;
-            for (let gameObject of this.gameObjects) {
-                if (pair.bodyB == gameObject.physicsBody) {
-                    gameObjectB = gameObject;
-                    break;
-                }
+        }
+        let gameObjectB = null;
+        for (let gameObject of this.gameObjects) {
+            if (handle2 == gameObject.collider.handle) {
+                gameObjectB = gameObject;
+                break;
             }
-            const contacts = pair.contacts.map(contact => {
-                if (contact && contact.vertex)
-                    return new Vector(contact.vertex.x, contact.vertex.y);
-                return null;
-            }).filter(contact => {
-                return contact;
-            });
-            if (gameObjectA) {
-                gameObjectA.onCollision(gameObjectB, contacts);
-            }
-            if (gameObjectB) {
-                gameObjectB.onCollision(gameObjectA, contacts);
-            }
-        });
+        }
+        const pair = gameObjectA.collider.contactCollider(gameObjectB.collider, 1);
+        const contacts = [
+            new Vector(pair.point1.x, -pair.point1.y),
+            new Vector(pair.point2.x, -pair.point2.y)
+        ];
+        gameObjectA.onCollision(gameObjectB, contacts, started);
+        gameObjectB.onCollision(gameObjectA, contacts, started);
     }
 }
