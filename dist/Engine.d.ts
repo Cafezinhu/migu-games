@@ -43,4 +43,5 @@ export declare class Engine {
     loadResources(): void;
     onPhysicsUpdate(): void;
     onCollision(handle1: number, handle2: number, started: boolean): void;
+    onForce(): void;
 }

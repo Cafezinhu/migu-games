@@ -29,6 +29,9 @@ export class Engine {
             this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
                 this.onCollision(handle1, handle2, started);
             });
+            this.physicsEventQueue.drainContactForceEvents((e) => {
+                this.onCollision(e.collider1(), e.collider2(), false);
+            });
             clearInterval(this.physicsInterval);
             this.physicsInterval = setInterval(() => {
                 this.onPhysicsUpdate();
@@ -122,5 +125,8 @@ export class Engine {
         ];
         gameObjectA.onCollision(gameObjectB, contacts, started);
         gameObjectB.onCollision(gameObjectA, contacts, started);
+    }
+    onForce() {
+        console.log('force');
     }
 }
