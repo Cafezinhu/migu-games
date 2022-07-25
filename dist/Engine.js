@@ -51,7 +51,7 @@ export class Engine {
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
         this.physicsEngine = Matter.Engine.create();
-        const physicsRunner = Matter.Runner.create();
+        const physicsRunner = Matter.Runner.create({ isFixed: true });
         Matter.Events.on(this.physicsEngine, 'afterUpdate', () => this.onPhysicsUpdate());
         Matter.Runner.run(physicsRunner, this.physicsEngine);
         Matter.Events.on(this.physicsEngine, 'collisionStart', (e) => this.onCollision(e));
