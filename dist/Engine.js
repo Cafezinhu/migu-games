@@ -21,7 +21,7 @@ export class Engine {
         this.loader = new Loader();
         this.onProgress = options.onProgress;
         this.gameObjects = [];
-        this.loader.onLoad.add(() => __awaiter(this, void 0, void 0, function* () {
+        this.loader.onComplete.add(() => __awaiter(this, void 0, void 0, function* () {
             yield Physics.init();
             let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
             this.physicsWorld = new Physics.World(gravity);

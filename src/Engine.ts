@@ -51,7 +51,7 @@ export class Engine{
 
         this.gameObjects = [];
 
-        this.loader.onLoad.add(async () => {
+        this.loader.onComplete.add(async () => {
             await Physics.init();
             let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
             
