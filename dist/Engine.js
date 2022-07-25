@@ -91,7 +91,7 @@ export class Engine {
         });
     }
     onPhysicsUpdate() {
-        this.physicsWorld.step();
+        this.physicsWorld.step(this.physicsEventQueue);
         this.gameObjects.forEach(gameObject => {
             if (!gameObject.rigidBody)
                 return;
