@@ -14,7 +14,6 @@ export interface EngineOptions extends IApplicationOptions {
     physicsStep?: number;
     gravity?: Vector;
     onProgress?: (progress: number) => void;
-    onLoad?: () => void;
     onComplete?: () => void;
 }
 export declare class Engine {

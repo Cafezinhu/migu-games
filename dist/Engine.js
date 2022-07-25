@@ -19,13 +19,11 @@ export class Engine {
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.loader = new Loader();
-        this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
-        this.onComplete = options.onComplete;
         this.gameObjects = [];
         this.loader.onLoad.add(() => __awaiter(this, void 0, void 0, function* () {
             yield Physics.init();
-            let gravity = options.gravity ? new Vector(options.gravity.x, -options.gravity.y) : new Vector(0, -9.81);
+            let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
             this.physicsWorld = new Physics.World(gravity);
             this.physicsEventQueue = new Physics.EventQueue(true);
             this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
@@ -35,8 +33,8 @@ export class Engine {
             this.physicsInterval = setInterval(() => {
                 this.onPhysicsUpdate();
             });
-            if (this.onLoad)
-                this.onLoad();
+            if (options.onComplete)
+                options.onComplete();
         }));
         this.loader.onProgress.add((loader) => {
             if (this.onProgress)

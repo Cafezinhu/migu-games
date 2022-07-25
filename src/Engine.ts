@@ -16,7 +16,6 @@ export interface EngineOptions extends IApplicationOptions{
     physicsStep?: number;
     gravity?: Vector;
     onProgress?: (progress: number) => void;
-    onLoad?: () => void;
     onComplete?: () => void;
 }
 
@@ -48,16 +47,13 @@ export class Engine{
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.loader = new Loader();
-        this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
-
-        this.onComplete = options.onComplete;
 
         this.gameObjects = [];
 
         this.loader.onLoad.add(async () => {
             await Physics.init();
-            let gravity = options.gravity ? new Vector(options.gravity.x, -options.gravity.y) : new Vector(0, -9.81);
+            let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
             
             this.physicsWorld = new Physics.World(gravity);
 
@@ -73,7 +69,7 @@ export class Engine{
                 this.onPhysicsUpdate();
             });
 
-            if(this.onLoad) this.onLoad();
+            if(options.onComplete) options.onComplete();
         });
 
         this.loader.onProgress.add((loader) => {
