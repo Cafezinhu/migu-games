@@ -26,12 +26,6 @@ export class Engine {
             let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
             this.physicsWorld = new Physics.World(gravity);
             this.physicsEventQueue = new Physics.EventQueue(true);
-            this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
-                this.onCollision(handle1, handle2, started);
-            });
-            this.physicsEventQueue.drainContactForceEvents((e) => {
-                this.onCollision(e.collider1(), e.collider2(), false);
-            });
             clearInterval(this.physicsInterval);
             this.physicsInterval = setInterval(() => {
                 this.onPhysicsUpdate();
@@ -95,6 +89,9 @@ export class Engine {
     }
     onPhysicsUpdate() {
         this.physicsWorld.step(this.physicsEventQueue);
+        this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
+            this.onCollision(handle1, handle2, started);
+        });
         this.gameObjects.forEach(gameObject => {
             if (!gameObject.rigidBody)
                 return;

@@ -59,14 +59,6 @@ export class Engine{
 
             this.physicsEventQueue = new Physics.EventQueue(true);
 
-            this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
-                this.onCollision(handle1, handle2, started);
-            });
-
-            this.physicsEventQueue.drainContactForceEvents((e) => {
-                this.onCollision(e.collider1(), e.collider2(), false);
-            })
-
             clearInterval(this.physicsInterval);
 
             this.physicsInterval = setInterval(() => {
@@ -145,6 +137,10 @@ export class Engine{
 
     onPhysicsUpdate(){
         this.physicsWorld.step(this.physicsEventQueue);
+        this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
+            this.onCollision(handle1, handle2, started);
+        });
+        
         this.gameObjects.forEach(gameObject => {
             if(!gameObject.rigidBody) return;
 

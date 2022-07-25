@@ -48,7 +48,7 @@ export class GameObject {
     }
     setCollider(colliderData) {
         this.colliderData = colliderData;
-        colliderData.collider.setActiveEvents(Physics.ActiveEvents.CONTACT_FORCE_EVENTS);
+        colliderData.collider.setActiveEvents(Physics.ActiveEvents.COLLISION_EVENTS);
         this.collider = this.engine.physicsWorld.createCollider(colliderData.collider, this.rigidBody);
     }
     setRigidbody(type, mass = 1) {
