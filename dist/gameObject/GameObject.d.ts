@@ -1,4 +1,4 @@
-import { Collider, RigidBody } from "@dimforge/rapier2d";
+import { Collider, RigidBody } from "@dimforge/rapier2d-compat";
 import { Container } from "pixi.js";
 import { Engine } from "../Engine";
 import { ColliderData } from "../Physics";

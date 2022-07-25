@@ -1,17 +1,15 @@
-type PhysicsType = typeof import('@dimforge/rapier2d');
-import {ColliderDesc} from '@dimforge/rapier2d';
+import {ColliderDesc} from '@dimforge/rapier2d-compat';
 
-export let Physics: PhysicsType;
+import RAPIER from '@dimforge/rapier2d-compat';
+
+export let Physics = RAPIER;
+
 export type ColliderData = {
     collider: ColliderDesc;
     shape: 'box' | 'circle' | 'capsule';
     width?: number;
     height?: number;
     radius?: number;
-}
-
-export function setPhysics(p: PhysicsType){
-    Physics = p;
 }
 
 export function createBoxCollider(width: number, height: number): ColliderData{

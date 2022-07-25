@@ -10,8 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./Input";
-import { setPhysics } from "./Physics";
 import { Vector } from "./Vector";
+import { Physics } from "./Physics";
 export class Engine {
     constructor(options) {
         this.pixiApplication = new Application(Object.assign(Object.assign({}, options), { resizeTo: window }));
@@ -24,11 +24,10 @@ export class Engine {
         this.onComplete = options.onComplete;
         this.gameObjects = [];
         this.loader.onLoad.add(() => __awaiter(this, void 0, void 0, function* () {
-            const physics = yield import('@dimforge/rapier2d');
-            setPhysics(physics);
+            yield Physics.init();
             let gravity = options.gravity ? new Vector(options.gravity.x, -options.gravity.y) : new Vector(0, -9.81);
-            this.physicsWorld = new physics.World(gravity);
-            this.physicsEventQueue = new physics.EventQueue(true);
+            this.physicsWorld = new Physics.World(gravity);
+            this.physicsEventQueue = new Physics.EventQueue(true);
             this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
                 this.onCollision(handle1, handle2, started);
             });

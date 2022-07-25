@@ -5,7 +5,7 @@ import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";
-import { EventQueue, World } from '@dimforge/rapier2d';
+import { EventQueue, World } from '@dimforge/rapier2d-compat';
 export interface EngineOptions extends IApplicationOptions {
     autoResize?: boolean;
     sideToPreserve?: 'height' | 'width';

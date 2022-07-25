@@ -4,9 +4,9 @@ import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./Input";
 import { Resources } from "./loadSprites";
-import { setPhysics } from "./Physics";
 import { Vector } from "./Vector";
-import {EventQueue, World} from '@dimforge/rapier2d';
+import {EventQueue, World} from '@dimforge/rapier2d-compat';
+import { Physics } from "./Physics";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
@@ -56,13 +56,12 @@ export class Engine{
         this.gameObjects = [];
 
         this.loader.onLoad.add(async () => {
-            const physics = await import('@dimforge/rapier2d');
-            setPhysics(physics);
+            await Physics.init();
             let gravity = options.gravity ? new Vector(options.gravity.x, -options.gravity.y) : new Vector(0, -9.81);
             
-            this.physicsWorld = new physics.World(gravity);
+            this.physicsWorld = new Physics.World(gravity);
 
-            this.physicsEventQueue = new physics.EventQueue(true);
+            this.physicsEventQueue = new Physics.EventQueue(true);
 
             this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
                 this.onCollision(handle1, handle2, started);
@@ -148,7 +147,7 @@ export class Engine{
         this.physicsWorld.step();
         this.gameObjects.forEach(gameObject => {
             if(!gameObject.rigidBody) return;
-            
+
             const pos = gameObject.rigidBody.translation();
             gameObject.position = new Vector(pos.x, -pos.y);
             gameObject.rotation = gameObject.rigidBody.rotation();
