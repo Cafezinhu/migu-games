@@ -9,6 +9,7 @@ export declare type GameObjectOptions = {
     ignoreEmptyContainer?: boolean;
     ignoreStart?: boolean;
     zIndex?: number;
+    tag?: string;
 };
 export declare class GameObject {
     container: Container;
@@ -16,6 +17,7 @@ export declare class GameObject {
     parent: GameObject;
     children: GameObject[];
     private updateFunction;
+    tag?: string;
     rigidBody?: RigidBody;
     collider?: Collider;
     colliderData?: ColliderData;
