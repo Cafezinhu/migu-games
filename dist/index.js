@@ -12,4 +12,5 @@ import { Sprite } from "./gameObject/Sprite";
 import { TilingSprite } from "./gameObject/TilingSprite";
 import { AnimatedSprite } from "./gameObject/AnimatedSprite";
 import { loadSprites } from './loadSprites';
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI };
+import { createBoxCollider, createCapsuleCollider, createCircleCollider, Physics } from "./Physics";
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI, Physics, createBoxCollider, createCircleCollider, createCapsuleCollider };

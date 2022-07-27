@@ -1,7 +1,17 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./Input";
 import { Vector } from "./Vector";
+import { Physics } from "./Physics";
 export class Engine {
     constructor(options) {
         this.pixiApplication = new Application(Object.assign(Object.assign({}, options), { resizeTo: window }));
@@ -9,13 +19,20 @@ export class Engine {
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.loader = new Loader();
-        this.onLoad = options.onLoad;
         this.onProgress = options.onProgress;
-        this.onComplete = options.onComplete;
-        this.loader.onLoad.add(() => {
-            if (this.onLoad)
-                this.onLoad();
-        });
+        this.gameObjects = [];
+        this.loader.onComplete.add(() => __awaiter(this, void 0, void 0, function* () {
+            yield Physics.init();
+            let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
+            this.physicsWorld = new Physics.World(gravity);
+            this.physicsEventQueue = new Physics.EventQueue(true);
+            clearInterval(this.physicsInterval);
+            this.physicsInterval = setInterval(() => {
+                this.onPhysicsUpdate();
+            });
+            if (options.onComplete)
+                options.onComplete();
+        }));
         this.loader.onProgress.add((loader) => {
             if (this.onProgress)
                 this.onProgress(loader.progress);
@@ -49,12 +66,19 @@ export class Engine {
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
     }
-    ;
     appendToDocument() {
         document.body.appendChild(this.view);
     }
     addResource(name, url) {
         this.loader.add(name, url);
+    }
+    addGameObject(gameObject) {
+        this.gameObjects.push(gameObject);
+    }
+    removeGameObject(gameObject) {
+        this.gameObjects = this.gameObjects.filter(g => {
+            return g != gameObject;
+        });
     }
     loadResources() {
         this.loader.load((l, resources) => {
@@ -62,5 +86,44 @@ export class Engine {
             if (this.onComplete)
                 this.onComplete();
         });
+    }
+    onPhysicsUpdate() {
+        this.physicsWorld.step(this.physicsEventQueue);
+        this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
+            this.onCollision(handle1, handle2, started);
+        });
+        this.gameObjects.forEach(gameObject => {
+            if (!gameObject.rigidBody)
+                return;
+            const pos = gameObject.rigidBody.translation();
+            gameObject.position = new Vector(pos.x, -pos.y);
+            gameObject.rotation = gameObject.rigidBody.rotation();
+        });
+    }
+    onCollision(handle1, handle2, started) {
+        let gameObjectA = null;
+        for (let gameObject of this.gameObjects) {
+            if (handle1 == gameObject.collider.handle) {
+                gameObjectA = gameObject;
+                break;
+            }
+        }
+        let gameObjectB = null;
+        for (let gameObject of this.gameObjects) {
+            if (handle2 == gameObject.collider.handle) {
+                gameObjectB = gameObject;
+                break;
+            }
+        }
+        const pair = gameObjectA.collider.contactCollider(gameObjectB.collider, 1);
+        const contacts = [
+            new Vector(pair.point1.x, -pair.point1.y),
+            new Vector(pair.point2.x, -pair.point2.y)
+        ];
+        gameObjectA.onCollision(gameObjectB, contacts, started);
+        gameObjectB.onCollision(gameObjectA, contacts, started);
+    }
+    onForce() {
+        console.log('force');
     }
 }

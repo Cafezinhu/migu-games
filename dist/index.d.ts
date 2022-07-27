@@ -13,4 +13,5 @@ import { TilingSprite, type TilingSpriteOptions } from "./gameObject/TilingSprit
 import { AnimatedSprite, type AnimatedSpriteOptions } from "./gameObject/AnimatedSprite";
 import { loadSprites } from './loadSprites';
 import { type Texture } from "./Texture";
-export { Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI };
+import { createBoxCollider, createCapsuleCollider, createCircleCollider, Physics } from "./Physics";
+export { Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI, Physics, createBoxCollider, createCircleCollider, createCapsuleCollider };
