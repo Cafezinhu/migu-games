@@ -123,7 +123,4 @@ export class Engine {
         gameObjectA.onCollision(gameObjectB, contacts, started);
         gameObjectB.onCollision(gameObjectA, contacts, started);
     }
-    onForce() {
-        console.log('force');
-    }
 }

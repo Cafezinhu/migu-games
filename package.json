@@ -27,7 +27,6 @@
     "@types/matter-js": "^0.17.7",
     "@types/offscreencanvas": "^2019.6.4",
     "@types/victor": "^1.1.0",
-    "matter-js": "^0.18.0",
     "pixi-viewport": "^4.34.4",
     "pixi.js": "6.4.2",
     "recursive-readdir": "^2.2.2",

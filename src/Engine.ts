@@ -1,4 +1,3 @@
-import Matter from "matter-js";
 import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
@@ -34,7 +33,6 @@ export class Engine{
     onProgress: (progress: number) => void;
     onComplete: () => void;
 
-    physicsEngine: Matter.Engine;
     physicsWorld: World;
     private physicsInterval: any;
     physicsEventQueue: EventQueue;
@@ -174,10 +172,5 @@ export class Engine{
 
         gameObjectA.onCollision(gameObjectB, contacts, started);
         gameObjectB.onCollision(gameObjectA, contacts, started);
-    }
-
-    onForce(){
-        console.log('force');
-        
     }
 }
