@@ -1,9 +1,9 @@
 import { Sprite as PIXISprite } from 'pixi.js';
 import { GameObject } from "./GameObject";
 export class Sprite extends GameObject {
-    constructor(engine, options) {
+    constructor(options) {
         options.ignoreEmptyContainer = true;
-        super(engine, options);
+        super(options);
         this.container = PIXISprite.from(options.texture);
         this.endOptionsConfiguration(options);
     }

@@ -1,5 +1,4 @@
 import { AnimatedSprite as PIXIAnimatedSprite, Resource, Texture } from 'pixi.js';
-import { Engine } from '../Engine';
 import { GameObject, type GameObjectOptions } from "./GameObject";
 
 export type AnimatedSpriteOptions = GameObjectOptions & {
@@ -12,9 +11,9 @@ export type AnimatedSpriteOptions = GameObjectOptions & {
 export class AnimatedSprite extends GameObject{
     container: PIXIAnimatedSprite;
 
-    constructor(engine: Engine, options: AnimatedSpriteOptions){
+    constructor(options: AnimatedSpriteOptions){
         options.ignoreEmptyContainer = true;
-        super(engine, options);
+        super(options);
 
         const textures = options.textures.map(sprite => {
             if(typeof(sprite) == 'string')

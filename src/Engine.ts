@@ -2,7 +2,7 @@ import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./Input";
-import { Resources } from "./loadSprites";
+import { loadSprites, Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import {EventQueue, World} from '@dimforge/rapier2d-compat';
 import { Physics } from "./Physics";
@@ -38,6 +38,8 @@ export class Engine{
     physicsEventQueue: EventQueue;
 
     gameObjects: GameObject[];
+
+    static instance: Engine;
 
     constructor(options?: EngineOptions){
         this.pixiApplication = new Application({...options, resizeTo: window});
@@ -106,6 +108,17 @@ export class Engine{
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+    }
+
+    create(options: EngineOptions){
+        const oldOnComplete = options.onComplete;
+        const onComplete = () => {
+            loadSprites(Engine.instance);
+            oldOnComplete();
+        }
+        Engine.instance = new Engine({...options, onComplete});
+        new Input(Engine.instance);
+        Engine.instance.appendToDocument();
     }
 
     appendToDocument(){

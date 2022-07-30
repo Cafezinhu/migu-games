@@ -33,7 +33,9 @@ export declare class Engine {
     private physicsInterval;
     physicsEventQueue: EventQueue;
     gameObjects: GameObject[];
+    static instance: Engine;
     constructor(options?: EngineOptions);
+    create(options: EngineOptions): void;
     appendToDocument(): void;
     addResource(name: string, url: string): void;
     addGameObject(gameObject: GameObject): void;

@@ -11,6 +11,7 @@ export type GameObjectOptions = {
     ignoreStart?: boolean;
     zIndex?: number;
     tag?: string;
+    engine?: Engine;
 }
 
 export class GameObject{
@@ -25,10 +26,10 @@ export class GameObject{
     collider?: Collider;
     colliderData?: ColliderData;
     
-    constructor(engine: Engine, options: GameObjectOptions){
+    constructor(options: GameObjectOptions){
         this.children = [];
-        this.engine = engine;
-        engine.addGameObject(this);
+        this.engine = options.engine ? options.engine : Engine.instance;
+        this.engine.addGameObject(this);
 
         if(!options.ignoreEmptyContainer){
             this.container = new Container();

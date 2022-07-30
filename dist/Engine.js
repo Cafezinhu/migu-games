@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./Input";
+import { loadSprites } from "./loadSprites";
 import { Vector } from "./Vector";
 import { Physics } from "./Physics";
 export class Engine {
@@ -65,6 +66,16 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+    }
+    create(options) {
+        const oldOnComplete = options.onComplete;
+        const onComplete = () => {
+            loadSprites(Engine.instance);
+            oldOnComplete();
+        };
+        Engine.instance = new Engine(Object.assign(Object.assign({}, options), { onComplete }));
+        new Input(Engine.instance);
+        Engine.instance.appendToDocument();
     }
     appendToDocument() {
         document.body.appendChild(this.view);

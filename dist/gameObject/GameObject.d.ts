@@ -10,6 +10,7 @@ export declare type GameObjectOptions = {
     ignoreStart?: boolean;
     zIndex?: number;
     tag?: string;
+    engine?: Engine;
 };
 export declare class GameObject {
     container: Container;
@@ -21,7 +22,7 @@ export declare class GameObject {
     rigidBody?: RigidBody;
     collider?: Collider;
     colliderData?: ColliderData;
-    constructor(engine: Engine, options: GameObjectOptions);
+    constructor(options: GameObjectOptions);
     addChild(child: GameObject): void;
     protected endOptionsConfiguration(options: GameObjectOptions): void;
     setCollider(colliderData: ColliderData): void;

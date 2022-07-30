@@ -1,11 +1,12 @@
 import { Container } from "pixi.js";
+import { Engine } from "../Engine";
 import { Physics } from "../Physics";
 import { Vector } from "../Vector";
 export class GameObject {
-    constructor(engine, options) {
+    constructor(options) {
         this.children = [];
-        this.engine = engine;
-        engine.addGameObject(this);
+        this.engine = options.engine ? options.engine : Engine.instance;
+        this.engine.addGameObject(this);
         if (!options.ignoreEmptyContainer) {
             this.container = new Container();
             this.endOptionsConfiguration(options);
