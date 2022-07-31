@@ -12,14 +12,6 @@ export class GameObject {
             this.endOptionsConfiguration(options);
         }
         //@ts-ignore
-        if (this.update) {
-            this.updateFunction = (delta) => {
-                //@ts-ignore
-                this.update(delta);
-            };
-            this.engine.pixiApplication.ticker.add(this.updateFunction);
-        }
-        //@ts-ignore
         if (this.start) {
             if (options && options.ignoreStart)
                 return;

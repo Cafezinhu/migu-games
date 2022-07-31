@@ -126,6 +126,12 @@ export class Engine{
         Array.from(Input.keys.values()).forEach(key => {
             key.update();
         });
+
+        this.gameObjects.forEach(gameObject => {
+            //@ts-ignore
+            const gameObjectUpdate = gameObject.update;
+            if(gameObjectUpdate) gameObjectUpdate(delta);
+        })
     }
 
     appendToDocument(){
