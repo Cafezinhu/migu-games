@@ -1,7 +1,7 @@
 import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
-import { Input } from "./Input";
+import { Input } from "./input/Input";
 import { Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import { EventQueue, World } from '@dimforge/rapier2d-compat';
@@ -36,6 +36,7 @@ export declare class Engine {
     static instance: Engine;
     constructor(options?: EngineOptions);
     create(options: EngineOptions): void;
+    update(delta: number): void;
     appendToDocument(): void;
     addResource(name: string, url: string): void;
     addGameObject(gameObject: GameObject): void;
