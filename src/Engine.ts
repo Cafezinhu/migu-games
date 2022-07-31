@@ -1,7 +1,7 @@
 import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
-import { Input } from "./Input";
+import { Input } from "./input/Input";
 import { loadSprites, Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import {EventQueue, World} from '@dimforge/rapier2d-compat';
@@ -65,6 +65,8 @@ export class Engine{
                 this.onPhysicsUpdate();
             });
 
+            this.pixiApplication.ticker.add(delta => this.update(delta));
+
             if(options.onComplete) options.onComplete();
         });
 
@@ -117,8 +119,13 @@ export class Engine{
             oldOnComplete();
         }
         Engine.instance = new Engine({...options, onComplete});
-        new Input(Engine.instance);
         Engine.instance.appendToDocument();
+    }
+
+    update(delta: number){
+        Array.from(Input.keys.values()).forEach(key => {
+            key.update();
+        });
     }
 
     appendToDocument(){

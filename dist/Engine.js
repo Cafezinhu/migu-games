@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { Application, Loader } from "pixi.js";
 import { Camera } from "./Camera";
-import { Input } from "./Input";
+import { Input } from "./input/Input";
 import { loadSprites } from "./loadSprites";
 import { Vector } from "./Vector";
 import { Physics } from "./Physics";
@@ -31,6 +31,7 @@ export class Engine {
             this.physicsInterval = setInterval(() => {
                 this.onPhysicsUpdate();
             });
+            this.pixiApplication.ticker.add(delta => this.update(delta));
             if (options.onComplete)
                 options.onComplete();
         }));
@@ -74,8 +75,12 @@ export class Engine {
             oldOnComplete();
         };
         Engine.instance = new Engine(Object.assign(Object.assign({}, options), { onComplete }));
-        new Input(Engine.instance);
         Engine.instance.appendToDocument();
+    }
+    update(delta) {
+        Array.from(Input.keys.values()).forEach(key => {
+            key.update();
+        });
     }
     appendToDocument() {
         document.body.appendChild(this.view);

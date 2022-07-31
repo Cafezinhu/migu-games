@@ -3,7 +3,7 @@ import { Engine, type EngineOptions } from "./Engine";
 import { GameObject, type GameObjectOptions } from "./gameObject/GameObject";
 import { Vector } from "./Vector";
 import * as PIXI from 'pixi.js';
-import { Input } from "./Input";
+import { Input } from "./input/Input";
 import { CollisionArea } from './collision/CollisionArea';
 import { CircleCollisionArea } from './collision/CircleCollisionArea';
 import { RectangleCollisionArea } from './collision/RectangleCollisionArea';
