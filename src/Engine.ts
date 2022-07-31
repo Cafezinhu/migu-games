@@ -44,6 +44,7 @@ export class Engine{
     constructor(options?: EngineOptions){
         this.pixiApplication = new Application({...options, resizeTo: window});
         this.view = this.pixiApplication.view;
+        this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
         this.loader = new Loader();

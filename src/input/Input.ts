@@ -34,7 +34,7 @@ export class Input{
         });
         document.addEventListener('mouseup', e => {
             Input.releaseKey(`mouse${e.button}`);
-        })
+        });
     }
 
     static mouseEventToVector(e: MouseEvent){
