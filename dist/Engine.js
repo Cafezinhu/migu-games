@@ -83,9 +83,8 @@ export class Engine {
         });
         this.gameObjects.forEach(gameObject => {
             //@ts-ignore
-            const gameObjectUpdate = gameObject.update;
-            if (gameObjectUpdate)
-                gameObjectUpdate(delta);
+            if (gameObject.update)
+                gameObject.update(delta);
         });
     }
     appendToDocument() {
