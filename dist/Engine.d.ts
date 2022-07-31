@@ -35,7 +35,7 @@ export declare class Engine {
     gameObjects: GameObject[];
     static instance: Engine;
     constructor(options?: EngineOptions);
-    create(options: EngineOptions): void;
+    static create(options: EngineOptions): Engine;
     update(delta: number): void;
     appendToDocument(): void;
     addResource(name: string, url: string): void;

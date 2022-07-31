@@ -113,7 +113,7 @@ export class Engine{
         });
     }
 
-    create(options: EngineOptions){
+    static create(options: EngineOptions){
         const oldOnComplete = options.onComplete;
         const onComplete = () => {
             loadSprites(Engine.instance);
@@ -121,6 +121,7 @@ export class Engine{
         }
         Engine.instance = new Engine({...options, onComplete});
         Engine.instance.appendToDocument();
+        return Engine.instance;
     }
 
     update(delta: number){

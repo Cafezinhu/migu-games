@@ -69,7 +69,7 @@ export class Engine {
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
     }
-    create(options) {
+    static create(options) {
         const oldOnComplete = options.onComplete;
         const onComplete = () => {
             loadSprites(Engine.instance);
@@ -77,6 +77,7 @@ export class Engine {
         };
         Engine.instance = new Engine(Object.assign(Object.assign({}, options), { onComplete }));
         Engine.instance.appendToDocument();
+        return Engine.instance;
     }
     update(delta) {
         Array.from(Input.keys.values()).forEach(key => {
