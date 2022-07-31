@@ -15,16 +15,16 @@ export class Input {
             const world = engine.camera.toWorld(e.clientX, e.clientY);
             Input.mousePos = new Vector(world.x, world.y);
         });
-        engine.view.addEventListener('keydown', e => {
+        document.addEventListener('keydown', e => {
             Input.pressKey(e.key);
         });
-        engine.view.addEventListener('keyup', e => {
+        document.addEventListener('keyup', e => {
             Input.releaseKey(e.key);
         });
-        engine.view.addEventListener('mousedown', e => {
+        document.addEventListener('mousedown', e => {
             Input.pressKey(`mouse${e.button}`);
         });
-        engine.view.addEventListener('mouseup', e => {
+        document.addEventListener('mouseup', e => {
             Input.releaseKey(`mouse${e.button}`);
         });
     }
