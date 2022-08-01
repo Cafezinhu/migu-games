@@ -111,15 +111,12 @@ export class Engine{
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+
+        loadSprites(this);
     }
 
     static create(options: EngineOptions){
-        const oldOnComplete = options.onComplete;
-        const onComplete = () => {
-            loadSprites(Engine.instance);
-            oldOnComplete();
-        }
-        Engine.instance = new Engine({...options, onComplete});
+        Engine.instance = new Engine(options);
         Engine.instance.appendToDocument();
         return Engine.instance;
     }

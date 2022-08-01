@@ -68,14 +68,10 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+        loadSprites(this);
     }
     static create(options) {
-        const oldOnComplete = options.onComplete;
-        const onComplete = () => {
-            loadSprites(Engine.instance);
-            oldOnComplete();
-        };
-        Engine.instance = new Engine(Object.assign(Object.assign({}, options), { onComplete }));
+        Engine.instance = new Engine(options);
         Engine.instance.appendToDocument();
         return Engine.instance;
     }
