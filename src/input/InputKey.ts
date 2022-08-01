@@ -25,6 +25,7 @@ export class InputKey {
     }
 
     press(){
+        if(this.isPressed) return;
         this.isPressed = true;
         this.pressedOnThisFrame = false;
         this.releasedOnThisFrame = false;
