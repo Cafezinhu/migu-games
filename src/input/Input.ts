@@ -77,6 +77,7 @@ export class Input{
 
     static getKey(key: string){
         key = key.toLowerCase();
+        if(key == 'space') key = ' ';
         const keyInput = Input.keys.get(key);
         if(keyInput) return keyInput;
 
