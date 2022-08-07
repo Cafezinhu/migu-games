@@ -5,7 +5,7 @@ import { Input } from "./input/Input";
 import { loadSprites, Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import {EventQueue, World} from '@dimforge/rapier2d-compat';
-import { Physics } from "./Physics";
+import { PhysicsPlugin } from "./physics/Physics";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
@@ -53,12 +53,12 @@ export class Engine{
         this.gameObjects = [];
 
         this.loader.onComplete.add(async () => {
-            await Physics.init();
-            let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
+            await PhysicsPlugin.init();
+            let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
             
-            this.physicsWorld = new Physics.World(gravity);
+            this.physicsWorld = new PhysicsPlugin.World(gravity);
 
-            this.physicsEventQueue = new Physics.EventQueue(true);
+            this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
 
             clearInterval(this.physicsInterval);
 
@@ -167,7 +167,7 @@ export class Engine{
             if(!gameObject.rigidBody) return;
 
             const pos = gameObject.rigidBody.translation();
-            gameObject.position = new Vector(pos.x, -pos.y);
+            gameObject.position = new Vector(pos.x, pos.y);
             gameObject.rotation = gameObject.rigidBody.rotation();
         })
     }

@@ -1,7 +1,7 @@
 import { Collider, RigidBody } from "@dimforge/rapier2d-compat";
 import { Container } from "pixi.js";
 import { Engine } from "../Engine";
-import { ColliderData, Physics } from "../Physics";
+import { ColliderData, PhysicsPlugin } from "../physics/Physics";
 import { Vector } from "../Vector";
 
 export type GameObjectOptions = {
@@ -69,12 +69,12 @@ export class GameObject{
 
     setCollider(colliderData: ColliderData){
         this.colliderData = colliderData;
-        colliderData.collider.setActiveEvents(Physics.ActiveEvents.COLLISION_EVENTS);
+        colliderData.collider.setActiveEvents(PhysicsPlugin.ActiveEvents.COLLISION_EVENTS);
         this.collider = this.engine.physicsWorld.createCollider(colliderData.collider, this.rigidBody);
     }
 
     setRigidbody(type: 'fixed' | 'dynamic', mass = 1){
-        let rb = type == 'fixed' ? Physics.RigidBodyDesc.fixed() : Physics.RigidBodyDesc.dynamic();
+        let rb = type == 'fixed' ? PhysicsPlugin.RigidBodyDesc.fixed() : PhysicsPlugin.RigidBodyDesc.dynamic();
         rb.setTranslation(this.x, this.y);
         rb.mass = mass;
         this.rigidBody = this.engine.physicsWorld.createRigidBody(rb);
@@ -84,7 +84,7 @@ export class GameObject{
         this.container.position.x = position.x;
         this.container.position.y = position.y;
         if(this.rigidBody)
-            this.rigidBody.setTranslation({x: position.x, y: -position.y}, true);
+            this.rigidBody.setTranslation({x: position.x, y: position.y}, true);
     }
 
     get position(){
@@ -95,7 +95,7 @@ export class GameObject{
     set x(value: number){
         this.container.position.x = value;
         if(this.rigidBody)
-            this.rigidBody.setTranslation({x: value, y: -this.y}, true);
+            this.rigidBody.setTranslation({x: value, y: this.y}, true);
     }
 
     get x(){
@@ -105,7 +105,7 @@ export class GameObject{
     set y(value: number){
         this.container.position.y = value;
         if(this.rigidBody)
-            this.rigidBody.setTranslation({x: this.x, y: -value}, true);
+            this.rigidBody.setTranslation({x: this.x, y: value}, true);
     }
 
     get y(){
