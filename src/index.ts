@@ -14,6 +14,6 @@ import { AnimatedSprite, type AnimatedSpriteOptions } from "./gameObject/Animate
 import { loadSprites } from './loadSprites';
 import { type Texture } from "./Texture";
 import { PhysicsPlugin, Physics } from "./physics/Physics";
-import { RigidBody } from './gameObject/RigidBody';
+import { RigidBody, RigidBodyOptions } from './gameObject/RigidBody';
 
-export {Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI, PhysicsPlugin, Physics, RigidBody};
+export {Engine, EngineOptions, GameObject, GameObjectOptions, Sprite, SpriteOptions, TilingSprite, TilingSpriteOptions, AnimatedSprite, AnimatedSpriteOptions, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, Texture, PIXI, PhysicsPlugin, Physics, RigidBody, RigidBodyOptions};
