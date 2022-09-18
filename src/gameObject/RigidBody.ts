@@ -41,14 +41,30 @@ export class RigidBody extends GameObject {
         this.rigidBody.setTranslation({x: value, y: this.y}, true);
     }
 
+    get x() {
+        return super.x;
+    }
+
     set y(value: number){
         super.y = value;
         this.rigidBody.setTranslation({x: this.x, y: value}, true);
     }
 
+    get y() {
+        return super.y;
+    }
+
     set rotation(rotation: number){
         super.rotation = rotation;
         this.rigidBody.setRotation(rotation, true);
+    }
+
+    get rotation(){
+        return super.rotation;
+    }
+
+    get angle(){
+        return super.angle;
     }
 
     set angle(angle: number){

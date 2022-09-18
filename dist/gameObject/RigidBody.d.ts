@@ -15,8 +15,12 @@ export declare class RigidBody extends GameObject {
     setCollider(colliderData: ColliderData): void;
     set position(position: Vector);
     set x(value: number);
+    get x(): number;
     set y(value: number);
+    get y(): number;
     set rotation(rotation: number);
+    get rotation(): number;
+    get angle(): number;
     set angle(angle: number);
     set visible(value: boolean);
     onCollision(gameObject: GameObject | null, contacts: Vector[], started: boolean): void;
