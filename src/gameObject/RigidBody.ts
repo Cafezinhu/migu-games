@@ -6,7 +6,7 @@ import { GameObject, GameObjectOptions } from "./GameObject";
 export type RigidBodyOptions = GameObjectOptions & {
     colliderData?: ColliderData;
     rigidBodyType?: 'fixed' | 'dynamic';
-    mass: number;
+    mass?: number;
 }
 
 export class RigidBody extends GameObject {
