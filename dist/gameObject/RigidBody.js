@@ -64,6 +64,9 @@ export class RigidBody extends GameObject {
         this.container.visible = value;
         //TODO: set collider visibility on children
     }
+    get visible() {
+        return super.visible;
+    }
     onCollision(gameObject, contacts, started) { }
     destroy() {
         super.destroy();

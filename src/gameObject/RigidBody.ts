@@ -91,7 +91,11 @@ export class RigidBody extends GameObject {
         //TODO: set collider visibility on children
     }
 
-    onCollision(gameObject: GameObject | null, contacts: Vector[], started: boolean){}
+    get visible(){
+        return super.visible;
+    }
+
+    onCollision(gameObject: RigidBody | null, contacts: Vector[], started: boolean){}
 
     destroy(){
         super.destroy();

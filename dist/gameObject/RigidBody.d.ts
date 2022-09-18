@@ -23,6 +23,7 @@ export declare class RigidBody extends GameObject {
     get angle(): number;
     set angle(angle: number);
     set visible(value: boolean);
-    onCollision(gameObject: GameObject | null, contacts: Vector[], started: boolean): void;
+    get visible(): boolean;
+    onCollision(gameObject: RigidBody | null, contacts: Vector[], started: boolean): void;
     destroy(): void;
 }
