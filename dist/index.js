@@ -12,5 +12,6 @@ import { Sprite } from "./gameObject/Sprite";
 import { TilingSprite } from "./gameObject/TilingSprite";
 import { AnimatedSprite } from "./gameObject/AnimatedSprite";
 import { loadSprites } from './loadSprites';
-import { createBoxCollider, createCapsuleCollider, createCircleCollider, Physics } from "./Physics";
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI, Physics, createBoxCollider, createCircleCollider, createCapsuleCollider };
+import { PhysicsPlugin, Physics } from "./physics/Physics";
+import { RigidBody } from './gameObject/RigidBody';
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, loadSprites, PIXI, PhysicsPlugin, Physics, RigidBody };

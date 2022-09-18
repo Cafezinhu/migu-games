@@ -1,0 +1,61 @@
+import { PhysicsPlugin } from "../physics/Physics";
+import { GameObject } from "./GameObject";
+export class RigidBody extends GameObject {
+    constructor(options) {
+        super(options);
+        let rb = options.rigidBodyType == 'fixed' ? PhysicsPlugin.RigidBodyDesc.fixed() : PhysicsPlugin.RigidBodyDesc.dynamic();
+        rb.mass = options.mass ? options.mass : 1;
+        this.rigidBody = this.engine.physicsWorld.createRigidBody(rb);
+        if (options.colliderData) {
+            this.setCollider(options.colliderData);
+        }
+    }
+    setCollider(colliderData) {
+        this.colliderData = colliderData;
+        colliderData.collider.setActiveEvents(PhysicsPlugin.ActiveEvents.COLLISION_EVENTS);
+        this.collider = this.engine.physicsWorld.createCollider(colliderData.collider, this.rigidBody);
+    }
+    set position(position) {
+        super.position = position;
+        this.rigidBody.setTranslation({ x: position.x, y: position.y }, true);
+    }
+    set x(value) {
+        super.x = value;
+        this.rigidBody.setTranslation({ x: value, y: this.y }, true);
+    }
+    set y(value) {
+        super.y = value;
+        this.rigidBody.setTranslation({ x: this.x, y: value }, true);
+    }
+    set rotation(rotation) {
+        super.rotation = rotation;
+        this.rigidBody.setRotation(rotation, true);
+    }
+    set angle(angle) {
+        super.angle = angle;
+        this.rigidBody.setRotation(angle / (Math.PI / 180), true);
+    }
+    //TODO: scale
+    set visible(value) {
+        if (value && !this.container.visible) {
+            if (this.colliderData) {
+                this.setCollider(this.colliderData);
+            }
+            this.rigidBody.wakeUp();
+        }
+        else if (!value && this.container.visible) {
+            if (this.collider) {
+                this.engine.physicsWorld.removeCollider(this.collider, false);
+            }
+            this.rigidBody.sleep();
+        }
+        this.container.visible = value;
+        //TODO: set collider visibility on children
+    }
+    onCollision(gameObject, contacts, started) { }
+    destroy() {
+        super.destroy();
+        this.engine.physicsWorld.removeRigidBody(this.rigidBody);
+        //TODO: destroy rigidbody on children
+    }
+}

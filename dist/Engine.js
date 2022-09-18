@@ -12,7 +12,7 @@ import { Camera } from "./Camera";
 import { Input } from "./input/Input";
 import { loadSprites } from "./loadSprites";
 import { Vector } from "./Vector";
-import { Physics } from "./Physics";
+import { PhysicsPlugin } from "./physics/Physics";
 export class Engine {
     constructor(options) {
         this.pixiApplication = new Application(Object.assign(Object.assign({}, options), { resizeTo: window }));
@@ -24,10 +24,10 @@ export class Engine {
         this.onProgress = options.onProgress;
         this.gameObjects = [];
         this.loader.onComplete.add(() => __awaiter(this, void 0, void 0, function* () {
-            yield Physics.init();
-            let gravity = options.gravity ? new Physics.Vector2(options.gravity.x, -options.gravity.y) : new Physics.Vector2(0, -9.81);
-            this.physicsWorld = new Physics.World(gravity);
-            this.physicsEventQueue = new Physics.EventQueue(true);
+            yield PhysicsPlugin.init();
+            let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
+            this.physicsWorld = new PhysicsPlugin.World(gravity);
+            this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
             clearInterval(this.physicsInterval);
             this.physicsInterval = setInterval(() => {
                 this.onPhysicsUpdate();
@@ -111,26 +111,32 @@ export class Engine {
         this.physicsEventQueue.drainCollisionEvents((handle1, handle2, started) => {
             this.onCollision(handle1, handle2, started);
         });
-        this.gameObjects.forEach(gameObject => {
+        this.gameObjects.forEach((gameObject) => {
             if (!gameObject.rigidBody)
                 return;
             const pos = gameObject.rigidBody.translation();
-            gameObject.position = new Vector(pos.x, -pos.y);
+            gameObject.position = new Vector(pos.x, pos.y);
             gameObject.rotation = gameObject.rigidBody.rotation();
         });
     }
     onCollision(handle1, handle2, started) {
         let gameObjectA = null;
-        for (let gameObject of this.gameObjects) {
-            if (handle1 == gameObject.collider.handle) {
-                gameObjectA = gameObject;
+        for (const gameObject of this.gameObjects) {
+            const rigidBody = gameObject;
+            if (!rigidBody.rigidBody)
+                continue;
+            if (handle1 == rigidBody.collider.handle) {
+                gameObjectA = rigidBody;
                 break;
             }
         }
         let gameObjectB = null;
-        for (let gameObject of this.gameObjects) {
-            if (handle2 == gameObject.collider.handle) {
-                gameObjectB = gameObject;
+        for (const gameObject of this.gameObjects) {
+            const rigidBody = gameObject;
+            if (!rigidBody.rigidBody)
+                continue;
+            if (handle2 == rigidBody.collider.handle) {
+                gameObjectB = rigidBody;
                 break;
             }
         }

@@ -6,6 +6,7 @@ import { loadSprites, Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import {EventQueue, World} from '@dimforge/rapier2d-compat';
 import { PhysicsPlugin } from "./physics/Physics";
+import { RigidBody } from "./gameObject/RigidBody";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
@@ -163,7 +164,7 @@ export class Engine{
             this.onCollision(handle1, handle2, started);
         });
         
-        this.gameObjects.forEach(gameObject => {
+        this.gameObjects.forEach((gameObject: RigidBody) => {
             if(!gameObject.rigidBody) return;
 
             const pos = gameObject.rigidBody.translation();
@@ -173,17 +174,24 @@ export class Engine{
     }
 
     onCollision(handle1: number, handle2: number, started: boolean){
-        let gameObjectA: GameObject = null;
-        for(let gameObject of this.gameObjects){
-            if(handle1 == gameObject.collider.handle){
-                gameObjectA = gameObject;
+        let gameObjectA: RigidBody = null;
+        for(const gameObject of this.gameObjects){
+            const rigidBody = gameObject as RigidBody;
+            if(!rigidBody.rigidBody) continue;
+
+            if(handle1 == rigidBody.collider.handle){
+                gameObjectA = rigidBody;
                 break;
             }
         }
-        let gameObjectB: GameObject = null;
-        for(let gameObject of this.gameObjects){
-            if(handle2 == gameObject.collider.handle){
-                gameObjectB = gameObject;
+
+        let gameObjectB: RigidBody = null;
+        for(const gameObject of this.gameObjects){
+            const rigidBody = gameObject as RigidBody;
+            if(!rigidBody.rigidBody) continue;
+
+            if(handle2 == rigidBody.collider.handle){
+                gameObjectB = rigidBody;
                 break;
             }
         }
