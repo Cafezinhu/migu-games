@@ -10,6 +10,7 @@ import { RigidBody } from "./gameObject/RigidBody";
 
 export interface EngineOptions extends IApplicationOptions{
     autoResize?: boolean;
+    resizeTo?: HTMLElement | Window;
     sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
     disableInputSystem?: boolean;
@@ -43,7 +44,8 @@ export class Engine{
     static instance: Engine;
 
     constructor(options?: EngineOptions){
-        this.pixiApplication = new Application({...options, resizeTo: window});
+        if (!options.resizeTo) options.resizeTo = window;
+        this.pixiApplication = new Application({...options});
         this.view = this.pixiApplication.view;
         this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;

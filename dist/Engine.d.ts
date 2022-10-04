@@ -7,6 +7,7 @@ import { Vector } from "./Vector";
 import { EventQueue, World } from '@dimforge/rapier2d-compat';
 export interface EngineOptions extends IApplicationOptions {
     autoResize?: boolean;
+    resizeTo?: HTMLElement | Window;
     sideToPreserve?: 'height' | 'width';
     baseResolution?: Vector;
     disableInputSystem?: boolean;
