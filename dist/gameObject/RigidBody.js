@@ -48,6 +48,9 @@ export class RigidBody extends GameObject {
         this.rigidBody.setRotation(angle / (Math.PI / 180), true);
     }
     //TODO: scale
+    set scale(_) {
+        console.warn("Scaling rigidbodies is not supported.");
+    }
     set visible(value) {
         if (value && !this.container.visible) {
             if (this.colliderData) {

@@ -74,6 +74,10 @@ export class RigidBody extends GameObject {
 
     //TODO: scale
 
+    set scale(_: any){
+        console.warn("Scaling rigidbodies is not supported.");
+    }
+
     set visible(value: boolean){
         if(value && !this.container.visible) {
             if(this.colliderData){
