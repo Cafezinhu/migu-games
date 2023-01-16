@@ -1,8 +1,8 @@
-import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
+import { Application, Assets, Container, IApplicationOptions, ICanvas } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./input/Input";
-import { loadSprites, Resources } from "./loadSprites";
+import { manifest, Resources } from "./loadSprites";
 import { Vector } from "./Vector";
 import {EventQueue, World} from '@dimforge/rapier2d-compat';
 import { PhysicsPlugin } from "./physics/Physics";
@@ -22,22 +22,21 @@ export interface EngineOptions extends IApplicationOptions{
 
 export class Engine{
     pixiApplication: Application;
-    view: HTMLCanvasElement;
+    view: ICanvas;
     stage: Container;
     autoResize: boolean;
     baseResolution: Vector;
     sideToPreserve: 'height' | 'width';
     inputSystem: Input;
-    loader: Loader;
     resources: Resources;
     camera: Camera;
-    onLoad: () => void;
-    onProgress: (progress: number) => void;
-    onComplete: () => void;
 
     physicsWorld: World;
     private physicsInterval: any;
     physicsEventQueue: EventQueue;
+
+    onProgress?: (progress: number) => void;
+    onComplete?: () => void;
 
     gameObjects: GameObject[];
 
@@ -45,38 +44,20 @@ export class Engine{
 
     constructor(options?: EngineOptions){
         if (!options.resizeTo) options.resizeTo = window;
+        this.onProgress = options.onProgress;
+        this.onComplete = options.onComplete;
         this.pixiApplication = new Application({...options});
         this.view = this.pixiApplication.view;
         this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
-        this.loader = new Loader();
-        this.onProgress = options.onProgress;
 
         this.gameObjects = [];
 
-        this.loader.onComplete.add(async () => {
-            await PhysicsPlugin.init();
-            let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
-            
-            this.physicsWorld = new PhysicsPlugin.World(gravity);
+        this.startPhysics(options);
 
-            this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
+        this.pixiApplication.ticker.add(delta => this.update(delta));
 
-            clearInterval(this.physicsInterval);
-
-            this.physicsInterval = setInterval(() => {
-                this.onPhysicsUpdate();
-            });
-
-            this.pixiApplication.ticker.add(delta => this.update(delta));
-
-            if(options.onComplete) options.onComplete();
-        });
-
-        this.loader.onProgress.add((loader) => {
-            if(this.onProgress) this.onProgress(loader.progress);
-        });
 
         this.baseResolution = options.baseResolution ? options.baseResolution : new Vector(window.innerWidth, window.innerHeight);
 
@@ -114,14 +95,28 @@ export class Engine{
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
-
-        loadSprites(this);
+        this.loadResources();
     }
 
     static create(options: EngineOptions){
         Engine.instance = new Engine(options);
         Engine.instance.appendToDocument();
         return Engine.instance;
+    }
+
+    async startPhysics(options: EngineOptions){
+        await PhysicsPlugin.init();
+        let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
+        
+        this.physicsWorld = new PhysicsPlugin.World(gravity);
+
+        this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
+
+        clearInterval(this.physicsInterval);
+
+        this.physicsInterval = setInterval(() => {
+            this.onPhysicsUpdate();
+        });
     }
 
     update(delta: number){
@@ -136,11 +131,8 @@ export class Engine{
     }
 
     appendToDocument(){
+        //@ts-ignore
         document.body.appendChild(this.view);
-    }
-
-    addResource(name: string, url: string){
-        this.loader.add(name, url);
     }
 
     addGameObject(gameObject: GameObject){
@@ -153,11 +145,12 @@ export class Engine{
         });
     }
 
-    loadResources(){
-        this.loader.load((l, resources) => {
-            this.resources = resources;
-            if(this.onComplete) this.onComplete();
+    async loadResources(){
+        await Assets.init({manifest});
+        this.resources = await Assets.loadBundle('assets', progress => {
+            this.onProgress(progress);
         });
+        this.onComplete();
     }
 
     onPhysicsUpdate(){

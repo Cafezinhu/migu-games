@@ -1,2 +1,1 @@
-export function loadSprites(engine) {
-}
+export const manifest = { bundles: [] };

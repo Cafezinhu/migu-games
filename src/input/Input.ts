@@ -12,7 +12,7 @@ export class Input{
         Input.mousePos = new Vector(0,0);
         Input.ignoreOffset = false;
         Input.keys = new Map();
-        engine.view.addEventListener('mousemove', e => {
+        engine.view.addEventListener('mousemove', (e: MouseEvent) => {
             if(!Input.ignoreOffset){
                 const world = engine.camera.toWorld(e.offsetX, e.offsetY);
                 Input.mousePos = new Vector(world.x, world.y);
@@ -44,6 +44,7 @@ export class Input{
 
     static touchEventToVector(e: TouchEvent){
         const rect = Input.engine.view.getBoundingClientRect();
+        //@ts-ignore
         const world = Input.engine.camera.toWorld(e.touches[0].clientX - rect.left, e.touches[0].clientY - rect.top);
         return new Vector(world.x, world.y);
     }
