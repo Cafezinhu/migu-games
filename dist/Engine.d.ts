@@ -1,4 +1,4 @@
-import { Application, Container, IApplicationOptions, Loader } from "pixi.js";
+import { Application, Container, IApplicationOptions, ICanvas } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./input/Input";
@@ -18,31 +18,29 @@ export interface EngineOptions extends IApplicationOptions {
 }
 export declare class Engine {
     pixiApplication: Application;
-    view: HTMLCanvasElement;
+    view: ICanvas;
     stage: Container;
     autoResize: boolean;
     baseResolution: Vector;
     sideToPreserve: 'height' | 'width';
     inputSystem: Input;
-    loader: Loader;
     resources: Resources;
     camera: Camera;
-    onLoad: () => void;
-    onProgress: (progress: number) => void;
-    onComplete: () => void;
     physicsWorld: World;
     private physicsInterval;
     physicsEventQueue: EventQueue;
+    onProgress?: (progress: number) => void;
+    onComplete?: () => void;
     gameObjects: GameObject[];
     static instance: Engine;
     constructor(options?: EngineOptions);
     static create(options: EngineOptions): Engine;
+    startPhysics(options: EngineOptions): Promise<void>;
     update(delta: number): void;
     appendToDocument(): void;
-    addResource(name: string, url: string): void;
     addGameObject(gameObject: GameObject): void;
     removeGameObject(gameObject: GameObject): void;
-    loadResources(): void;
+    loadResources(): Promise<void>;
     onPhysicsUpdate(): void;
     onCollision(handle1: number, handle2: number, started: boolean): void;
 }

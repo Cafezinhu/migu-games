@@ -1,3 +1,3 @@
-import { Engine } from "./Engine";
-export declare function loadSprites(engine: Engine): void;
+import { ResolverManifest } from "pixi.js";
+export declare const manifest: ResolverManifest;
 export declare type Resources = {};

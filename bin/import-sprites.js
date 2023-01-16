@@ -45,13 +45,17 @@ Object.keys(sprites).reduce((acc, sprite, index) => {
     if(index == 1 || index == 0) return `import ${acc} from '../../../${sprites[acc]}';\nimport ${sprite} from '../../../${sprites[sprite]}';`;
     return `${acc}\nimport ${sprite} from '../../../${sprites[sprite]}';`;
 })}
-const sprites = {${Object.keys(sprites).reduce((acc, sprite) => `${acc}, ${sprite}`)}}
-export function loadSprites(engine){
-    Object.keys(sprites).forEach(sprite => {
-        engine.addResource(sprite, sprites[sprite]);
-    });
-    engine.loadResources();
-}`);
+
+export const manifest = {
+    bundles: [
+        {
+            name: 'assets',
+            assets: [
+                ${Object.keys(sprites).map(sprite => `{name: '${sprite}', srcs: ${sprite}}`).reduce((acc, sprite) => `${acc}, ${sprite}`)}
+            ]
+        }
+    ]
+};`);
 
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.d.ts'), `import { Engine } from "./Engine";
 import { LoaderResource } from 'pixi.js';

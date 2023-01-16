@@ -7,41 +7,26 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { Application, Loader } from "pixi.js";
+import { Application, Assets } from "pixi.js";
 import { Camera } from "./Camera";
 import { Input } from "./input/Input";
-import { loadSprites } from "./loadSprites";
+import { manifest } from "./loadSprites";
 import { Vector } from "./Vector";
 import { PhysicsPlugin } from "./physics/Physics";
 export class Engine {
     constructor(options) {
         if (!options.resizeTo)
             options.resizeTo = window;
+        this.onProgress = options.onProgress;
+        this.onComplete = options.onComplete;
         this.pixiApplication = new Application(Object.assign({}, options));
         this.view = this.pixiApplication.view;
         this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;
         this.autoResize = options.autoResize;
-        this.loader = new Loader();
-        this.onProgress = options.onProgress;
         this.gameObjects = [];
-        this.loader.onComplete.add(() => __awaiter(this, void 0, void 0, function* () {
-            yield PhysicsPlugin.init();
-            let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
-            this.physicsWorld = new PhysicsPlugin.World(gravity);
-            this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
-            clearInterval(this.physicsInterval);
-            this.physicsInterval = setInterval(() => {
-                this.onPhysicsUpdate();
-            });
-            this.pixiApplication.ticker.add(delta => this.update(delta));
-            if (options.onComplete)
-                options.onComplete();
-        }));
-        this.loader.onProgress.add((loader) => {
-            if (this.onProgress)
-                this.onProgress(loader.progress);
-        });
+        this.startPhysics(options);
+        this.pixiApplication.ticker.add(delta => this.update(delta));
         this.baseResolution = options.baseResolution ? options.baseResolution : new Vector(window.innerWidth, window.innerHeight);
         this.camera = new Camera({
             screenWidth: window.innerWidth,
@@ -70,12 +55,23 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
-        loadSprites(this);
     }
     static create(options) {
         Engine.instance = new Engine(options);
         Engine.instance.appendToDocument();
         return Engine.instance;
+    }
+    startPhysics(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield PhysicsPlugin.init();
+            let gravity = options.gravity ? new PhysicsPlugin.Vector2(options.gravity.x, options.gravity.y) : new PhysicsPlugin.Vector2(0, 9.81);
+            this.physicsWorld = new PhysicsPlugin.World(gravity);
+            this.physicsEventQueue = new PhysicsPlugin.EventQueue(true);
+            clearInterval(this.physicsInterval);
+            this.physicsInterval = setInterval(() => {
+                this.onPhysicsUpdate();
+            });
+        });
     }
     update(delta) {
         Array.from(Input.keys.values()).forEach(key => {
@@ -88,10 +84,8 @@ export class Engine {
         });
     }
     appendToDocument() {
+        //@ts-ignore
         document.body.appendChild(this.view);
-    }
-    addResource(name, url) {
-        this.loader.add(name, url);
     }
     addGameObject(gameObject) {
         this.gameObjects.push(gameObject);
@@ -102,10 +96,16 @@ export class Engine {
         });
     }
     loadResources() {
-        this.loader.load((l, resources) => {
-            this.resources = resources;
-            if (this.onComplete)
-                this.onComplete();
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Assets.init({ manifest });
+            const assets = yield Assets.loadBundle('assets', progress => {
+                this.onProgress(progress);
+                if (progress >= 1) {
+                    this.onComplete();
+                }
+            });
+            console.log('LOADED ASSETS:');
+            console.log(assets);
         });
     }
     onPhysicsUpdate() {
