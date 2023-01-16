@@ -55,6 +55,7 @@ export class Engine {
             this.camera.resize();
             this.camera.moveCenter(cameraPos.x, cameraPos.y);
         });
+        this.loadResources();
     }
     static create(options) {
         Engine.instance = new Engine(options);
