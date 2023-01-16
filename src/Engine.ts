@@ -149,10 +149,8 @@ export class Engine{
         await Assets.init({manifest});
         this.resources = await Assets.loadBundle('assets', progress => {
             this.onProgress(progress);
-            if(progress >= 1){
-                this.onComplete();
-            }
         });
+        this.onComplete();
     }
 
     onPhysicsUpdate(){

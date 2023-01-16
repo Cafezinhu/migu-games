@@ -101,10 +101,8 @@ export class Engine {
             yield Assets.init({ manifest });
             this.resources = yield Assets.loadBundle('assets', progress => {
                 this.onProgress(progress);
-                if (progress >= 1) {
-                    this.onComplete();
-                }
             });
+            this.onComplete();
         });
     }
     onPhysicsUpdate() {
