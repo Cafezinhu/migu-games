@@ -147,16 +147,12 @@ export class Engine{
 
     async loadResources(){
         await Assets.init({manifest});
-        const assets = await Assets.loadBundle('assets', progress => {
+        this.resources = await Assets.loadBundle('assets', progress => {
             this.onProgress(progress);
             if(progress >= 1){
                 this.onComplete();
             }
         });
-        console.log('LOADED ASSETS:');
-        
-        console.log(assets);
-        
     }
 
     onPhysicsUpdate(){

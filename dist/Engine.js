@@ -99,14 +99,12 @@ export class Engine {
     loadResources() {
         return __awaiter(this, void 0, void 0, function* () {
             yield Assets.init({ manifest });
-            const assets = yield Assets.loadBundle('assets', progress => {
+            this.resources = yield Assets.loadBundle('assets', progress => {
                 this.onProgress(progress);
                 if (progress >= 1) {
                     this.onComplete();
                 }
             });
-            console.log('LOADED ASSETS:');
-            console.log(assets);
         });
     }
     onPhysicsUpdate() {
