@@ -268,7 +268,7 @@ minimatch@3.0.4:
 
 "pixi-viewport@https://github.com/Cafezinhu/pixi-viewport":
   version "4.38.0"
-  resolved "https://github.com/Cafezinhu/pixi-viewport#593abcd927305ca26f35ddf76702aeea77e1cd78"
+  resolved "https://github.com/Cafezinhu/pixi-viewport#cc883a78e6e9874aeec0ac2096b12c8ecca3ef8e"
 
 pixi.js@^7.1.0:
   version "7.1.0"
