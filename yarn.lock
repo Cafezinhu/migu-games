@@ -266,10 +266,9 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
-pixi-viewport@^4.38.0:
+"pixi-viewport@https://github.com/Cafezinhu/pixi-viewport":
   version "4.38.0"
-  resolved "https://registry.yarnpkg.com/pixi-viewport/-/pixi-viewport-4.38.0.tgz#7deeec65a75046315638999d0379ff54ec26bdc3"
-  integrity sha512-TGj6Ymk/BU0wZcW4c1eP4e96aETJmB7jhjBflMjQU06/ZHPy7qHw8JyDqZ+C84SEg0ewCHjDNZ2vgR3Kjk74BQ==
+  resolved "https://github.com/Cafezinhu/pixi-viewport#593abcd927305ca26f35ddf76702aeea77e1cd78"
 
 pixi.js@^7.1.0:
   version "7.1.0"
