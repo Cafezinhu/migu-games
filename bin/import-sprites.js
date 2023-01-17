@@ -60,7 +60,7 @@ export const manifest = {
 };`);
 
     fs.writeFileSync(path.join(process.cwd(), 'node_modules', 'migu-games', 'dist', 'loadSprites.d.ts'), `import { Engine } from "./Engine";
-import { LoaderResource } from 'pixi.js';
+import { Texture } from 'pixi.js';
 export declare function loadSprites(engine: Engine): void;
 export declare type Resources = {${Object.keys(sprites).map(sprite => `'${sprite}': Texture`)}}`);
 });
