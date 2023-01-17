@@ -22,7 +22,7 @@ export interface EngineOptions extends IApplicationOptions{
 
 export class Engine{
     pixiApplication: Application;
-    view: ICanvas;
+    view: HTMLCanvasElement;
     stage: Container;
     autoResize: boolean;
     baseResolution: Vector;
@@ -47,6 +47,7 @@ export class Engine{
         this.onProgress = options.onProgress;
         this.onComplete = options.onComplete;
         this.pixiApplication = new Application({...options});
+        //@ts-ignore
         this.view = this.pixiApplication.view;
         this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;

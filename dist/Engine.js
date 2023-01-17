@@ -20,6 +20,7 @@ export class Engine {
         this.onProgress = options.onProgress;
         this.onComplete = options.onComplete;
         this.pixiApplication = new Application(Object.assign({}, options));
+        //@ts-ignore
         this.view = this.pixiApplication.view;
         this.view.addEventListener('contextmenu', e => e.preventDefault());
         this.stage = this.pixiApplication.stage;

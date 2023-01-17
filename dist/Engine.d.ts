@@ -1,4 +1,4 @@
-import { Application, Container, IApplicationOptions, ICanvas } from "pixi.js";
+import { Application, Container, IApplicationOptions } from "pixi.js";
 import { Camera } from "./Camera";
 import { GameObject } from "./gameObject/GameObject";
 import { Input } from "./input/Input";
@@ -18,7 +18,7 @@ export interface EngineOptions extends IApplicationOptions {
 }
 export declare class Engine {
     pixiApplication: Application;
-    view: ICanvas;
+    view: HTMLCanvasElement;
     stage: Container;
     autoResize: boolean;
     baseResolution: Vector;
