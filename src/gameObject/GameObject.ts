@@ -21,7 +21,6 @@ export class GameObject{
     children: GameObject[];
     protected _updateFunction: any;
     tag?: string;
-    destroyed: boolean;
     
     constructor(options: GameObjectOptions){
         this.children = [];

@@ -17,7 +17,6 @@ export declare class GameObject {
     children: GameObject[];
     protected _updateFunction: any;
     tag?: string;
-    destroyed: boolean;
     constructor(options: GameObjectOptions);
     addChild(child: GameObject): void;
     removeChild(child: GameObject, addToCamera?: boolean): void;
