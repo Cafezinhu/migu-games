@@ -266,9 +266,16 @@ minimatch@3.0.4:
   dependencies:
     brace-expansion "^1.1.7"
 
+penner@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/penner/-/penner-0.1.3.tgz#0b8b482d4e9b39af2f3d7c37592229b8acc29705"
+  integrity sha512-UzkaC2L6d9J1VzJAFH0TQwuKE/rerpTZkgW6aPLVeu/LdjWn6rnuY9lXcVN1AE9tZVfHrsJ2gZOBsRjpQECNHA==
+
 "pixi-viewport@https://github.com/Cafezinhu/pixi-viewport":
   version "4.38.0"
-  resolved "https://github.com/Cafezinhu/pixi-viewport#cc883a78e6e9874aeec0ac2096b12c8ecca3ef8e"
+  resolved "https://github.com/Cafezinhu/pixi-viewport#0914cb0166472dd65e364341169bbe358428c986"
+  dependencies:
+    penner "^0.1.3"
 
 pixi.js@^7.1.0:
   version "7.1.0"

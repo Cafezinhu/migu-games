@@ -17,10 +17,11 @@ export type GameObjectOptions = {
 export class GameObject{
     container: Container;
     engine: Engine;
-    parent: GameObject;
+    private _gameObjectParent: GameObject;
     children: GameObject[];
-    protected updateFunction: any;
+    protected _updateFunction: any;
     tag?: string;
+    destroyed: boolean;
     
     constructor(options: GameObjectOptions){
         this.children = [];
@@ -43,7 +44,37 @@ export class GameObject{
     addChild(child: GameObject){
         this.children.push(child);
         this.container.addChild(child.container);
-        child.parent = this;
+
+        if(child._gameObjectParent){
+            child._gameObjectParent.removeChild(child, false);
+        }
+        child._gameObjectParent = this;
+    }
+
+    removeChild(child: GameObject, addToCamera = true){
+        this.children = this.children.filter(c => {
+            return c != child;
+        });
+        child._gameObjectParent = null;
+        if(child.container && addToCamera)
+            this.engine.camera.addChild(child.container);
+    }
+
+    set parent(p: GameObject){
+        if(this._gameObjectParent){
+            this._gameObjectParent.removeChild(this, false);
+        }
+        this._gameObjectParent = p;
+        if(p == null){
+            this.engine.camera.addChild(this.container);
+        }else{
+            p.children.push(this);
+            p.container.addChild(this.container);
+        }
+    }
+
+    get parent(){
+        return this._gameObjectParent;
     }
 
     protected endOptionsConfiguration(options: GameObjectOptions){
@@ -151,9 +182,10 @@ export class GameObject{
     }
 
     destroy(){
+        this.children.forEach(child => child.destroy());
         this.engine.removeGameObject(this);
-        if(this.updateFunction) 
-            this.engine.pixiApplication.ticker.remove(this.updateFunction);
+        if(this._updateFunction) 
+            this.engine.pixiApplication.ticker.remove(this._updateFunction);
         this.container.destroy();
     }
 }
