@@ -13,12 +13,16 @@ export declare type GameObjectOptions = {
 export declare class GameObject {
     container: Container;
     engine: Engine;
-    parent: GameObject;
+    private _gameObjectParent;
     children: GameObject[];
-    protected updateFunction: any;
+    protected _updateFunction: any;
     tag?: string;
+    destroyed: boolean;
     constructor(options: GameObjectOptions);
     addChild(child: GameObject): void;
+    removeChild(child: GameObject, addToCamera?: boolean): void;
+    set parent(p: GameObject);
+    get parent(): GameObject;
     protected endOptionsConfiguration(options: GameObjectOptions): void;
     set position(position: Vector);
     get position(): Vector;
