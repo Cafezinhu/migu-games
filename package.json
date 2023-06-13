@@ -26,7 +26,7 @@
     "@types/offscreencanvas": "^2019.6.4",
     "@types/victor": "^1.1.0",
     "pixi-viewport": "https://github.com/Cafezinhu/pixi-viewport",
-    "pixi.js": "^7.1.0",
+    "pixi.js": "^7.2.4",
     "recursive-readdir": "^2.2.2",
     "victor": "^1.1.0"
   },
