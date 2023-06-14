@@ -1,4 +1,4 @@
-import {Resource, Sprite as PIXISprite, Texture} from 'pixi.js';
+import {Resource, Sprite as PIXISprite, Texture, ColorSource} from 'pixi.js';
 import { GameObject, type GameObjectOptions } from "./GameObject";
 
 export type SpriteOptions = GameObjectOptions & {
@@ -18,7 +18,7 @@ export class Sprite extends GameObject{
         return this.container.tint;
     }
 
-    set tint(tint: number){
+    set tint(tint: ColorSource){
         this.container.tint = tint;
     }
 }
