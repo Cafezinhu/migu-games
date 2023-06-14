@@ -5,7 +5,7 @@ import { GameObject, GameObjectOptions } from "./GameObject";
 
 export type RigidBodyOptions = GameObjectOptions & {
     colliderData?: ColliderData;
-    rigidBodyType?: 'fixed' | 'dynamic' | 'kinematicVelocityBased' | 'kinematicPositionBased';
+    rigidBodyType?: 'fixed' | 'dynamic';
     mass?: number;
 }
 
@@ -17,11 +17,7 @@ export class RigidBody extends GameObject {
     constructor(options: RigidBodyOptions) {
         super(options);
         let rb: RigidBodyDesc;
-        if(options.rigidBodyType == 'kinematicPositionBased'){
-            rb = PhysicsPlugin.RigidBodyDesc.kinematicPositionBased();
-        }else if(options.rigidBodyType == 'kinematicVelocityBased'){
-            rb = PhysicsPlugin.RigidBodyDesc.kinematicVelocityBased();
-        }else if(options.rigidBodyType == 'fixed'){
+        if(options.rigidBodyType == 'fixed'){
             rb = PhysicsPlugin.RigidBodyDesc.fixed();
         }else{
             rb = PhysicsPlugin.RigidBodyDesc.dynamic();

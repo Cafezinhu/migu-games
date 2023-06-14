@@ -4,13 +4,7 @@ export class RigidBody extends GameObject {
     constructor(options) {
         super(options);
         let rb;
-        if (options.rigidBodyType == 'kinematicPositionBased') {
-            rb = PhysicsPlugin.RigidBodyDesc.kinematicPositionBased();
-        }
-        else if (options.rigidBodyType == 'kinematicVelocityBased') {
-            rb = PhysicsPlugin.RigidBodyDesc.kinematicVelocityBased();
-        }
-        else if (options.rigidBodyType == 'fixed') {
+        if (options.rigidBodyType == 'fixed') {
             rb = PhysicsPlugin.RigidBodyDesc.fixed();
         }
         else {
