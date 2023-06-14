@@ -4,7 +4,7 @@ import { Vector } from "../Vector";
 import { GameObject, GameObjectOptions } from "./GameObject";
 export declare type RigidBodyOptions = GameObjectOptions & {
     colliderData?: ColliderData;
-    rigidBodyType?: 'fixed' | 'dynamic';
+    rigidBodyType?: 'fixed' | 'dynamic' | 'kinematicVelocityBased' | 'kinematicPositionBased';
     mass?: number;
 };
 export declare class RigidBody extends GameObject {

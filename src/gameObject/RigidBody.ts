@@ -1,11 +1,11 @@
-import { Collider, RigidBody as RapierRigidBody } from "@dimforge/rapier2d-compat";
+import { Collider, RigidBody as RapierRigidBody, RigidBodyDesc } from "@dimforge/rapier2d-compat";
 import { ColliderData, PhysicsPlugin } from "../physics/Physics";
 import { Vector } from "../Vector";
 import { GameObject, GameObjectOptions } from "./GameObject";
 
 export type RigidBodyOptions = GameObjectOptions & {
     colliderData?: ColliderData;
-    rigidBodyType?: 'fixed' | 'dynamic';
+    rigidBodyType?: 'fixed' | 'dynamic' | 'kinematicVelocityBased' | 'kinematicPositionBased';
     mass?: number;
 }
 
@@ -16,7 +16,17 @@ export class RigidBody extends GameObject {
 
     constructor(options: RigidBodyOptions) {
         super(options);
-        let rb = options.rigidBodyType == 'fixed' ? PhysicsPlugin.RigidBodyDesc.fixed() : PhysicsPlugin.RigidBodyDesc.dynamic();
+        let rb: RigidBodyDesc;
+        if(options.rigidBodyType == 'kinematicPositionBased'){
+            rb = PhysicsPlugin.RigidBodyDesc.kinematicPositionBased();
+        }else if(options.rigidBodyType == 'kinematicVelocityBased'){
+            rb = PhysicsPlugin.RigidBodyDesc.kinematicVelocityBased();
+        }else if(options.rigidBodyType == 'fixed'){
+            rb = PhysicsPlugin.RigidBodyDesc.fixed();
+        }else{
+            rb = PhysicsPlugin.RigidBodyDesc.dynamic();
+        }
+
         rb.mass = options.mass ? options.mass : 1;
         this.rigidBody = this.engine.physicsWorld.createRigidBody(rb);
 

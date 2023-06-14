@@ -3,7 +3,19 @@ import { GameObject } from "./GameObject";
 export class RigidBody extends GameObject {
     constructor(options) {
         super(options);
-        let rb = options.rigidBodyType == 'fixed' ? PhysicsPlugin.RigidBodyDesc.fixed() : PhysicsPlugin.RigidBodyDesc.dynamic();
+        let rb;
+        if (options.rigidBodyType == 'kinematicPositionBased') {
+            rb = PhysicsPlugin.RigidBodyDesc.kinematicPositionBased();
+        }
+        else if (options.rigidBodyType == 'kinematicVelocityBased') {
+            rb = PhysicsPlugin.RigidBodyDesc.kinematicVelocityBased();
+        }
+        else if (options.rigidBodyType == 'fixed') {
+            rb = PhysicsPlugin.RigidBodyDesc.fixed();
+        }
+        else {
+            rb = PhysicsPlugin.RigidBodyDesc.dynamic();
+        }
         rb.mass = options.mass ? options.mass : 1;
         this.rigidBody = this.engine.physicsWorld.createRigidBody(rb);
         if (options.colliderData) {
