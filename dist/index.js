@@ -13,4 +13,5 @@ import { TilingSprite } from "./gameObject/TilingSprite";
 import { AnimatedSprite } from "./gameObject/AnimatedSprite";
 import { PhysicsPlugin, Physics } from "./physics/Physics";
 import { RigidBody } from './gameObject/RigidBody';
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, PIXI, PhysicsPlugin, Physics, RigidBody };
+import { Area } from './gameObject/Area';
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, PIXI, PhysicsPlugin, Physics, RigidBody, Area };
