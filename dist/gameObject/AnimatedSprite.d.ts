@@ -11,4 +11,5 @@ export declare class AnimatedSprite extends GameObject {
     constructor(options: AnimatedSpriteOptions);
     set animationSpeed(speed: number);
     get animationSpeed(): number;
+    setAnimation(textures: string[] | (Texture<Resource> | undefined)[]): void;
 }

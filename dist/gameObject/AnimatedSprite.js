@@ -23,4 +23,12 @@ export class AnimatedSprite extends GameObject {
     get animationSpeed() {
         return this.container.animationSpeed;
     }
+    setAnimation(textures) {
+        const t = textures.map(sprite => {
+            if (typeof (sprite) == 'string')
+                return Texture.from(sprite);
+            return sprite;
+        });
+        this.container.textures = t;
+    }
 }
