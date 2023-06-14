@@ -1,4 +1,5 @@
 import { PhysicsPlugin } from "../physics/Physics";
+import { Vector } from "../Vector";
 import { GameObject } from "./GameObject";
 export class RigidBody extends GameObject {
     constructor(options) {
@@ -75,6 +76,25 @@ export class RigidBody extends GameObject {
     }
     get visible() {
         return super.visible;
+    }
+    set velocity(v) {
+        this.rigidBody.setLinvel({ x: v.x, y: v.y }, true);
+    }
+    get velocity() {
+        const v = this.rigidBody.linvel();
+        return new Vector(v.x, v.y);
+    }
+    set velocityX(x) {
+        this.rigidBody.setLinvel({ x, y: this.velocityY }, true);
+    }
+    set velocityY(y) {
+        this.rigidBody.setLinvel({ x: this.velocityX, y }, true);
+    }
+    get velocityX() {
+        return this.rigidBody.linvel().x;
+    }
+    get velocityY() {
+        return this.rigidBody.linvel().y;
     }
     onCollision(gameObject, contacts, started) { }
     destroy() {

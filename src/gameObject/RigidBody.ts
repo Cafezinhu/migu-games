@@ -105,6 +105,31 @@ export class RigidBody extends GameObject {
         return super.visible;
     }
 
+    set velocity(v: Vector){
+        this.rigidBody.setLinvel({x: v.x, y: v.y}, true);
+    }
+
+    get velocity(){
+        const v = this.rigidBody.linvel();
+        return new Vector(v.x, v.y);
+    }
+
+    set velocityX(x: number){
+        this.rigidBody.setLinvel({x, y: this.velocityY}, true);
+    }
+
+    set velocityY(y: number){
+        this.rigidBody.setLinvel({x: this.velocityX, y}, true);
+    }
+
+    get velocityX(){
+        return this.rigidBody.linvel().x;
+    }
+
+    get velocityY(){
+        return this.rigidBody.linvel().y;
+    }
+
     onCollision(gameObject: RigidBody | null, contacts: Vector[], started: boolean){}
 
     destroy(){

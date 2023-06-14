@@ -25,6 +25,12 @@ export declare class RigidBody extends GameObject {
     set scale(_: any);
     set visible(value: boolean);
     get visible(): boolean;
+    set velocity(v: Vector);
+    get velocity(): Vector;
+    set velocityX(x: number);
+    set velocityY(y: number);
+    get velocityX(): number;
+    get velocityY(): number;
     onCollision(gameObject: RigidBody | null, contacts: Vector[], started: boolean): void;
     destroy(): void;
 }
