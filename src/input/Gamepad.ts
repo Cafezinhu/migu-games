@@ -42,8 +42,6 @@ export const MiguGamepad = {
     },
     L: 'gamepad4',
     R: 'gamepad5',
-    ZL: 'gamepad6',
-    ZR: 'gamepad7',
     L2: 'gamepad6',
     R2: 'gamepad7',
     SelectStart: {

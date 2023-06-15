@@ -3,8 +3,9 @@ export declare class InputKey {
     pressedOnThisFrame: boolean;
     releasedOnThisFrame: boolean;
     status: number;
+    value: number;
     constructor();
     update(): void;
-    press(): void;
+    press(value: number): void;
     release(): void;
 }

@@ -3,6 +3,7 @@ export class InputKey {
     pressedOnThisFrame: boolean;
     releasedOnThisFrame: boolean;
     status: number;
+    value: number;
 
     constructor(){
         this.release();
@@ -24,12 +25,13 @@ export class InputKey {
         }
     }
 
-    press(){
+    press(value: number){
         if(this.isPressed) return;
         this.isPressed = true;
         this.pressedOnThisFrame = false;
         this.releasedOnThisFrame = false;
         this.status = 0;
+        this.value = value;
     }
 
     release(){
@@ -37,5 +39,6 @@ export class InputKey {
         this.pressedOnThisFrame = false;
         this.releasedOnThisFrame = false;
         this.status = -1;
+        this.value = 0;
     }
 }

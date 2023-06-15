@@ -7,8 +7,6 @@ export declare const MiguGamepad: {
     };
     L: string;
     R: string;
-    ZL: string;
-    ZR: string;
     L2: string;
     R2: string;
     SelectStart: {

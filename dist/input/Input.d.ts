@@ -13,9 +13,10 @@ export declare class Input {
     static isKeyPressed(key: string): boolean;
     static pressedOnThisFrame(key: string): boolean;
     static releasedOnThisFrame(key: string): boolean;
-    static getAxis(negative: string, positive: string): 0 | 1 | -1;
-    static getVector(left: string, right: string, up: string, down: string): Vector;
-    static pressKey(key: string): void;
+    static axisFromKeys(negative: string, positive: string): number;
+    static vectorFromKeys(left: string, right: string, up: string, down: string): Vector;
+    static valueFromKey(key: string): number;
+    static pressKey(key: string, value?: number): void;
     static releaseKey(key: string): void;
     static getKey(key: string): InputKey;
     static createKey(key: string): InputKey;

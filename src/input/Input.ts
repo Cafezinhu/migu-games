@@ -8,11 +8,13 @@ export class Input{
     static ignoreOffset: boolean;
     static keys: Map<string, InputKey>;
     static maps: Map<string, string[]>;
+    // static axes: Map<string, (string[] | number)[]>
     constructor(engine: Engine){
         Input.engine = engine;
         Input.mousePos = new Vector(0,0);
         Input.ignoreOffset = false;
         Input.keys = new Map();
+        // Input.axis = new Map();
         Input.maps = new Map();
         engine.view.addEventListener('mousemove', (e: MouseEvent) => {
             if(!Input.ignoreOffset){
@@ -66,22 +68,22 @@ export class Input{
         return inputKey.releasedOnThisFrame;
     }
 
-    static getAxis(negative: string, positive: string){
+    static axisFromKeys(negative: string, positive: string){
         const negativeKey = Input.getKey(negative);
         const positiveKey = Input.getKey(positive);
 
         if(positiveKey.isPressed){
-            return 1;
+            return positiveKey.value;
         }else if(negativeKey.isPressed){
-            return -1;
+            return -negativeKey.value;
         }else{
             return 0;
         }
     }
 
-    static getVector(left: string, right: string, up: string, down: string){
-        const x = Input.getAxis(left, right);
-        const y = Input.getAxis(up, down);
+    static vectorFromKeys(left: string, right: string, up: string, down: string){
+        const x = Input.axisFromKeys(left, right);
+        const y = Input.axisFromKeys(up, down);
         let vector = new Vector(x, y);
         if(vector.magnitude() > 1){
             vector = vector.normalize();
@@ -89,16 +91,21 @@ export class Input{
         return vector;
     }
 
-    static pressKey(key: string){
+    static valueFromKey(key: string){
+        const k = Input.getKey(key);
+        return k.value;
+    }
+
+    static pressKey(key: string, value = 1){
         const inputKey = Input.getKey(key);
 
-        inputKey.press();
+        inputKey.press(value);
 
         Input.maps.forEach((keys, mapName) => {
             keys.forEach(k => {
                 if (cleanKeyName(k) == cleanKeyName(key)){
                     const inputKey = Input.getKey(mapName);
-                    inputKey.press();
+                    inputKey.press(value);
                 }
             })
         });
@@ -146,7 +153,7 @@ export class Input{
         gamepad.buttons.forEach((button, index) => {
             const key = Input.getKey(`gamepad${index}`);
             if(key.isPressed && !button.pressed) Input.releaseKey(`gamepad${index}`);
-            else if(!key.isPressed && button.pressed) Input.pressKey(`gamepad${index}`);
+            else if(!key.isPressed && button.pressed || button.value != 0 && button.value != 1) Input.pressKey(`gamepad${index}`, button.value);
         });
     }
 }
