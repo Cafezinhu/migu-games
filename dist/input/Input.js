@@ -78,7 +78,7 @@ export class Input {
         inputKey.press();
         Input.maps.forEach((keys, mapName) => {
             keys.forEach(k => {
-                if (k == key) {
+                if (cleanKeyName(key) == key) {
                     const inputKey = Input.getKey(mapName);
                     inputKey.press();
                 }
@@ -90,7 +90,7 @@ export class Input {
         inputKey.release();
         Input.maps.forEach((keys, mapName) => {
             keys.forEach(k => {
-                if (k == key) {
+                if (cleanKeyName(key) == key) {
                     const inputKey = Input.getKey(mapName);
                     inputKey.release();
                 }
@@ -98,9 +98,7 @@ export class Input {
         });
     }
     static getKey(key) {
-        key = key.toLowerCase();
-        if (key == 'space')
-            key = ' ';
+        key = cleanKeyName(key);
         const keyInput = Input.keys.get(key);
         if (keyInput)
             return keyInput;
@@ -115,4 +113,10 @@ export class Input {
         Input.createKey(name);
         Input.maps.set(name, keys);
     }
+}
+function cleanKeyName(key) {
+    key = key.toLowerCase();
+    if (key == 'space')
+        key = ' ';
+    return key;
 }
