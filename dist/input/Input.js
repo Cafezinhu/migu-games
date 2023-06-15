@@ -121,10 +121,12 @@ export class Input {
         Input.maps.set(name, keys.map(key => cleanKeyName(key)));
     }
     static mapAxis(name, axes) {
-        if (typeof (axes) == "object" && axes.length != 2) {
-            console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
-            return;
-        }
+        axes.forEach(axis => {
+            if (typeof (axis) == "object" && axis.length != 2) {
+                console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.\nCurrent value: ${JSON.stringify(axis)}`);
+                return;
+            }
+        });
         Input.axes.set(name, axes);
     }
     static getAxis(name) {
@@ -154,10 +156,12 @@ export class Input {
         }
     }
     static mapVector(name, vectors) {
-        if (typeof (vectors) == "object" && vectors.length != 4) {
-            console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.`);
-            return;
-        }
+        vectors.forEach(vector => {
+            if (typeof (vector) == "object" && vector.length != 4) {
+                console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.\nCurrent value: ${JSON.stringify(vector)}`);
+                return;
+            }
+        });
         Input.vectors.set(name, vectors);
     }
     static getVector(name) {
