@@ -33,7 +33,7 @@
 //     RightStickYAxis: 3
 // }
 
-export const GamepadButtons = {
+export const MiguGamepad = {
     Button: {
         North: 'gamepad3',
         South: 'gamepad0',

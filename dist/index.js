@@ -15,5 +15,5 @@ import { PhysicsPlugin, Physics } from "./physics/Physics";
 import { RigidBody } from './gameObject/RigidBody';
 import { Area } from './gameObject/Area';
 import { Key } from "ts-key-enum";
-import { GamepadButtons } from "./input/Gamepad";
-export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, PIXI, PhysicsPlugin, Physics, RigidBody, Area, Key, GamepadButtons };
+import { MiguGamepad } from "./input/Gamepad";
+export { Engine, GameObject, Sprite, TilingSprite, AnimatedSprite, Vector, Anchor, Input, CollisionArea, CircleCollisionArea, RectangleCollisionArea, CapsuleCollisionArea, PIXI, PhysicsPlugin, Physics, RigidBody, Area, Key, MiguGamepad };
