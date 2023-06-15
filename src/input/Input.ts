@@ -1,5 +1,6 @@
 import { Engine } from "../Engine";
 import { Vector } from "../Vector";
+import { MiguGamepad } from "./Gamepad";
 import { InputKey } from "./InputKey";
 
 export class Input{
@@ -9,7 +10,7 @@ export class Input{
     static keys: Map<string, InputKey>;
     static maps: Map<string, string[]>;
     static axes: Map<string, (string[] | number)[]>;
-    static vectors: Map<string, (string[] | string)>;
+    static vectors: Map<string, (string[] | string)[]>;
     constructor(engine: Engine){
         Input.engine = engine;
         Input.mousePos = new Vector(0,0);
@@ -148,6 +149,10 @@ export class Input{
     }
 
     static mapAxis(name: string, axes: (string[] | number)[]){
+        if(typeof(axes) == "object" && axes.length != 2){
+            console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
+            return;
+        }
         Input.axes.set(name, axes);
     }
 
@@ -160,7 +165,10 @@ export class Input{
                     const gamepad = navigator.getGamepads()[0];
                     value = gamepad.axes[a];
                 }else{
-                    value = Input.axisFromKeys(a[0], a[1]);
+                    if(a.length == 2)
+                        value = Input.axisFromKeys(a[0], a[1]);
+                    else
+                        console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
                 }
                 if(value != 0) return value;
             });
@@ -169,6 +177,43 @@ export class Input{
         }else{
             console.error(`Axis ${name} not found!`);
             return 0;
+        }
+    }
+
+    static mapVector(name: string, vectors: (string[] | string)[]){
+        if(typeof(vectors) == "object" && vectors.length != 4){
+            console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.`);
+            return;
+        }
+        Input.vectors.set(name, vectors);
+    }
+
+    static getVector(name: string){
+        const vector = Input.vectors.get(name);
+        if(vector){
+            vector.forEach(v => {
+                let value = Vector.Zero();
+                if(typeof(v) == "string"){
+                    const gamepad = navigator.getGamepads()[0];
+                    if(v == MiguGamepad.LeftStick){
+                        value = new Vector(gamepad.axes[0], gamepad.axes[1]);
+                    }else if(v == MiguGamepad.RightStick){
+                        value = new Vector(gamepad.axes[2], gamepad.axes[3]);
+                    }
+                }else{
+                    if(v.length == 4){
+                        value = Input.vectorFromKeys(v[0], v[1], v[2], v[3]);
+                    }else{
+                        console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.`);
+                    }
+                }
+                if(value.magnitude() != 0) return value;
+            });
+
+            return Vector.Zero();
+        }else{
+            console.error(`Vector ${name} not found!`);
+            return Vector.Zero();
         }
     }
 
