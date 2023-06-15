@@ -7,11 +7,13 @@ export class Input{
     static mousePos: Vector;
     static ignoreOffset: boolean;
     static keys: Map<string, InputKey>;
+    static maps: Map<string, string[]>;
     constructor(engine: Engine){
         Input.engine = engine;
         Input.mousePos = new Vector(0,0);
         Input.ignoreOffset = false;
         Input.keys = new Map();
+        Input.maps = new Map();
         engine.view.addEventListener('mousemove', (e: MouseEvent) => {
             if(!Input.ignoreOffset){
                 const world = engine.camera.toWorld(e.offsetX, e.offsetY);
@@ -91,12 +93,30 @@ export class Input{
         const inputKey = Input.getKey(key);
 
         inputKey.press();
+
+        Input.maps.forEach((keys, mapName) => {
+            keys.forEach(k => {
+                if (k == key){
+                    const inputKey = Input.getKey(mapName);
+                    inputKey.press();
+                }
+            })
+        });
     }
 
     static releaseKey(key: string){
         const inputKey = Input.getKey(key);
 
         inputKey.release();
+
+        Input.maps.forEach((keys, mapName) => {
+            keys.forEach(k => {
+                if (k == key){
+                    const inputKey = Input.getKey(mapName);
+                    inputKey.release();
+                }
+            })
+        });
     }
 
     static getKey(key: string){
@@ -112,5 +132,10 @@ export class Input{
         const newInputKey = new InputKey();
         Input.keys.set(key, newInputKey);
         return newInputKey;
+    }
+
+    static mapKeys(name: string, keys: string[]){
+        Input.createKey(name);
+        Input.maps.set(name, keys);
     }
 }

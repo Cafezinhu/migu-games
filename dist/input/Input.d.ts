@@ -6,6 +6,7 @@ export declare class Input {
     static mousePos: Vector;
     static ignoreOffset: boolean;
     static keys: Map<string, InputKey>;
+    static maps: Map<string, string[]>;
     constructor(engine: Engine);
     static mouseEventToVector(e: MouseEvent): Vector;
     static touchEventToVector(e: TouchEvent): Vector;
@@ -18,4 +19,5 @@ export declare class Input {
     static releaseKey(key: string): void;
     static getKey(key: string): InputKey;
     static createKey(key: string): InputKey;
+    static mapKeys(name: string, keys: string[]): void;
 }
