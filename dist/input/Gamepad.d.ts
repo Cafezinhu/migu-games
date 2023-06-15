@@ -25,4 +25,10 @@ export declare const MiguGamepad: {
     };
     System: string;
     Touchpad: string;
+    LeftStick: string;
+    LeftStickX: number;
+    LeftStickY: number;
+    RightStick: string;
+    RightStickX: number;
+    RightStickY: number;
 };

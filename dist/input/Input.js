@@ -1,13 +1,13 @@
 import { Vector } from "../Vector";
 import { InputKey } from "./InputKey";
 export class Input {
-    // static axes: Map<string, (string[] | number)[]>
     constructor(engine) {
         Input.engine = engine;
         Input.mousePos = new Vector(0, 0);
         Input.ignoreOffset = false;
         Input.keys = new Map();
-        // Input.axis = new Map();
+        Input.axes = new Map();
+        Input.vectors = new Map();
         Input.maps = new Map();
         engine.view.addEventListener('mousemove', (e) => {
             if (!Input.ignoreOffset) {
@@ -118,6 +118,31 @@ export class Input {
     static mapKeys(name, keys) {
         Input.createKey(cleanKeyName(name));
         Input.maps.set(name, keys.map(key => cleanKeyName(key)));
+    }
+    static mapAxis(name, axes) {
+        Input.axes.set(name, axes);
+    }
+    static getAxis(name) {
+        const axis = Input.axes.get(name);
+        if (axis) {
+            axis.forEach(a => {
+                let value = 0;
+                if (typeof (a) == 'number') {
+                    const gamepad = navigator.getGamepads()[0];
+                    value = gamepad.axes[a];
+                }
+                else {
+                    value = Input.axisFromKeys(a[0], a[1]);
+                }
+                if (value != 0)
+                    return value;
+            });
+            return 0;
+        }
+        else {
+            console.error(`Axis ${name} not found!`);
+            return 0;
+        }
     }
     static updateGamepad() {
         const gamepad = navigator.getGamepads()[0];

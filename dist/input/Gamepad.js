@@ -58,5 +58,11 @@ export const MiguGamepad = {
         Right: 'gamepad15'
     },
     System: 'gamepad16',
-    Touchpad: 'gamepad17'
+    Touchpad: 'gamepad17',
+    LeftStick: 'gamepadleftstick',
+    LeftStickX: 0,
+    LeftStickY: 1,
+    RightStick: 'gamepadrightstick',
+    RightStickX: 2,
+    RightStickY: 3
 };
