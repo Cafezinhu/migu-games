@@ -78,7 +78,7 @@ export class Input {
         inputKey.press();
         Input.maps.forEach((keys, mapName) => {
             keys.forEach(k => {
-                if (cleanKeyName(k) == key) {
+                if (cleanKeyName(k) == cleanKeyName(key)) {
                     const inputKey = Input.getKey(mapName);
                     inputKey.press();
                 }
@@ -90,7 +90,7 @@ export class Input {
         inputKey.release();
         Input.maps.forEach((keys, mapName) => {
             keys.forEach(k => {
-                if (cleanKeyName(k) == key) {
+                if (cleanKeyName(k) == cleanKeyName(key)) {
                     const inputKey = Input.getKey(mapName);
                     inputKey.release();
                 }
