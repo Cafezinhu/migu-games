@@ -20,4 +20,5 @@ export declare class Input {
     static getKey(key: string): InputKey;
     static createKey(key: string): InputKey;
     static mapKeys(name: string, keys: string[]): void;
+    static updateGamepad(): void;
 }

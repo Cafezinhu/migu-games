@@ -84,6 +84,7 @@ export class Engine {
             if (gameObject.update)
                 gameObject.update(delta);
         });
+        Input.updateGamepad();
     }
     appendToDocument() {
         //@ts-ignore

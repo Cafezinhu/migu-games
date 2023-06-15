@@ -137,6 +137,18 @@ export class Input{
         Input.createKey(cleanKeyName(name));
         Input.maps.set(name, keys.map(key => cleanKeyName(key)));
     }
+
+    static updateGamepad(){
+        const gamepad = navigator.getGamepads()[0];
+
+        if(!gamepad) return;
+
+        gamepad.buttons.forEach((button, index) => {
+            const key = Input.keys.get(`gamepad${index}`);
+            if(key.isPressed && !button.pressed) key.release();
+            else if(!key.isPressed && button.pressed) key.press();
+        });
+    }
 }
 
 function cleanKeyName(key: string){
