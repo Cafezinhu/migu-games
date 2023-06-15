@@ -9,8 +9,8 @@ export class Input{
     static ignoreOffset: boolean;
     static keys: Map<string, InputKey>;
     static maps: Map<string, string[]>;
-    static axes: Map<string, (string[] | number)[]>;
-    static vectors: Map<string, (string[] | string)[]>;
+    static axes: Map<string, {axes: (string[] | number)[], deadzone: number}>;
+    static vectors: Map<string, {vectors: (string[] | string)[], deadzone: number}>;
     constructor(engine: Engine){
         Input.engine = engine;
         Input.mousePos = new Vector(0,0);
@@ -148,7 +148,7 @@ export class Input{
         Input.maps.set(name, keys.map(key => cleanKeyName(key)));
     }
 
-    static mapAxis(name: string, axes: (string[] | number)[]){
+    static mapAxis(name: string, axes: (string[] | number)[], deadzone = 0.2){
         axes.forEach(axis => {
             if(typeof(axis) == "object" && axis.length != 2){
                 console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.\nCurrent value: ${JSON.stringify(axis)}`);
@@ -156,14 +156,17 @@ export class Input{
             }
         })
         
-        Input.axes.set(name, axes);
+        Input.axes.set(name, {
+            axes,
+            deadzone
+        });
     }
 
     static getAxis(name: string){
         const axis = Input.axes.get(name);
         if(axis){
             let currentValue = 0;
-            axis.forEach(a => {
+            axis.axes.forEach(a => {
                 let value = 0;
                 if(typeof(a) == 'number'){
                     const gamepad = navigator.getGamepads()[0];
@@ -175,7 +178,7 @@ export class Input{
                     else
                         console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
                 }
-                if(value != 0) currentValue = value;
+                if(Math.abs(value) > axis.deadzone) currentValue = value;
             });
 
             return currentValue;
@@ -185,7 +188,7 @@ export class Input{
         }
     }
 
-    static mapVector(name: string, vectors: (string[] | string)[]){
+    static mapVector(name: string, vectors: (string[] | string)[], deadzone = 0.2){
         vectors.forEach(vector => {
             if(typeof(vector) == "object" && vector.length != 4){
                 console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.\nCurrent value: ${JSON.stringify(vector)}`);
@@ -193,14 +196,14 @@ export class Input{
             }
         })
         
-        Input.vectors.set(name, vectors);
+        Input.vectors.set(name, {vectors, deadzone});
     }
 
     static getVector(name: string){
         const vector = Input.vectors.get(name);
         if(vector){
             let currentVector = Vector.Zero();
-            vector.forEach(v => {
+            vector.vectors.forEach(v => {
                 let value = Vector.Zero();
                 if(typeof(v) == "string"){
                     const gamepad = navigator.getGamepads()[0];
@@ -218,7 +221,7 @@ export class Input{
                         console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.`);
                     }
                 }
-                if(value.magnitude() != 0) currentVector = value;
+                if(value.magnitude() > vector.deadzone) currentVector = value;
             });
 
             return currentVector;

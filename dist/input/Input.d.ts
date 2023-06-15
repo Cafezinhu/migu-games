@@ -7,8 +7,14 @@ export declare class Input {
     static ignoreOffset: boolean;
     static keys: Map<string, InputKey>;
     static maps: Map<string, string[]>;
-    static axes: Map<string, (string[] | number)[]>;
-    static vectors: Map<string, (string[] | string)[]>;
+    static axes: Map<string, {
+        axes: (string[] | number)[];
+        deadzone: number;
+    }>;
+    static vectors: Map<string, {
+        vectors: (string[] | string)[];
+        deadzone: number;
+    }>;
     constructor(engine: Engine);
     static mouseEventToVector(e: MouseEvent): Vector;
     static touchEventToVector(e: TouchEvent): Vector;
@@ -23,9 +29,9 @@ export declare class Input {
     static getKey(key: string): InputKey;
     static createKey(key: string): InputKey;
     static mapKeys(name: string, keys: string[]): void;
-    static mapAxis(name: string, axes: (string[] | number)[]): void;
+    static mapAxis(name: string, axes: (string[] | number)[], deadzone?: number): void;
     static getAxis(name: string): number;
-    static mapVector(name: string, vectors: (string[] | string)[]): void;
+    static mapVector(name: string, vectors: (string[] | string)[], deadzone?: number): void;
     static getVector(name: string): Vector;
     static updateGamepad(): void;
 }
