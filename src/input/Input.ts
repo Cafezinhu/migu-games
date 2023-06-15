@@ -64,6 +64,25 @@ export class Input{
         return inputKey.releasedOnThisFrame;
     }
 
+    static getAxis(negative: string, positive: string){
+        const negativeKey = Input.getKey(negative);
+        const positiveKey = Input.getKey(positive);
+
+        if(positiveKey.isPressed){
+            return 1;
+        }else if(negativeKey.isPressed){
+            return -1;
+        }else{
+            return 0;
+        }
+    }
+
+    static getVector(left: string, right: string, up: string, down: string){
+        const x = Input.getAxis(left, right);
+        const y = Input.getAxis(up, down);
+        return new Vector(x, y);
+    }
+
     static pressKey(key: string){
         const inputKey = Input.getKey(key);
 
