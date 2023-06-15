@@ -32,7 +32,7 @@
 //     RightStickXAxis: 2,
 //     RightStickYAxis: 3
 // }
-export const Gamepad = {
+export const GamepadButtons = {
     Button: {
         North: 'gamepad3',
         South: 'gamepad0',

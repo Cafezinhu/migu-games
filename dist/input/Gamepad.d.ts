@@ -1,4 +1,4 @@
-export declare const Gamepad: {
+export declare const GamepadButtons: {
     Button: {
         North: string;
         South: string;
