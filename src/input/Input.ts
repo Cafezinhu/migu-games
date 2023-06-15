@@ -163,7 +163,8 @@ export class Input{
                 let value = 0;
                 if(typeof(a) == 'number'){
                     const gamepad = navigator.getGamepads()[0];
-                    value = gamepad.axes[a];
+                    if(gamepad)
+                        value = gamepad.axes[a];
                 }else{
                     if(a.length == 2)
                         value = Input.axisFromKeys(a[0], a[1]);
@@ -195,10 +196,12 @@ export class Input{
                 let value = Vector.Zero();
                 if(typeof(v) == "string"){
                     const gamepad = navigator.getGamepads()[0];
-                    if(v == MiguGamepad.LeftStick){
-                        value = new Vector(gamepad.axes[0], gamepad.axes[1]);
-                    }else if(v == MiguGamepad.RightStick){
-                        value = new Vector(gamepad.axes[2], gamepad.axes[3]);
+                    if(gamepad){
+                        if(v == MiguGamepad.LeftStick){
+                            value = new Vector(gamepad.axes[0], gamepad.axes[1]);
+                        }else if(v == MiguGamepad.RightStick){
+                            value = new Vector(gamepad.axes[2], gamepad.axes[3]);
+                        }
                     }
                 }else{
                     if(v.length == 4){
