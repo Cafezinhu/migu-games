@@ -66,7 +66,11 @@ export class Input {
     static getVector(left, right, up, down) {
         const x = Input.getAxis(left, right);
         const y = Input.getAxis(up, down);
-        return new Vector(x, y);
+        let vector = new Vector(x, y);
+        if (vector.magnitude() > 1) {
+            vector = vector.normalize();
+        }
+        return vector;
     }
     static pressKey(key) {
         const inputKey = Input.getKey(key);
