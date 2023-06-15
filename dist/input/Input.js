@@ -120,9 +120,9 @@ export class Input {
         gamepad.buttons.forEach((button, index) => {
             const key = Input.getKey(`gamepad${index}`);
             if (key.isPressed && !button.pressed)
-                key.release();
+                Input.releaseKey(`gamepad${index}`);
             else if (!key.isPressed && button.pressed)
-                key.press();
+                Input.pressKey(`gamepad${index}`);
         });
     }
 }
