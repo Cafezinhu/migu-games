@@ -134,8 +134,8 @@ export class Input{
     }
 
     static mapKeys(name: string, keys: string[]){
-        Input.createKey(name);
-        Input.maps.set(name, keys);
+        Input.createKey(cleanKeyName(name));
+        Input.maps.set(name, keys.map(key => cleanKeyName(key)));
     }
 }
 

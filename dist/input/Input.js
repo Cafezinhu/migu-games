@@ -110,8 +110,8 @@ export class Input {
         return newInputKey;
     }
     static mapKeys(name, keys) {
-        Input.createKey(name);
-        Input.maps.set(name, keys);
+        Input.createKey(cleanKeyName(name));
+        Input.maps.set(name, keys.map(key => cleanKeyName(key)));
     }
 }
 function cleanKeyName(key) {
