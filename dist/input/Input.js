@@ -132,6 +132,7 @@ export class Input {
     static getAxis(name) {
         const axis = Input.axes.get(name);
         if (axis) {
+            let currentValue = 0;
             axis.forEach(a => {
                 let value = 0;
                 if (typeof (a) == 'number') {
@@ -146,9 +147,9 @@ export class Input {
                         console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
                 }
                 if (value != 0)
-                    return value;
+                    currentValue = value;
             });
-            return 0;
+            return currentValue;
         }
         else {
             console.error(`Axis ${name} not found!`);
@@ -167,6 +168,7 @@ export class Input {
     static getVector(name) {
         const vector = Input.vectors.get(name);
         if (vector) {
+            let currentVector = Vector.Zero();
             vector.forEach(v => {
                 let value = Vector.Zero();
                 if (typeof (v) == "string") {
@@ -189,9 +191,9 @@ export class Input {
                     }
                 }
                 if (value.magnitude() != 0)
-                    return value;
+                    currentVector = value;
             });
-            return Vector.Zero();
+            return currentVector;
         }
         else {
             console.error(`Vector ${name} not found!`);

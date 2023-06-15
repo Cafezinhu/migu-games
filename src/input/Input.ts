@@ -162,6 +162,7 @@ export class Input{
     static getAxis(name: string){
         const axis = Input.axes.get(name);
         if(axis){
+            let currentValue = 0;
             axis.forEach(a => {
                 let value = 0;
                 if(typeof(a) == 'number'){
@@ -174,10 +175,10 @@ export class Input{
                     else
                         console.error(`Invalid axis value detected. Axis ${name} should be a single number or an array of 2 strings.`);
                 }
-                if(value != 0) return value;
+                if(value != 0) currentValue = value;
             });
 
-            return 0;
+            return currentValue;
         }else{
             console.error(`Axis ${name} not found!`);
             return 0;
@@ -198,6 +199,7 @@ export class Input{
     static getVector(name: string){
         const vector = Input.vectors.get(name);
         if(vector){
+            let currentVector = Vector.Zero();
             vector.forEach(v => {
                 let value = Vector.Zero();
                 if(typeof(v) == "string"){
@@ -216,10 +218,10 @@ export class Input{
                         console.error(`Invalid vector value detected. Vector ${name} should be a string (MiguGamepad.LeftStick or MiguGamepad.RightStick) or an array of 4 strings.`);
                     }
                 }
-                if(value.magnitude() != 0) return value;
+                if(value.magnitude() != 0) currentVector = value;
             });
 
-            return Vector.Zero();
+            return currentVector;
         }else{
             console.error(`Vector ${name} not found!`);
             return Vector.Zero();
